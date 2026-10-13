@@ -15,6 +15,8 @@ Plus **The Line-Up** (compare thinkers side by side) and **Who Said It?** (a quo
 
 Interpretations follow E.K. Hunt & Mark Lautzenheiser, *History of Economic Thought: A Critical Perspective* (2011).
 
+Website created by Maria Petrolia using Claude Code
+
 ## Running it on your own computer
 
 Double-click `start-site.bat`, or run:
