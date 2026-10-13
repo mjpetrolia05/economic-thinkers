@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Stationary State · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Exo+2:ital,wght@0,400;0,600;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#04050d; --panel:rgba(12,20,44,.78); --cyan:#22e5ff; --magenta:#ff2bd6; --violet:#8b6cff; --lime:#b6ff3b; --amber:#ffb02e; --red:#ff4d6d;
+  --text:#d8e6ff; --muted:#7f93c4; --line:rgba(34,229,255,.28); --line2:rgba(34,229,255,.55);
+  --display:"Orbitron",system-ui,sans-serif; --body:"Exo 2",system-ui,sans-serif; --mono:"Share Tech Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0; overflow-x:clip}
+body{font-family:var(--body); font-size:15px; line-height:1.5; color:var(--text); min-height:100vh;
+  background:radial-gradient(1000px 600px at 80% -10%,rgba(139,108,255,.22),transparent 60%),radial-gradient(800px 500px at 0% 40%,rgba(34,229,255,.10),transparent 60%),var(--void); background-attachment:fixed}
+body::before{content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.7;
+  background-image:radial-gradient(1px 1px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 140px 80px,#9fdfff,transparent),radial-gradient(1.5px 1.5px at 260px 160px,#fff,transparent),radial-gradient(1px 1px at 330px 40px,#ffc6f2,transparent),radial-gradient(1px 1px at 90px 210px,#fff,transparent);
+  background-size:380px 260px}
+body::after{content:""; position:fixed; inset:0; pointer-events:none; z-index:80; background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
+button{font:inherit; color:inherit; cursor:pointer; background:none; border:0; padding:0}
+button:disabled{cursor:not-allowed}
+button:focus-visible,a:focus-visible{outline:2px solid var(--cyan); outline-offset:2px}
+h1,h2,h3{font-family:var(--display); font-weight:700; margin:0; letter-spacing:.06em; line-height:1.15}
+p{margin:0 0 .7em}
+.app{max-width:1260px; margin:0 auto; padding:14px 16px 50px; display:grid; gap:14px}
+
+.top{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px}
+.top h1{font-weight:900; font-size:clamp(20px,3.4vw,34px); background:linear-gradient(90deg,var(--cyan),#fff 45%,var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 14px rgba(34,229,255,.35))}
+.top small{display:block; font-family:var(--mono); color:var(--lime); letter-spacing:.1em; font-size:12px}
+.btns{display:flex; flex-wrap:wrap; gap:8px}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; font-family:var(--display); font-size:11px; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; color:var(--cyan); padding:9px 14px; border:1px solid var(--line2); background:rgba(34,229,255,.06);
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); transition:background .15s,color .15s,box-shadow .15s}
+.btn:hover:not(:disabled){background:var(--cyan); color:var(--void); box-shadow:0 0 16px var(--cyan)}
+.btn:disabled{opacity:.35}
+.btn.mag{color:var(--magenta); border-color:rgba(255,43,214,.6); background:rgba(255,43,214,.07)}
+.btn.mag:hover:not(:disabled){background:var(--magenta); color:var(--void)}
+.btn.lime{color:var(--lime); border-color:rgba(182,255,59,.6); background:rgba(182,255,59,.06)}
+.btn.lime:hover:not(:disabled){background:var(--lime); color:var(--void)}
+.btn.amber{color:var(--amber); border-color:rgba(255,176,46,.6); background:rgba(255,176,46,.06)}
+.btn.amber:hover:not(:disabled){background:var(--amber); color:var(--void)}
+.btn.big{font-size:14px; padding:13px 20px}
+.btn[aria-pressed="true"]{background:var(--cyan); color:var(--void); box-shadow:0 0 14px var(--cyan)}
+
+.panel{position:relative; background:var(--panel); border:1px solid var(--line); padding:14px 16px; backdrop-filter:blur(6px); min-width:0}
+.panel::before,.panel::after{content:""; position:absolute; width:14px; height:14px; border:2px solid var(--c,var(--cyan)); pointer-events:none}
+.panel::before{top:-1px; left:-1px; border-right:0; border-bottom:0}
+.panel::after{bottom:-1px; right:-1px; border-left:0; border-top:0}
+.panel.mag{--c:var(--magenta)} .panel.lime{--c:var(--lime)} .panel.vio{--c:var(--violet)} .panel.amber{--c:var(--amber)}
+.panel h3{font-size:13px; color:var(--c,var(--cyan)); margin-bottom:10px; letter-spacing:.14em}
+.k{font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--muted)}
+
+/* HUD */
+.hud{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px}
+.h{border:1px solid var(--line); background:rgba(4,5,13,.55); padding:8px 10px; min-width:0}
+.h .v{font-family:var(--display); font-size:18px; color:#fff; white-space:nowrap}
+.h .v small{font-size:11px; color:var(--muted)}
+.meter{height:12px; border:1px solid var(--line2); margin-top:6px; position:relative; background:rgba(4,5,13,.8); overflow:hidden}
+.meter i{position:absolute; inset:0 auto 0 0; background:linear-gradient(90deg,var(--amber),var(--red)); box-shadow:0 0 12px var(--red); transition:width .6s}
+.meter.danger{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 16px var(--red)}}
+.votes{display:flex; gap:6px; margin-top:4px}
+.votes i{width:22px; height:22px; border:1px solid var(--lime); display:grid; place-items:center; font-style:normal; font-size:13px}
+.votes i.on{background:var(--lime); color:var(--void); box-shadow:0 0 12px var(--lime)}
+
+/* board */
+.main{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:14px; align-items:start}
+.board{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); grid-template-rows:repeat(5,minmax(0,1fr)); gap:5px; aspect-ratio:1; background:rgba(4,5,13,.6); border:1px solid var(--line); padding:6px}
+.sp{position:relative; display:flex; flex-direction:column; justify-content:space-between; padding:5px 6px; border:1px solid rgba(34,229,255,.25); background:linear-gradient(145deg,#141d3a,#0b1128); font-family:var(--mono); font-size:clamp(8px,1.05vw,11px); line-height:1.15; overflow:hidden; min-width:0; transition:background .3s, border-color .3s}
+.sp .nm{font-family:var(--display); font-size:clamp(8px,1.05vw,11px); letter-spacing:.06em; color:#fff}
+.sp .ic{font-size:clamp(14px,2.2vw,24px); line-height:1}
+.sp .row{display:flex; justify-content:space-between; align-items:flex-end; gap:4px}
+.sp.plot.cult{background:linear-gradient(145deg,rgba(182,255,59,calc(var(--f) * .35)),#0b1128 85%); border-color:rgba(182,255,59,.5)}
+.sp.plot.marg{border-color:var(--amber); box-shadow:inset 0 0 0 1px var(--amber), 0 0 14px rgba(255,176,46,.35)}
+.sp.plot.wild{opacity:.55; border-style:dashed}
+.sp .rent{font-family:var(--display); font-size:clamp(8px,1vw,11px); color:var(--magenta); text-shadow:0 0 8px var(--magenta)}
+.sp .fert{color:var(--lime)}
+.sp .tag{position:absolute; top:3px; right:4px; font-size:clamp(7px,.9vw,9px); color:var(--amber); letter-spacing:.06em}
+.sp.special{border-color:rgba(139,108,255,.55)}
+.sp.parl{border-color:var(--lime); box-shadow:inset 0 0 18px rgba(182,255,59,.15)}
+.sp.here{outline:2px solid var(--cyan); outline-offset:-2px; box-shadow:0 0 18px rgba(34,229,255,.6)}
+.tok{position:absolute; bottom:4px; right:5px; font-size:clamp(14px,2vw,22px); filter:drop-shadow(0 0 6px var(--cyan)); animation:bob 1s ease-in-out infinite}
+.tok.lord{right:auto; left:5px; filter:drop-shadow(0 0 6px var(--magenta)); animation-delay:.3s}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.center{grid-column:2 / 5; grid-row:2 / 5; border:1px solid var(--line); background:rgba(4,5,13,.75); padding:8px 10px; display:flex; flex-direction:column; min-width:0}
+.center .k{color:var(--cyan)}
+.center svg{width:100%; flex:1; min-height:0}
+.center svg text{font-family:var(--mono); font-size:10px; fill:var(--muted)}
+.caption{font-family:var(--mono); font-size:clamp(9px,1.1vw,12px); color:#fff; text-align:center}
+.caption b{color:var(--cyan); font-weight:400} .caption .m{color:var(--magenta)}
+.controls{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px}
+.dice{display:flex; gap:6px; margin-left:auto}
+.die{width:36px; height:36px; border:1px solid var(--cyan); display:grid; place-items:center; font-family:var(--display); font-size:18px; color:#fff; background:rgba(34,229,255,.08); box-shadow:0 0 10px rgba(34,229,255,.3)}
+.die.roll{animation:roll .5s ease}
+@keyframes roll{0%{transform:rotate(-180deg) scale(.6)}100%{transform:none}}
+.legend{display:flex; flex-wrap:wrap; gap:6px 14px; font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:8px}
+.legend i{display:inline-block; width:12px; height:12px; margin-right:5px; vertical-align:-2px}
+
+/* parliament & logic */
+.clues{display:grid; gap:6px; margin-bottom:12px; max-height:240px; overflow:auto}
+.clue{display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:start; padding:8px 10px; border:1px solid var(--line); background:rgba(4,5,13,.55); font-size:14px}
+.clue.new{animation:fresh 1s ease; border-color:var(--lime)}
+@keyframes fresh{from{background:rgba(182,255,59,.25)}}
+.clue .no{font-family:var(--mono); color:var(--magenta)}
+.clue .plain{display:block; font-family:var(--mono); font-size:12px; color:var(--lime); margin-top:3px}
+.clue .dec{font-family:var(--mono); font-size:10px; color:var(--muted); border:1px solid var(--line); padding:2px 6px; white-space:nowrap}
+.clue .dec:hover{color:var(--cyan); border-color:var(--cyan)}
+.clue.locked{color:var(--muted); font-style:italic; border-style:dashed}
+.lgwrap{overflow-x:auto}
+table.lg{border-collapse:collapse; font-family:var(--mono); font-size:11px; margin:0 auto}
+table.lg th{font-weight:400; color:var(--muted); padding:3px; white-space:nowrap}
+table.lg th.col{height:92px; vertical-align:bottom}
+table.lg th.col span{display:inline-block; writing-mode:vertical-rl; transform:rotate(180deg)}
+table.lg th.rowh{text-align:right; padding-right:6px}
+table.lg td{width:30px; height:30px; padding:0; border:1px solid rgba(34,229,255,.3)}
+table.lg td.gap{border:0; width:8px}
+table.lg td.blank{border:0}
+table.lg td button{width:100%; height:100%; font-family:var(--display); font-size:14px}
+table.lg td button:hover{background:rgba(34,229,255,.12)}
+.x{color:var(--red)} .o{color:var(--lime); text-shadow:0 0 8px var(--lime)}
+.c-p{color:var(--lime)} .c-a{color:var(--cyan)} .c-t{color:var(--magenta)}
+.mps{display:grid; gap:8px; margin-bottom:12px}
+.mp{display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center; padding:8px 10px; border:1px solid var(--line); background:rgba(4,5,13,.5)}
+.mp .face{font-size:24px}
+.mp b{font-family:var(--display); font-weight:700; font-size:12px; letter-spacing:.06em; color:#fff}
+.mp small{display:block; color:var(--muted); font-size:12px}
+.mp .st{font-family:var(--mono); font-size:11px; padding:2px 8px; border:1px solid var(--muted); color:var(--muted)}
+.mp .st.yes{border-color:var(--lime); color:var(--lime); box-shadow:0 0 10px rgba(182,255,59,.4)}
+.log{display:grid; gap:4px; max-height:160px; overflow:auto; font-family:var(--mono); font-size:12px; color:var(--muted)}
+.log div:first-child{color:var(--text)}
+.log .bad{color:var(--red)} .log .good{color:var(--lime)}
+
+/* overlay */
+.overlay{position:fixed; inset:0; z-index:70; background:rgba(2,3,10,.88); display:grid; place-items:center; padding:16px; overflow:auto}
+.overlay[hidden]{display:none}
+.modal{width:min(760px,100%); background:linear-gradient(180deg,rgba(18,30,64,.96),rgba(8,11,28,.98)); border:1px solid var(--line2); padding:22px; position:relative; box-shadow:0 0 40px rgba(34,229,255,.2); animation:warp .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes warp{from{opacity:0; transform:scale(.96); filter:blur(4px)}}
+.modal::before,.modal::after{content:""; position:absolute; width:20px; height:20px; border:2px solid var(--magenta)}
+.modal::before{top:-1px; left:-1px; border-right:0; border-bottom:0}
+.modal::after{bottom:-1px; right:-1px; border-left:0; border-top:0}
+.modal h2{font-size:clamp(18px,3.4vw,28px); color:#fff; margin-bottom:10px; text-shadow:0 0 16px rgba(34,229,255,.4)}
+.modal .sub{color:var(--muted)}
+.foot{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; margin-top:16px}
+.three{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:14px 0}
+.three div{border:1px solid var(--line); padding:12px; background:rgba(4,5,13,.5)}
+.three b{display:block; font-family:var(--display); font-size:12px; letter-spacing:.12em; margin-bottom:4px}
+.split{display:flex; height:42px; border:1px solid var(--line2); margin:12px 0 6px; overflow:hidden}
+.split > div{display:grid; place-items:center; font-family:var(--mono); font-size:12px; color:var(--void); font-weight:700; white-space:nowrap; overflow:hidden; animation:grow .7s cubic-bezier(.2,.8,.2,1) both}
+.split > div:nth-child(2){animation-delay:.15s} .split > div:nth-child(3){animation-delay:.3s}
+@keyframes grow{from{flex-grow:0.0001}}
+.lobby{display:grid; gap:10px; margin-top:10px}
+.lobby .mp{grid-template-columns:auto 1fr}
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px}
+.toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); z-index:75; font-family:var(--mono); background:rgba(8,11,28,.95); border:1px solid var(--cyan); color:#fff; padding:10px 16px; box-shadow:0 0 20px rgba(34,229,255,.4); animation:warp .3s; max-width:92vw; text-align:center}
+.toast[hidden]{display:none}
+
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.cn{display:flex; flex-direction:column; gap:4px; text-decoration:none; padding:14px 16px; border:1px solid var(--line2); background:var(--panel); color:var(--text); clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.cn.next{text-align:right}
+.cn:hover{background:rgba(34,229,255,.1)}
+.cn .d{font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.12em}
+.cn .t{font-family:var(--display); font-size:15px; color:var(--cyan); letter-spacing:.08em}
+.cn.off{opacity:.4; pointer-events:none; border-style:dashed}
+
+@media (max-width:1000px){ .main{grid-template-columns:1fr} .hud{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:600px){
+  .hud{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .three{grid-template-columns:1fr}
+  .board{gap:3px; padding:3px}
+  .sp{padding:3px}
+  .sp .fert,.sp .tag{display:none}
+  .casenav{grid-template-columns:1fr} .cn.next{text-align:left}
+  .dice{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div><small>&gt; CASE 004 // IDEAS IN ACTION</small><h1>THE STATIONARY STATE</h1></div>
+    <nav class="btns">
+      <button class="btn lime" type="button" data-act="help">? How to play</button>
+      <a class="btn" href="../">◀ Ricardo's ideas</a>
+      <a class="btn" href="../../">⌂ Home</a>
+    </nav>
+  </header>
+
+  <div class="hud" id="hud"></div>
+
+  <div class="main">
+    <div class="panel">
+      <div class="board" id="board"></div>
+      <div class="controls">
+        <button class="btn big" type="button" data-act="roll" id="rollBtn">🎲 Roll & move</button>
+        <button class="btn amber" type="button" data-act="carriage" id="carBtn">🚀 Shuttle (−20)</button>
+        <button class="btn lime" type="button" data-act="improve" id="impBtn">🌱 Improve land (−60)</button>
+        <button class="btn mag" type="button" data-act="brief" id="briefBtn">📡 Buy a briefing (−30)</button>
+        <div class="dice"><span class="die" id="d1">·</span><span class="die" id="d2">·</span></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--violet)"></i>Wages (subsistence)</span>
+        <span><i style="background:var(--cyan)"></i>Your profit</span>
+        <span><i style="background:var(--magenta)"></i>Landlord's rent</span>
+        <span><i style="background:var(--amber)"></i>The margin</span>
+        <span>🛸 you · 👑 landlord</span>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:14px">
+      <div class="panel lime">
+        <h3>// PARLIAMENT · REPEAL THE CORN LAWS</h3>
+        <div class="mps" id="mps"></div>
+        <div class="k" style="margin-bottom:6px">COMMITTEE REPORTS: which argument moves which MP?</div>
+        <div class="clues" id="clues"></div>
+        <div class="lgwrap"><table class="lg" id="lg"></table></div>
+      </div>
+      <div class="panel vio"><h3>// COLONY LOG</h3><div class="log" id="log"></div></div>
+    </div>
+  </div>
+
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn" href="../../malthus/"><span class="d">◀ PREVIOUS CASE</span><span class="t">CASE 003 · MALTHUS</span></a>
+    <span class="cn next off" aria-disabled="true"><span class="d">NEXT CASE ▶</span><span class="t">CASE 005 · PENDING</span></span>
+  </nav>
+</div>
+<div class="overlay" id="overlay" hidden><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* =====================================================================
+   THE STATIONARY STATE
+   Move around a ring of plots that runs from fertile to barren. Each
+   harvest splits into wages, rent, and profit by Ricardo's rule: rent is
+   a plot's fertility minus the fertility of the worst land in use, so
+   profit is the same on every plot. Each round population grows, the
+   margin of cultivation advances, rents rise, and profit shrinks.
+   Win three MPs' votes to repeal the Corn Laws before profit hits zero.
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const cap = s => s[0].toUpperCase() + s.slice(1);
+const WAGE = 40;
+const FERT = [100, 94, 88, 82, 76, 70, 64, 58, 52, 46];
+
+/* ---------- the board: 16 spaces around a 5×5 frame ---------- */
+const SPACES = [
+  {t:"start"}, {t:"plot", k:0}, {t:"plot", k:1}, {t:"clue"}, {t:"plot", k:2},
+  {t:"plot", k:3}, {t:"mill"}, {t:"plot", k:4}, {t:"plot", k:5}, {t:"parl"},
+  {t:"plot", k:6}, {t:"plot", k:7}, {t:"clue"}, {t:"plot", k:8}, {t:"port"}, {t:"plot", k:9}
+];
+const CELL = [[0,0],[1,0],[2,0],[3,0],[4,0],[4,1],[4,2],[4,3],[4,4],[3,4],[2,4],[1,4],[0,4],[0,3],[0,2],[0,1]];
+
+/* ---------- the deduction: MPs × arguments × constituencies ---------- */
+const MPS = [
+  {n:"Sir Barley Thorne", s:"Thorne", f:"🎩", d:["the MP with a thousand acres", "the squire on the back benches"]},
+  {n:"Mr. Ivor Spindle", s:"Spindle", f:"🏭", d:["the MP whose looms never stop", "the mill-owning member"]},
+  {n:"Mrs. Opal Tide", s:"Tide", f:"⚓", d:["the MP whose ships carry wine", "the merchant member"]}
+];
+const ARGS = [
+  {n:"the rent ladder", s:"Rent ladder", d:["the argument that rent is never new wealth", "the argument that worse land raises every rent"]},
+  {n:"comparative advantage", s:"Comp. advantage", d:["the argument about England's cloth and Portugal's wine", "the case for trading even with a better producer"]},
+  {n:"the profit squeeze", s:"Profit squeeze", d:["the argument that dear corn forces wages up and profits down", "the warning about the stationary state"]}
+];
+const TOWNS = [
+  {n:"the Shire", s:"Shire", d:["the county of great estates", "the farming shire"]},
+  {n:"the Mill Town", s:"Mill Town", d:["the town of smoke and spindles", "the factory town"]},
+  {n:"the Port", s:"Port", d:["the town where cheap grain would land", "the harbour town"]}
+];
+const PERMS = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+function holds(c, a){
+  if (c.t === "PA") return (a.arg[c.p] === c.a) === c.pos;
+  if (c.t === "PT") return (a.town[c.p] === c.x) === c.pos;
+  const p = a.arg.indexOf(c.a); return (a.town[p] === c.x) === c.pos;
+}
+function candidates(clues){ const out = []; PERMS.forEach(ar => PERMS.forEach(tw => { const a = {arg:ar, town:tw}; if (clues.every(c => holds(c, a))) out.push(a); })); return out; }
+const desc = (list, i) => Math.random() < .55 ? pick(list[i].d) : list[i].n;
+function clueText(c){
+  if (c.t === "PA") return {txt:`${cap(desc(MPS, c.p))} is ${c.pos ? "" : "not "}persuaded by ${desc(ARGS, c.a)}.`, plain:`${MPS[c.p].s} ${c.pos ? "=" : "≠"} ${ARGS[c.a].s}`};
+  if (c.t === "PT") return {txt:`${cap(desc(MPS, c.p))} ${c.pos ? "sits" : "does not sit"} for ${desc(TOWNS, c.x)}.`, plain:`${MPS[c.p].s} ${c.pos ? "=" : "≠"} ${TOWNS[c.x].s}`};
+  return {txt:`Whoever is moved by ${desc(ARGS, c.a)} ${c.pos ? "sits" : "does not sit"} for ${desc(TOWNS, c.x)}.`, plain:`${ARGS[c.a].s} ${c.pos ? "=" : "≠"} ${TOWNS[c.x].s}`};
+}
+function makePuzzle(){
+  const sol = {arg:pick(PERMS).slice(), town:pick(PERMS).slice()};
+  const pool = [];
+  for (let p = 0; p < 3; p++) for (let a = 0; a < 3; a++) pool.push({t:"PA", p, a, pos:sol.arg[p] === a});
+  for (let p = 0; p < 3; p++) for (let x = 0; x < 3; x++) pool.push({t:"PT", p, x, pos:sol.town[p] === x});
+  for (let a = 0; a < 3; a++) for (let x = 0; x < 3; x++) pool.push({t:"AT", a, x, pos:sol.town[sol.arg.indexOf(a)] === x});
+  const ordered = shuffle(pool).sort((a, b) => (a.pos - b.pos) + (Math.random() - .5) * 1.2);
+  let clues = [];
+  for (const c of ordered){ clues.push(c); if (candidates(clues).length === 1) break; }
+  for (const c of clues.slice()){ const rest = clues.filter(x => x !== c); if (candidates(rest).length === 1) clues = rest; }
+  return {sol, clues:shuffle(clues).map(c => ({...c, ...clueText(c), found:false, decoded:false}))};
+}
+
+/* ---------- events at the Machine Mill ---------- */
+const EVENTS = [
+  {n:"Agricultural improvement", i:"🌱", d:"New methods cut the labor needed for corn. The worst plot falls out of use and every rent falls at once. The landlords protest.", fx:() => moveMargin(-1)},
+  {n:"Population boom", i:"👶", d:"More mouths than expected. Worse land must be plowed now.", fx:() => moveMargin(+1)},
+  {n:"Napoleonic blockade", i:"⚓", d:"Imports cut off. The march onto poor land speeds up.", fx:() => moveMargin(+1)},
+  {n:"New machinery (1817 view)", i:"⚙️", d:"Costs fall, prices fall, everyone benefits. Capital +40.", fx:() => { G.capital += 40; }},
+  {n:"Machinery displaces workers (1821)", i:"🤖", d:"Profit up, but workers are made 'redundant'. Capital +50. Ricardo admits their fears were \"not founded on prejudice and error.\"", fx:() => { G.capital += 50; }},
+  {n:"Say's law", i:"🔁", d:"\"Commodities are always bought by commodities.\" No general glut this season. Capital +20.", fx:() => { G.capital += 20; }},
+  {n:"Landlords' petition", i:"📜", d:"The landed interest lobbies hard to keep the Corn Laws. Capital −30.", fx:() => { G.capital -= 30; }},
+  {n:"Leaked committee minutes", i:"📡", d:"A clerk slips you a report.", fx:() => revealClue()}
+];
+
+/* ---------- state ---------- */
+let G = null;
+function newGame(){
+  G = {pos:0, lord:9, capital:100, margin:3, round:1, votes:[false,false,false], puz:makePuzzle(), marks:{}, rentBank:0, harvests:0,
+       deck:shuffle(EVENTS.slice()), log:[], over:null, busy:false, improvedThisRound:false, briefedThisRound:false, attempts:0, newClue:null};
+  revealClue(true);
+  logm("Colony founded. Plots 1–4 are farmed. Every round the population grows and worse land must be plowed.");
+  logm("Win three MPs to repeal the Corn Laws before profit falls to zero.");
+  hideModal(); render();
+}
+function logm(t, cls = ""){ G.log.unshift({t:`R${G.round} · ${t}`, cls}); G.log = G.log.slice(0, 60); }
+const marginFert = () => G.margin > 9 ? WAGE : FERT[G.margin];
+const profitPer = () => Math.max(0, marginFert() - WAGE);
+const rentOf = k => k <= G.margin ? FERT[k] - marginFert() : 0;
+const totalRent = () => FERT.slice(0, Math.min(G.margin, 9) + 1).reduce((s, f, k) => s + rentOf(k), 0);
+function revealClue(quiet){
+  const c = G.puz.clues.find(c => !c.found);
+  if (!c){ if (!quiet) { G.capital += 15; toast("No reports left; the clerk pays you 15 instead"); } return; }
+  c.found = true; G.newClue = G.puz.clues.indexOf(c);
+  if (!quiet){ logm(`📡 New committee report (clue ${G.newClue + 1}).`, "good"); toast("📡 New committee report"); }
+}
+function moveMargin(d){
+  const before = G.margin;
+  G.margin = Math.max(0, G.margin + d);
+  if (G.margin > before) logm(`Margin advanced to Plot ${Math.min(G.margin, 9) + 1}${G.margin > 9 ? " (none left)" : ` (fertility ${FERT[G.margin]})`}. Rents rose on ${Math.min(G.margin, 10)} plots.`, "bad");
+  else if (G.margin < before) logm(`Margin pulled back to Plot ${G.margin + 1}. Rents fell everywhere.`, "good");
+}
+
+/* ---------- turn flow ---------- */
+const wait = ms => new Promise(r => setTimeout(r, ms));
+async function step(n){
+  for (let i = 0; i < n; i++){
+    G.pos = (G.pos + 1) % SPACES.length;
+    if (G.pos === 0 && i < n - 1){ G.capital += 10; logm("Passed Harvest Station: +10 capital."); }
+    render(); await wait(170);
+  }
+}
+async function roll(){
+  if (G.busy || G.over) return;
+  G.busy = true; render();
+  const a = 1 + Math.floor(Math.random() * 6), b = 1 + Math.floor(Math.random() * 6);
+  $("#d1").textContent = a; $("#d2").textContent = b;
+  [$("#d1"), $("#d2")].forEach(d => { d.classList.remove("roll"); void d.offsetWidth; d.classList.add("roll"); });
+  await wait(350);
+  await step(a + b);
+  resolve();
+}
+function carriage(){
+  if (G.busy || G.over) return;
+  if (G.capital < 20){ toast("Not enough capital"); return; }
+  showModal(`<h2>🚀 Shuttle</h2><p class="sub">Pay 20 capital to move exactly 1–6 spaces instead of rolling.</p>
+    <div class="chips">${[1,2,3,4,5,6].map(n => `<button class="btn" type="button" data-shuttle="${n}">${n} → ${spaceName(SPACES[(G.pos + n) % 16])}</button>`).join("")}</div>
+    <div class="foot"><button class="btn" type="button" data-act="close">Cancel</button></div>`);
+}
+async function shuttle(n){
+  hideModal(); G.capital -= 20; G.busy = true; logm(`Took a shuttle ${n} space${n > 1 ? "s" : ""} (−20).`);
+  await step(n); resolve();
+}
+function spaceName(s){ return s.t === "plot" ? `Plot ${s.k + 1}` : s.t === "start" ? "Harvest Station" : s.t === "clue" ? "Committee Room" : s.t === "mill" ? "Machine Mill" : s.t === "parl" ? "Parliament" : "Free Port"; }
+
+function resolve(){
+  const s = SPACES[G.pos];
+  if (s.t === "plot") return harvest(s.k);
+  if (s.t === "start"){ G.capital += 25; revealClue(); return card("🛰️ Harvest Station", `<p>Back at base. Investors advance you <b>25 capital</b>, and a briefing arrives.</p>`); }
+  if (s.t === "clue"){ revealClue(); revealClue(); return card("📡 Committee Room", `<p>Two committee reports land on your desk. Check the clue list.</p>`); }
+  if (s.t === "mill"){
+    if (!G.deck.length) G.deck = shuffle(EVENTS.slice());
+    const e = G.deck.pop(); e.fx();
+    logm(`${e.i} ${e.n}.`, "");
+    return card(`${e.i} ${e.n}`, `<p>${e.d}</p>`);
+  }
+  if (s.t === "port") return portChoice();
+  if (s.t === "parl") return lobbyModal();
+}
+function harvest(k){
+  if (k > G.margin){
+    return card(`🌑 Plot ${k + 1}: wilderness`, `<p>Fertility ${FERT[k]}. Not yet needed to feed the colony, so nobody farms it and it pays <b>no rent</b>. As population grows, the margin will reach it.</p>`);
+  }
+  const F = FERT[k], rent = rentOf(k), prof = profitPer();
+  G.capital += prof; G.rentBank += rent; G.harvests++;
+  logm(`Harvest on Plot ${k + 1}: produce ${F} = wages ${WAGE} + rent ${rent} + profit ${prof}.`, prof > 15 ? "good" : "bad");
+  const seg = (v, col, lbl) => v > 0 ? `<div style="flex-grow:${v};background:${col}">${lbl} ${v}</div>` : "";
+  return card(`🌾 Harvest on Plot ${k + 1}`, `
+    <p>Produce: <b style="color:var(--lime)">${F}</b> bushels.${k === Math.min(G.margin, 9) ? " This is the <b style='color:var(--amber)'>marginal plot</b>: no rent is paid here." : ""}</p>
+    <div class="split">${seg(WAGE, "var(--violet)", "wages")}${seg(prof, "var(--cyan)", "profit")}${seg(rent, "var(--magenta)", "rent")}</div>
+    <p class="sub">Competition among farmers bids rent up until profit here equals profit on the worst land in use. <b style="color:#fff">Your profit is ${prof} on every farmed plot, fertile or not.</b> The extra fertility goes to the landlord.</p>`);
+}
+function portChoice(){
+  showModal(`<h2>⚓ Free Port</h2><p>Trade by comparative advantage: England's cloth for Portugal's wine.</p>
+    <div class="foot" style="justify-content:flex-start">
+      <button class="btn lime" type="button" data-port="trade">Trade cloth for wine: +30 capital</button>
+      <button class="btn mag" type="button" data-port="intel">Talk to the merchants: +1 report</button></div>`);
+}
+function card(title, html){
+  showModal(`<h2>${title}</h2>${html}<div class="foot"><button class="btn big" type="button" data-act="endRound">Continue ▶</button></div>`);
+  render();
+}
+
+/* ---------- Parliament ---------- */
+let lobbySel = {};
+function lobbyModal(){
+  lobbySel = {};
+  const open = MPS.map((m, p) => p).filter(p => !G.votes[p]);
+  showModal(`<h2>🏛️ Parliament is sitting</h2>
+    <p class="sub">Choose an argument for each MP you want to lobby. A right match wins their vote. A wrong one costs 30 capital, and the landed interest pushes cultivation one plot further.</p>
+    <div class="lobby">${open.map(p => `<div class="mp"><span class="face">${MPS[p].f}</span><div><b>${MPS[p].n}</b>
+      <div class="chips">${ARGS.map((a, ai) => `<button class="btn" type="button" data-lob="${p},${ai}" aria-pressed="false">${a.s}</button>`).join("")}<button class="btn" type="button" data-lob="${p},-1" aria-pressed="true">Skip</button></div></div></div>`).join("")}</div>
+    <div class="foot"><button class="btn lime big" type="button" data-act="doLobby">Make the case</button></div>`);
+}
+function doLobby(){
+  const tried = Object.entries(lobbySel).filter(([, a]) => a >= 0);
+  let won = 0, lost = 0;
+  const lines = tried.map(([p, a]) => {
+    p = +p; G.attempts++;
+    if (G.puz.sol.arg[p] === a){ G.votes[p] = true; won++; logm(`🏛️ ${MPS[p].s} persuaded by ${ARGS[a].n}. Vote secured!`, "good"); return `<p style="color:var(--lime)">✓ ${MPS[p].n} is persuaded by ${ARGS[a].n}.</p>`; }
+    lost++; G.capital -= 30; moveMargin(+1); logm(`🏛️ ${MPS[p].s} unmoved by ${ARGS[a].n} (−30, margin +1).`, "bad");
+    return `<p style="color:var(--red)">✕ ${MPS[p].n} is unmoved by ${ARGS[a].n}. −30 capital; the margin creeps outward.</p>`;
+  });
+  if (G.votes.every(Boolean)) return win();
+  card("🏛️ The division bell", lines.length ? lines.join("") : `<p>You watched the debate from the gallery.</p>`);
+}
+
+/* ---------- end of round: population grows, the landlord collects ---------- */
+function endRound(){
+  hideModal();
+  if (G.over) return;
+  if (G.capital < 0) return lose("bankrupt");
+  if (G.margin > 9) return lose("stationary");
+  // the landlord's collector moves too
+  const lr = 1 + Math.floor(Math.random() * 6);
+  G.lord = (G.lord + lr) % 16;
+  if (SPACES[G.lord].t === "parl" && G.votes.some(Boolean)){
+    const i = G.votes.lastIndexOf(true); G.votes[i] = false;
+    logm(`👑 The landlords' lobby reached Parliament and won back ${MPS[i].s}'s vote!`, "bad"); toast(`👑 Landlords flipped ${MPS[i].s}'s vote`);
+  } else if (G.lord === G.pos){ G.capital -= 15; logm("👑 The rent collector caught up with you: −15.", "bad"); toast("👑 Rent collector: −15"); }
+  // population grows: the margin of cultivation advances
+  moveMargin(+1);
+  G.round++; G.improvedThisRound = false; G.briefedThisRound = false; G.busy = false;
+  if (G.margin > 9) return lose("stationary");
+  if (G.capital < 0) return lose("bankrupt");
+  toast(`Population grew. Plot ${G.margin + 1} plowed. Profit now ${profitPer()} per harvest.`);
+  render();
+}
+function improve(){
+  if (G.busy || G.over || G.improvedThisRound) return;
+  if (G.capital < 60){ toast("Not enough capital"); return; }
+  if (G.margin <= 0){ toast("Already at the best land"); return; }
+  G.capital -= 60; G.improvedThisRound = true; moveMargin(-1);
+  toast(`🌱 Improvement: margin back to Plot ${G.margin + 1}. Rents fell, profit up to ${profitPer()}.`);
+  render();
+}
+function brief(){
+  if (G.busy || G.over || G.briefedThisRound) return;
+  if (G.capital < 30){ toast("Not enough capital"); return; }
+  if (!G.puz.clues.some(c => !c.found)){ toast("You have every report"); return; }
+  G.capital -= 30; G.briefedThisRound = true; revealClue(); render();
+}
+
+/* ---------- endings ---------- */
+function win(){
+  G.over = "won";
+  const score = Math.max(0, Math.round(G.capital * 2 + profitPer() * 15 - G.round * 20 + 400));
+  const rank = score >= 900 ? "First Lord of the Treasury" : score >= 650 ? "Chancellor" : score >= 450 ? "Member of Parliament" : "Pamphleteer";
+  render();
+  showModal(`<h2 style="color:var(--lime)">✓ THE CORN LAWS ARE REPEALED</h2>
+    <p>Cheap grain flows in through the ports. The colony no longer has to plow ever-worse land, so the margin stops advancing at <b>Plot ${G.margin + 1}</b>. Rents stop rising, and profit holds at <b style="color:var(--cyan)">${profitPer()}</b> per harvest. Capital keeps accumulating.</p>
+    <p class="sub">History: Britain repealed its Corn Laws in 1846, twenty-three years after Ricardo died. Agricultural improvement and free imports kept his stationary state at bay.</p>
+    <div class="three"><div><b>SCORE</b>${score}</div><div><b>RANK</b>${rank}</div><div><b>ROUNDS · CAPITAL</b>${G.round} · ${G.capital}</div></div>
+    <p class="sub">The landlords collected <b style="color:var(--magenta)">${G.rentBank}</b> in rent from your ${G.harvests} harvests, without lifting a finger.</p>
+    <div class="foot"><a class="btn" href="../">◀ Ricardo's ideas</a><button class="btn lime big" type="button" data-act="new">Play again</button></div>`);
+}
+function lose(why){
+  G.over = why; G.busy = false; render();
+  const sol = G.puz.sol;
+  showModal(`<h2 style="color:var(--red)">✕ ${why === "stationary" ? "THE STATIONARY STATE" : "BANKRUPT"}</h2>
+    <p>${why === "stationary" ? "Every plot is plowed. The worst land now barely feeds the people who work it, so there is <b>no profit left</b> anywhere. With no profit there's no motive to accumulate, growth halts, and wages sink to subsistence. This is Ricardo's stationary state." : "Your capital ran out. Without capital there's no accumulation, and the colony stalls."}</p>
+    <p class="sub">The landlords collected <b style="color:var(--magenta)">${G.rentBank}</b> in rent along the way. The votes you needed:</p>
+    <div class="three">${MPS.map((m, p) => `<div><b class="c-p">${m.s}</b>${ARGS[sol.arg[p]].s}<br><span class="k">${TOWNS[sol.town[p]].s}</span></div>`).join("")}</div>
+    <div class="foot"><a class="btn" href="../">◀ Ricardo's ideas</a><button class="btn lime big" type="button" data-act="new">Try again</button></div>`);
+}
+
+/* ---------- rendering ---------- */
+function chartSVG(){
+  const W = 300, H = 150, bw = 24, gap = 5, X = 8, sy = v => H - 18 - v / 100 * (H - 30), mf = marginFert();
+  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Each plot's produce split into wages, profit and rent">`;
+  FERT.forEach((f, k) => {
+    const x = X + k * (bw + gap), farmed = k <= G.margin;
+    if (!farmed){ s += `<rect x="${x}" y="${sy(f)}" width="${bw}" height="${sy(0) - sy(f)}" fill="none" stroke="#7f93c4" stroke-dasharray="3 3" opacity=".6"/>`; }
+    else {
+      s += `<rect x="${x}" y="${sy(WAGE)}" width="${bw}" height="${sy(0) - sy(WAGE)}" fill="#8b6cff" opacity=".8"/>`;
+      if (mf > WAGE) s += `<rect x="${x}" y="${sy(mf)}" width="${bw}" height="${sy(WAGE) - sy(mf)}" fill="#22e5ff" style="filter:drop-shadow(0 0 4px #22e5ff)"/>`;
+      if (f > mf) s += `<rect x="${x}" y="${sy(f)}" width="${bw}" height="${sy(mf) - sy(f)}" fill="#ff2bd6" style="filter:drop-shadow(0 0 4px #ff2bd6)"/>`;
+    }
+    s += `<text x="${x + bw / 2}" y="${H - 5}" text-anchor="middle" style="fill:${k === G.margin ? "#ffb02e" : farmed ? "#d8e6ff" : "#7f93c4"}">${k + 1}</text>`;
+  });
+  s += `<line x1="${X - 4}" x2="${W - 4}" y1="${sy(WAGE)}" y2="${sy(WAGE)}" stroke="#8b6cff" stroke-dasharray="4 3"/><text x="${W - 4}" y="${sy(WAGE) - 3}" text-anchor="end" style="fill:#8b6cff">subsistence</text>`;
+  if (G.margin <= 9){ const mx = X + G.margin * (bw + gap) + bw + 2; s += `<line x1="${mx}" x2="${mx}" y1="8" y2="${sy(0)}" stroke="#ffb02e" stroke-width="2" style="filter:drop-shadow(0 0 4px #ffb02e)"/><text x="${mx + 3}" y="16" style="fill:#ffb02e">margin</text>`; }
+  return s + `</svg>`;
+}
+function render(){
+  const left = 9 - G.margin, danger = left <= 2;
+  $("#hud").innerHTML = `
+    <div class="h"><div class="k">ROUND</div><div class="v">${G.round}</div></div>
+    <div class="h"><div class="k">CAPITAL</div><div class="v" style="color:${G.capital < 30 ? "var(--red)" : "#fff"}">${G.capital}</div></div>
+    <div class="h"><div class="k">PROFIT / HARVEST</div><div class="v" style="color:var(--cyan)">${profitPer()}</div></div>
+    <div class="h"><div class="k">RENT / ROUND (ALL PLOTS)</div><div class="v" style="color:var(--magenta)">${totalRent()}</div></div>
+    <div class="h"><div class="k">MARGIN → STATIONARY STATE</div><div class="meter ${danger ? "danger" : ""}"><i style="width:${Math.min(100, (G.margin + 1) / 10 * 100)}%"></i></div><div class="k" style="margin-top:4px">${left > 0 ? `${left} plot${left > 1 ? "s" : ""} of land left` : "LAST PLOT IN USE"}</div></div>
+    <div class="h"><div class="k">VOTES FOR REPEAL</div><div class="votes">${G.votes.map((v, p) => `<i class="${v ? "on" : ""}" title="${MPS[p].n}">${v ? "✓" : MPS[p].f}</i>`).join("")}</div></div>`;
+  const cells = Array(25).fill("");
+  SPACES.forEach((s, i) => {
+    const [cx, cy] = CELL[i];
+    let cls = "sp", inner = "";
+    if (s.t === "plot"){
+      const f = FERT[s.k], farmed = s.k <= G.margin, marg = s.k === G.margin;
+      cls += ` plot ${farmed ? "cult" : "wild"}${marg ? " marg" : ""}`;
+      inner = `<span class="nm">PLOT ${s.k + 1}</span>${marg ? `<span class="tag">MARGIN</span>` : ""}<div class="row"><span class="fert">◆${f}</span>${farmed && rentOf(s.k) > 0 ? `<span class="rent">R${rentOf(s.k)}</span>` : farmed ? `<span class="k" style="color:var(--amber)">R0</span>` : `<span class="k">wild</span>`}</div>`;
+      return void (cells[cy * 5 + cx] = `<div class="${cls}${G.pos === i ? " here" : ""}" style="--f:${((f - 40) / 60).toFixed(2)}" title="Plot ${s.k + 1}, fertility ${f}">${inner}${tokens(i)}</div>`);
+    }
+    const SP = {start:["🛰️","HARVEST","land: +25 · report"], clue:["📡","COMMITTEE","2 reports"], mill:["⚙️","MACHINE MILL","event"], parl:["🏛️","PARLIAMENT","lobby MPs"], port:["⚓","FREE PORT","trade"]}[s.t];
+    cells[cy * 5 + cx] = `<div class="sp special ${s.t === "parl" ? "parl" : ""}${G.pos === i ? " here" : ""}"><span class="nm">${SP[1]}</span><span class="ic">${SP[0]}</span><span class="k">${SP[2]}</span>${tokens(i)}</div>`;
+  });
+  const center = `<div class="center"><div class="k">// DISTRIBUTION OF EVERY HARVEST</div>${chartSVG()}<div class="caption">Your profit on <b>any</b> farmed plot: <b>${profitPer()}</b> · landlords take <span class="m">${totalRent()}</span> in rent each round</div></div>`;
+  $("#board").innerHTML = cells.map((c, i) => i === 6 ? center : c).filter((c, i) => ![7,8,11,12,13,16,17,18].includes(i)).join("");
+  const busy = G.busy || !!G.over;
+  $("#rollBtn").disabled = busy; $("#carBtn").disabled = busy || G.capital < 20;
+  $("#impBtn").disabled = busy || G.improvedThisRound || G.capital < 60 || G.margin <= 0;
+  $("#briefBtn").disabled = busy || G.briefedThisRound || G.capital < 30 || !G.puz.clues.some(c => !c.found);
+  $("#mps").innerHTML = MPS.map((m, p) => `<div class="mp"><span class="face">${m.f}</span><div><b>${m.n}</b><small>${m.d[0]}</small></div><span class="st ${G.votes[p] ? "yes" : ""}">${G.votes[p] ? "AYE" : "UNDECIDED"}</span></div>`).join("");
+  $("#clues").innerHTML = G.puz.clues.map((c, i) => c.found
+    ? `<div class="clue ${G.newClue === i ? "new" : ""}"><span class="no">${String(i + 1).padStart(2, "0")}</span><span>${c.txt}${c.decoded ? `<span class="plain">≡ ${c.plain}</span>` : ""}</span>${c.decoded ? "" : `<button class="dec" type="button" data-dec="${i}" title="Costs 10 capital">DECODE −10</button>`}</div>`
+    : `<div class="clue locked"><span class="no">${String(i + 1).padStart(2, "0")}</span><span>Sealed. Land on the Committee Room or Harvest, visit the Port, or buy a briefing.</span><span></span></div>`).join("");
+  G.newClue = null;
+  $("#log").innerHTML = G.log.map(l => `<div class="${l.cls}">${l.t}</div>`).join("");
+  renderGrid();
+}
+function tokens(i){ return (G.pos === i ? `<span class="tok">🛸</span>` : "") + (G.lord === i ? `<span class="tok lord">👑</span>` : ""); }
+
+/* deduction grid */
+const SH = {P:MPS.map(m => m.s), A:ARGS.map(a => a.s), T:TOWNS.map(t => t.s)};
+const mk = (b, r, c) => `${b}:${r}:${c}`;
+function cycleMark(b, r, c){
+  const k = mk(b, r, c), v = G.marks[k], next = v === undefined ? "x" : v === "x" ? "o" : undefined;
+  if (next === undefined) delete G.marks[k]; else G.marks[k] = next;
+  if (next === "o") for (let j = 0; j < 3; j++){ if (j !== c && !G.marks[mk(b, r, j)]) G.marks[mk(b, r, j)] = "x"; if (j !== r && !G.marks[mk(b, j, c)]) G.marks[mk(b, j, c)] = "x"; }
+  renderGrid();
+}
+function renderGrid(){
+  const cell = (b, r, c) => { const v = G.marks[mk(b, r, c)]; return `<td><button type="button" data-cell="${b},${r},${c}">${v === "x" ? `<span class="x">✕</span>` : v === "o" ? `<span class="o">●</span>` : ""}</button></td>`; };
+  let h = `<tr><th></th>${SH.A.map(n => `<th class="col"><span class="c-a">${n}</span></th>`).join("")}<td class="gap"></td>${SH.T.map(n => `<th class="col"><span class="c-t">${n}</span></th>`).join("")}</tr>`;
+  SH.P.forEach((n, r) => { h += `<tr><th class="rowh c-p">${n}</th>${[0,1,2].map(c => cell("PA", r, c)).join("")}<td class="gap"></td>${[0,1,2].map(c => cell("PT", r, c)).join("")}</tr>`; });
+  h += `<tr><td class="gap" colspan="9" style="height:8px"></td></tr>`;
+  SH.T.forEach((n, r) => { h += `<tr><th class="rowh c-t">${n}</th>${[0,1,2].map(c => cell("TA", r, c)).join("")}<td class="gap"></td><td class="blank" colspan="3"></td></tr>`; });
+  $("#lg").innerHTML = h;
+}
+
+function toast(t){ const el = $("#toast"); el.textContent = t; el.hidden = false; clearTimeout(toast.tm); toast.tm = setTimeout(() => el.hidden = true, 2200); }
+function showModal(html){ $("#modal").innerHTML = html; $("#overlay").hidden = false; }
+function hideModal(){ $("#overlay").hidden = true; }
+function howto(){
+  return `<div class="three">
+    <div><b class="c-a">1 · FARM</b>Roll and move around the ring. Landing on farmed land gives a harvest: <b style="display:inline;font-family:var(--body);letter-spacing:0">produce = wages + rent + profit</b>. Watch the middle of the board: your profit is the <i>same</i> on every plot. The landlord takes the difference.</div>
+    <div><b style="color:var(--amber)">2 · OUTRUN THE MARGIN</b>Each round the population grows and the next, poorer plot is plowed. Rents rise on every better plot and your profit shrinks. Run out of land and you reach the <i>stationary state</i>.</div>
+    <div><b class="c-p">3 · REPEAL</b>Win all three MPs' votes in Parliament to repeal the Corn Laws. Committee reports are logic clues. Mark the grid (✕ / ●) to work out which argument moves which MP, then land on Parliament and lobby.</div></div>
+  <p class="sub">Spend capital wisely. <b>Shuttle</b> (−20) moves you exactly where you want. <b>Improve land</b> (−60) pulls the margin back a plot, so rents fall. <b>Briefings</b> (−30) buy a clue, once a round. <b>Decode</b> (−10) translates a clue into plain terms. Watch out for 👑 the landlords' collector: if it reaches Parliament, it flips one of your votes back.</p>`;
+}
+function title(){
+  showModal(`<div class="k" style="color:var(--lime)">&gt; COLONY ROSTER · PLANET RICARDO-IV</div>
+    <h2>THE STATIONARY STATE</h2>
+    <p>You run the colony's farms as its capitalist. The land runs from rich to barren, and the landlords own all of it. Every new colonist means plowing worse ground, which raises every rent and squeezes your profit toward zero. Win Parliament and repeal the Corn Laws before that happens.</p>
+    ${howto()}
+    <div class="foot"><button class="btn lime big" type="button" data-act="new">▶ Begin the colony</button></div>`);
+}
+
+/* ---------- input ---------- */
+document.addEventListener("click", e => {
+  const c = e.target.closest("[data-cell]"); if (c){ const [b, r, col] = c.dataset.cell.split(","); cycleMark(b, +r, +col); return; }
+  const d = e.target.closest("[data-dec]"); if (d && !G.over){ if (G.capital < 10){ toast("Not enough capital"); return; } const cl = G.puz.clues[+d.dataset.dec]; cl.decoded = true; G.capital -= 10; logm(`Decoded clue ${+d.dataset.dec + 1} (−10).`); render(); return; }
+  const sh = e.target.closest("[data-shuttle]"); if (sh){ shuttle(+sh.dataset.shuttle); return; }
+  const pt = e.target.closest("[data-port]"); if (pt){ if (pt.dataset.port === "trade"){ G.capital += 30; logm("⚓ Traded cloth for wine: +30.", "good"); card("⚓ Comparative advantage", `<p>England makes cloth, Portugal makes wine, and both gain. <b>+30 capital.</b></p>`); } else { revealClue(); card("⚓ Dockside gossip", `<p>The merchants know things. One new report.</p>`); } return; }
+  const lb = e.target.closest("[data-lob]"); if (lb){ const [p, a] = lb.dataset.lob.split(","); lobbySel[p] = +a; $$(`[data-lob^="${p},"]`).forEach(b => b.setAttribute("aria-pressed", b.dataset.lob === `${p},${a}`)); return; }
+  const a = e.target.closest("[data-act]"); if (!a || a.disabled) return;
+  ({new:newGame, help:() => showModal(`<h2>How to play</h2>${howto()}<div class="foot"><button class="btn lime" type="button" data-act="close">Got it</button></div>`),
+    close:hideModal, roll, carriage, improve, brief, endRound, doLobby}[a.dataset.act] || (() => {}))();
+});
+
+newGame(); title();
+</script>
+</body>
+</html>

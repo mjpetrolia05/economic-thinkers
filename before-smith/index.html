@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before Adam Smith · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Creepster&family=Nunito:ital,wght@0,500;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#1b0f33; --night2:#2c1850; --purple:#5b2e91; --ink:#1a0f2e;
+  --teal:#3fb8a9; --lime:#a6d64a; --orange:#f5892a; --yellow:#ffd23f; --pink:#ff7aa8;
+  --cream:#fff4dc; --paper:#fffaf0; --muted:#6a5a86; --fog:#c9b8e8;
+  --cartoon:"Luckiest Guy","Arial Black",Impact,sans-serif;
+  --spooky:"Creepster","Luckiest Guy",Impact,sans-serif;
+  --body:"Nunito",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0; overflow-x:clip}
+body{
+  font-family:var(--body); font-size:16px; line-height:1.55; color:var(--cream);
+  background:
+    radial-gradient(900px 500px at 85% -5%, rgba(166,214,74,.18), transparent 60%),
+    radial-gradient(800px 600px at 0% 30%, rgba(91,46,145,.55), transparent 65%),
+    linear-gradient(180deg,var(--night) 0%,#22123f 60%,#170b2b 100%);
+  background-attachment:fixed; min-height:100vh;
+}
+a{color:var(--yellow)}
+button{font:inherit; color:inherit; cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--yellow); outline-offset:3px}
+p{margin:0 0 .8em}
+h1,h2,h3,h4{font-family:var(--cartoon); font-weight:400; letter-spacing:.02em; margin:0; line-height:1.05}
+.app{max-width:1200px; margin:0 auto; padding:0 16px 60px}
+
+/* ---------- haunted header ---------- */
+.mast{position:relative; padding:26px 0 0; overflow:hidden}
+.mast-inner{position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:14px 20px; align-items:flex-end; justify-content:space-between; padding-bottom:70px}
+.case{display:inline-block; font-family:var(--cartoon); font-size:14px; letter-spacing:.08em; background:var(--orange); color:var(--ink); padding:6px 12px; border:3px solid var(--ink); border-radius:999px; transform:rotate(-3deg); box-shadow:3px 3px 0 var(--ink)}
+.mast h1{font-size:clamp(34px,6.5vw,72px); color:var(--lime); margin-top:12px;
+  text-shadow:3px 3px 0 var(--ink), 6px 6px 0 var(--purple), 0 0 30px rgba(166,214,74,.35); transform:rotate(-1.5deg)}
+.mast h1 .spook{font-family:var(--spooky); color:var(--orange); letter-spacing:.04em; font-size:.72em}
+.mast .tag{font-size:18px; color:var(--fog); max-width:52ch; margin-top:10px}
+.navbtns{display:flex; gap:10px; flex-wrap:wrap}
+.pill{display:inline-flex; align-items:center; gap:6px; font-family:var(--cartoon); font-size:16px; letter-spacing:.04em; text-decoration:none; color:var(--ink); background:var(--teal); padding:10px 16px; border:3px solid var(--ink); border-radius:999px; box-shadow:4px 4px 0 var(--ink); transition:transform .1s, box-shadow .1s}
+.pill:hover{transform:translate(-2px,-2px) rotate(-1deg); box-shadow:6px 6px 0 var(--ink)}
+.pill:active{transform:translate(3px,3px); box-shadow:1px 1px 0 var(--ink)}
+.pill.orange{background:var(--orange)} .pill.lime{background:var(--lime)} .pill.yellow{background:var(--yellow)} .pill.pink{background:var(--pink)} .pill.cream{background:var(--cream)}
+.pill[aria-pressed="true"]{background:var(--yellow); transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink)}
+.pill:disabled{opacity:.45; cursor:not-allowed; transform:none}
+.mansion{position:absolute; right:0; bottom:0; width:min(560px,70%); z-index:1; opacity:.95; pointer-events:none}
+.moon{position:absolute; right:6%; top:10px; width:110px; height:110px; border-radius:50%; background:radial-gradient(circle at 40% 38%,#fffbe0,#f6e7a6 60%,#e2cc7a); box-shadow:0 0 60px rgba(255,240,170,.45); z-index:0}
+.bat{position:absolute; z-index:1; animation:flap 3.5s ease-in-out infinite}
+@keyframes flap{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(-10px) scaleX(.8)}}
+.fog{position:absolute; left:-10%; right:-10%; bottom:-20px; height:70px; z-index:3; background:radial-gradient(ellipse at 20% 60%,rgba(201,184,232,.35),transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(201,184,232,.28),transparent 60%); filter:blur(6px); animation:drift 18s ease-in-out infinite alternate; pointer-events:none}
+@keyframes drift{to{transform:translateX(6%)}}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky; top:0; z-index:20; display:flex; gap:8px; overflow-x:auto; padding:12px 0; margin-bottom:10px; background:linear-gradient(180deg,var(--night) 70%,transparent); scrollbar-width:none}
+.tab{flex:0 0 auto; font-family:var(--cartoon); font-size:16px; letter-spacing:.04em; text-decoration:none; color:var(--ink); background:var(--cream); padding:9px 16px 7px; border:3px solid var(--ink); border-radius:16px 16px 16px 4px; box-shadow:3px 3px 0 var(--ink)}
+.tab .q{font-family:var(--body); font-weight:800; font-size:11px; display:block; letter-spacing:.08em; color:var(--muted); margin-top:1px}
+.tab.active{background:var(--c,var(--lime)); transform:rotate(-2deg) translateY(-2px)}
+.tab.active .q{color:var(--ink)}
+
+section.view{display:none}
+section.view.active{display:grid; gap:20px; animation:spookin .45s cubic-bezier(.2,1.3,.4,1)}
+@keyframes spookin{from{opacity:0; transform:translateY(18px) rotate(.6deg)}to{opacity:1; transform:none}}
+
+/* ---------- cartoon panels ---------- */
+.panel{background:var(--paper); color:var(--ink); border:4px solid var(--ink); border-radius:22px; box-shadow:7px 7px 0 var(--c,var(--orange)); padding:20px 22px; min-width:0; position:relative}
+.panel.teal{--c:var(--teal)} .panel.lime{--c:var(--lime)} .panel.pink{--c:var(--pink)} .panel.yellow{--c:var(--yellow)} .panel.purple{--c:var(--purple)}
+.panel h3{font-size:24px; color:var(--purple); margin-bottom:8px}
+.panel .k{font-family:var(--cartoon); font-size:13px; letter-spacing:.08em; color:var(--orange); margin-bottom:4px; display:block}
+.panel .cite{font-size:12px; color:var(--muted); margin-top:10px; font-weight:700}
+.hero{background:linear-gradient(135deg,var(--paper) 60%,#f3fbe4); padding:24px 26px}
+.hero h2{font-size:clamp(28px,4.2vw,46px); color:var(--purple); text-shadow:2px 2px 0 var(--lime)}
+.lede{font-size:19px; max-width:72ch}
+.grid{display:grid; gap:20px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g12{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.qcard{text-decoration:none; transition:transform .15s}
+.qcard:hover{transform:rotate(-1.5deg) translateY(-4px)}
+.qcard .n{font-family:var(--cartoon); font-size:42px; color:var(--c); -webkit-text-stroke:2px var(--ink); line-height:1}
+.qcard h3{margin:6px 0}
+.qcard p{margin:0; color:var(--muted); font-weight:700}
+
+/* clue / quote */
+.clue{background:var(--yellow); color:var(--ink); border:3px dashed var(--ink); border-radius:14px; padding:14px 16px; transform:rotate(-1deg)}
+.clue .ct{font-family:var(--cartoon); font-size:14px; letter-spacing:.08em}
+.clue q{display:block; font-style:italic; font-size:18px; font-weight:700; margin:6px 0}
+.clue small{font-weight:800; color:#5a4100}
+
+/* controls */
+.ctrl{margin:12px 0}
+.ctrl label{display:flex; justify-content:space-between; gap:10px; font-weight:800; font-size:14px; margin-bottom:6px}
+.ctrl output{font-family:var(--cartoon); font-size:16px; color:var(--purple)}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:14px; border-radius:999px; background:linear-gradient(90deg,var(--teal),var(--lime)); border:3px solid var(--ink); outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:28px; height:28px; border-radius:50%; background:var(--orange); border:3px solid var(--ink); cursor:pointer; box-shadow:2px 2px 0 var(--ink)}
+input[type=range]::-moz-range-thumb{width:22px; height:22px; border-radius:50%; background:var(--orange); border:3px solid var(--ink); cursor:pointer}
+.row{display:flex; flex-wrap:wrap; gap:10px}
+.readout{margin-top:12px; background:#efe6ff; border:3px solid var(--ink); border-radius:14px; padding:12px 14px; font-weight:700}
+.readout b{font-family:var(--cartoon); font-weight:400; font-size:20px; color:var(--purple); letter-spacing:.02em}
+.meter{height:20px; border:3px solid var(--ink); border-radius:999px; background:#fff; overflow:hidden; margin-top:6px}
+.meter i{display:block; height:100%; border-radius:999px; transition:width .5s cubic-bezier(.2,1.3,.4,1)}
+.facts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px}
+.fact{background:#fff; border:3px solid var(--ink); border-radius:12px; padding:8px 10px}
+.fact .fk{font-family:var(--cartoon); font-size:12px; letter-spacing:.06em; color:var(--orange)}
+.fact .fv{font-weight:800}
+svg.chart{width:100%; height:auto; display:block; background:#fff; border:3px solid var(--ink); border-radius:14px}
+svg.chart text{font-family:var(--body); font-weight:800; font-size:12px; fill:var(--ink)}
+
+/* timeline of power */
+.eras{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0 4px}
+.era{border:3px solid var(--ink); border-radius:12px; padding:8px; text-align:center; font-family:var(--cartoon); font-size:14px; background:#fff; opacity:.45; transition:all .3s}
+.era.on{opacity:1; background:var(--c); transform:translateY(-3px) rotate(-1deg); box-shadow:3px 3px 0 var(--ink)}
+.evlist{display:grid; gap:6px; margin-top:12px; max-height:240px; overflow:auto}
+.ev{display:grid; grid-template-columns:56px 1fr; gap:10px; align-items:baseline; padding:6px 8px; border-radius:10px; background:#fff; border:2px solid #e3d8f5; transition:all .3s}
+.ev.past{border-color:var(--ink); background:#fff7e0}
+.ev .y{font-family:var(--cartoon); color:var(--purple)}
+.ev.future{opacity:.35}
+
+/* suspects */
+.suspects{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px}
+.suspect{display:grid; justify-items:center; gap:4px; padding:12px 6px 10px; border:3px solid var(--ink); border-radius:16px; background:#fff; color:var(--ink); transition:transform .15s; position:relative}
+.suspect:hover{transform:translateY(-4px) rotate(-2deg)}
+.suspect[aria-pressed="true"]{background:var(--lime); box-shadow:4px 4px 0 var(--ink)}
+.suspect svg{width:64px; height:72px}
+.suspect .sn{font-family:var(--cartoon); font-size:13px; text-align:center; line-height:1.1}
+.suspect .sa{font-size:11px; font-weight:800; color:var(--muted)}
+.dossier{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:16px; margin-top:16px}
+.answers{display:grid; gap:8px}
+.dossier .clue{align-self:start}
+.ans{border:3px solid var(--ink); border-radius:12px; padding:8px 12px; background:#fff}
+.ans b{font-family:var(--cartoon); font-weight:400; letter-spacing:.04em}
+.swap{animation:spookin .4s cubic-bezier(.2,1.3,.4,1)}
+
+/* hive */
+.hive{display:flex; flex-wrap:wrap; gap:4px; min-height:64px; padding:10px; border:3px solid var(--ink); border-radius:14px; background:#fff6d6; margin-top:10px; font-size:22px}
+.hive span{animation:buzz .6s ease-in-out infinite alternate}
+.hive span:nth-child(3n){animation-delay:.2s} .hive span:nth-child(3n+1){animation-delay:.4s}
+@keyframes buzz{to{transform:translate(2px,-3px) rotate(8deg)}}
+.toggle{display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:8px 10px; border:3px solid var(--ink); border-radius:12px; background:#fff; color:var(--ink); font-weight:800}
+.toggle + .toggle{margin-top:6px}
+.toggle .sw{flex:none; width:40px; height:22px; border-radius:99px; background:#ddd; border:2px solid var(--ink); position:relative; transition:background .2s}
+.toggle .sw::after{content:""; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:var(--ink); transition:transform .2s}
+.toggle[aria-pressed="true"] .sw{background:var(--lime)}
+.toggle[aria-pressed="true"] .sw::after{transform:translateX(18px)}
+.toggle small{display:block; font-weight:600; color:var(--muted)}
+
+/* production stages */
+.stages{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+.stg{border:3px solid var(--ink); border-radius:14px; padding:10px 6px; background:#fff; color:var(--ink); font-family:var(--cartoon); font-size:14px; line-height:1.15}
+.stg .i{font-size:26px; display:block; margin-bottom:4px}
+.stg[aria-pressed="true"]{background:var(--teal); transform:translateY(-3px); box-shadow:3px 3px 0 var(--ink)}
+
+/* poor law sorter */
+.people{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px}
+.who{border:3px solid var(--ink); border-radius:14px; padding:10px; background:#fff; color:var(--ink); text-align:left; transition:transform .15s}
+.who .e{font-size:26px}
+.who b{font-family:var(--cartoon); font-weight:400; font-size:16px; display:block}
+.who small{font-weight:700; color:var(--muted)}
+.who[aria-pressed="true"]{background:var(--yellow); transform:rotate(-2deg) scale(1.03); box-shadow:4px 4px 0 var(--ink)}
+.who.placed{opacity:.35; pointer-events:none}
+.bins{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:12px}
+.bin{border:3px dashed var(--ink); border-radius:14px; padding:10px; background:#f3ecff; color:var(--ink); min-height:110px; text-align:left; display:flex; flex-direction:column; gap:6px}
+.bin h4{font-size:15px; color:var(--purple)}
+.bin .placed-in{display:flex; flex-wrap:wrap; gap:4px; font-size:22px}
+.bin.flash-ok{background:#e4f7c8; border-style:solid}
+.bin.flash-no{background:#ffd9d9; animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* tableau */
+svg.tableau{width:100%; height:auto; display:block}
+svg.tableau text{font-family:var(--body); font-weight:800; fill:var(--ink)}
+svg.tableau .lbl{font-family:var(--cartoon); font-weight:400; font-size:14px}
+
+/* unmasking */
+.ghosts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px}
+.ghostcard{perspective:900px; min-height:330px}
+.flip{position:relative; width:100%; height:100%; min-height:330px; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.3,1.4,.4,1)}
+.ghostcard.unmasked .flip{transform:rotateY(180deg)}
+.face{position:absolute; inset:0; backface-visibility:hidden; border:4px solid var(--ink); border-radius:22px; padding:18px; display:flex; flex-direction:column; gap:8px; align-items:center; text-align:center}
+.face.front{background:linear-gradient(180deg,#3a2266,#1b0f33); color:var(--cream); box-shadow:6px 6px 0 var(--lime)}
+.face.front h3{font-family:var(--spooky); font-size:30px; color:var(--lime); letter-spacing:.04em}
+.face.front p{color:var(--fog); font-weight:700}
+.face.back{background:var(--paper); color:var(--ink); transform:rotateY(180deg); box-shadow:6px 6px 0 var(--orange); justify-content:center}
+.face.back h3{color:var(--purple); font-size:24px}
+.face.back .reveal{font-family:var(--cartoon); font-size:15px; letter-spacing:.06em; color:var(--orange)}
+.sheet{width:90px; height:96px}
+.face .pill{margin-top:auto}
+table.verdict{width:100%; border-collapse:separate; border-spacing:0; font-size:15px; border:3px solid var(--ink); border-radius:16px; overflow:hidden; background:#fff; color:var(--ink)}
+table.verdict th, table.verdict td{padding:10px 12px; text-align:left; vertical-align:top; border-bottom:2px solid #e3d8f5}
+table.verdict thead th{background:var(--purple); color:var(--cream); font-family:var(--cartoon); font-weight:400; letter-spacing:.04em}
+table.verdict tbody th{font-family:var(--cartoon); font-weight:400; font-size:17px; color:var(--purple)}
+.tbl{overflow-x:auto; border-radius:16px}
+.final{text-align:center; background:linear-gradient(135deg,var(--lime),var(--teal)); }
+.final h2{font-size:clamp(26px,4vw,40px); color:var(--ink); text-shadow:2px 2px 0 var(--cream)}
+
+/* previous / next case tabs */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:34px}
+.cn{display:flex; flex-direction:column; gap:2px; text-decoration:none; color:var(--ink); background:var(--cream); border:4px solid var(--ink); border-radius:22px 22px 22px 6px; padding:14px 18px; box-shadow:5px 5px 0 var(--orange); transition:transform .15s, box-shadow .15s}
+.cn.next{text-align:right; border-radius:22px 22px 6px 22px; background:var(--lime); box-shadow:5px 5px 0 var(--purple)}
+.cn:hover{transform:translateY(-3px) rotate(-1deg); box-shadow:8px 8px 0 var(--orange)}
+.cn .d{font-family:var(--body); font-weight:800; font-size:12px; letter-spacing:.1em; color:var(--muted)}
+.cn.next .d{color:var(--ink)}
+.cn .t{font-family:var(--cartoon); font-size:clamp(17px,2.4vw,24px)}
+.cn.off{opacity:.45; pointer-events:none; box-shadow:none}
+@media (max-width:560px){ .casenav{grid-template-columns:1fr} .cn.next{text-align:left} }
+.foot{text-align:center; color:var(--fog); font-size:13px; margin-top:30px}
+
+@media (max-width:1000px){
+  .suspects{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g3,.ghosts{grid-template-columns:1fr}
+  .g12,.dossier{grid-template-columns:1fr}
+  .bins{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:680px){
+  .g2{grid-template-columns:1fr}
+  .people{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stages{grid-template-columns:repeat(2,1fr)}
+  .eras{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+  .mansion{width:90%; opacity:.5}
+  .moon{width:70px; height:70px}
+  .panel{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="mast">
+    <div class="moon" aria-hidden="true"></div>
+    <svg class="bat" style="left:52%;top:30px" width="44" height="20" viewBox="0 0 44 20" aria-hidden="true"><path d="M22 8c2-4 6-6 10-5-2 1-2 3-1 4 3-2 8-2 13 1-4 0-6 3-7 6-2-2-5-2-7 0-2-3-5-3-8-1-3-2-6-2-8 1-2-2-5-2-7 0-1-3-3-6-7-6 5-3 10-3 13-1 1-1 1-3-1-4 4-1 8 1 10 5z" fill="#0d0620"/></svg>
+    <svg class="bat" style="left:70%;top:120px;animation-delay:1.2s" width="30" height="14" viewBox="0 0 44 20" aria-hidden="true"><path d="M22 8c2-4 6-6 10-5-2 1-2 3-1 4 3-2 8-2 13 1-4 0-6 3-7 6-2-2-5-2-7 0-2-3-5-3-8-1-3-2-6-2-8 1-2-2-5-2-7 0-1-3-3-6-7-6 5-3 10-3 13-1 1-1 1-3-1-4 4-1 8 1 10 5z" fill="#0d0620"/></svg>
+    <svg class="mansion" viewBox="0 0 560 230" aria-hidden="true">
+      <path d="M0 230 L0 200 Q60 180 120 196 L560 196 L560 230 Z" fill="#0d0620"/>
+      <g fill="#120828">
+        <rect x="170" y="90" width="230" height="110"/>
+        <polygon points="160,95 285,20 410,95"/>
+        <rect x="380" y="50" width="56" height="150"/>
+        <polygon points="372,55 408,8 444,55"/>
+        <rect x="120" y="120" width="60" height="80"/>
+        <polygon points="112,124 150,86 188,124"/>
+        <rect x="226" y="40" width="14" height="40"/>
+      </g>
+      <g fill="#ffd23f" opacity=".9">
+        <rect x="196" y="110" width="20" height="26" rx="2"/><rect x="250" y="110" width="20" height="26" rx="2" opacity=".35"/>
+        <rect x="304" y="110" width="20" height="26" rx="2"/><rect x="358" y="110" width="20" height="26" rx="2" opacity=".35"/>
+        <rect x="398" y="70" width="18" height="22" rx="9"/><rect x="138" y="140" width="22" height="22" rx="2" opacity=".5"/>
+        <circle cx="285" cy="70" r="10"/>
+      </g>
+      <rect x="270" y="160" width="30" height="40" rx="15" fill="#0d0620"/>
+      <path d="M470 196 Q480 120 470 100 M470 140 L500 120 M470 160 L446 140" stroke="#0d0620" stroke-width="7" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="fog" aria-hidden="true"></div>
+    <div class="mast-inner">
+      <div>
+        <span class="case">CASE NO. 001 · 1500–1776</span>
+        <h1>Before Adam Smith<br><span class="spook">The Mystery of Where Profit Comes From</span></h1>
+        <p class="tag">Merchants, monarchs, preachers, and philosophers all had a theory. Follow the clues across three centuries, and unmask what was hiding behind each one.</p>
+      </div>
+      <div class="navbtns">
+        <a class="pill cream" href="../">⌂ Home</a>
+        <a class="pill orange" href="game/">Ideas in Action 👻</a>
+        <a class="pill" href="../smith/">Next case: Adam Smith ▶</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="#overview" style="--c:var(--lime)">The Case<span class="q">OVERVIEW</span></a>
+    <a class="tab" href="#what" style="--c:var(--orange)">Clue 1<span class="q">WHAT WILL WE MAKE?</span></a>
+    <a class="tab" href="#how" style="--c:var(--teal)">Clue 2<span class="q">HOW WILL WE MAKE IT?</span></a>
+    <a class="tab" href="#share" style="--c:var(--pink)">Clue 3<span class="q">HOW WILL WE SHARE IT?</span></a>
+    <a class="tab" href="#verdict" style="--c:var(--yellow)">Unmask!<span class="q">THE VERDICT</span></a>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view" id="v-overview">
+    <div class="panel hero lime">
+      <span class="k">THE MYSTERY</span>
+      <h2>Every theory of profit was wearing a mask</h2>
+      <p class="lede">Between 1500 and Adam Smith, economic thinkers kept changing their minds about what gives things value and where profit comes from. Hunt and Lautzenheiser's answer is that the ideas followed the power. Whoever held economic power, first merchants and then producer-capitalists, shaped the theory of the day. That wasn't foolishness. Each theory described the economy its authors could see.</p>
+    </div>
+
+    <div class="grid g3">
+      <a class="panel qcard orange" href="#what" style="--c:var(--orange)"><div class="n">1</div><h3>What will we make?</h3><p>Exports for jobs, luxuries for a busy hive, or crops from nature's gift?</p></a>
+      <a class="panel qcard teal" href="#how" style="--c:var(--teal)"><div class="n">2</div><h3>How will we make it?</h3><p>Buy low, sell high, or put workers to work? The masters become employers.</p></a>
+      <a class="panel qcard pink" href="#share" style="--c:var(--pink)"><div class="n">3</div><h3>How will we share it?</h3><p>Poor Laws, wage limits, and a French doctor's map of where the surplus flows.</p></a>
+    </div>
+
+    <div class="panel teal">
+      <h3>Follow the power · drag through time</h3>
+      <div class="ctrl"><label for="yr">Year <output id="yrOut"></output></label><input type="range" id="yr" min="1500" max="1776" value="1540"></div>
+      <div class="eras" id="eras"></div>
+      <div class="facts" id="eraFacts"></div>
+      <div class="evlist" id="evlist"></div>
+    </div>
+
+    <div class="panel purple">
+      <h3>The usual suspects · pick one</h3>
+      <div class="suspects" id="suspects" role="group" aria-label="Suspects"></div>
+      <div class="dossier" id="dossier"></div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT ================= -->
+  <section class="view" id="v-what">
+    <div class="panel hero orange" style="--c:var(--orange)">
+      <span class="k">CLUE 1</span>
+      <h2>What will we make?</h2>
+      <p class="lede">The merchant era said to make whatever sells, and export as much of it as possible. Value is just market price, driven by usefulness and scarcity. Later, Mandeville claimed that greed and vanity are what keep the whole hive making things.</p>
+    </div>
+
+    <div class="grid g12">
+      <div class="panel orange">
+        <h3>Barbon's price machine</h3>
+        <p>Nicholas Barbon said a thing is worth whatever it sells for. Usefulness drives the wanting, and plenty or scarcity sets the price. Pick a good and change how much is on the market.</p>
+        <div class="row" id="goodsRow" role="group" aria-label="Goods"></div>
+        <div class="ctrl"><label for="qty">Amount on the market <output id="qtyOut"></output></label><input type="range" id="qty" min="1" max="10" value="5"></div>
+        <div class="row"><button class="pill yellow" type="button" id="layUp">Lay the goods up (hoard)</button><button class="pill cream" type="button" id="release">Release them</button></div>
+        <div class="readout" id="priceRead"></div>
+        <div class="cite">Logic from pp. 24–25; prices illustrative.</div>
+      </div>
+      <div class="clue">
+        <div class="ct">🔎 CLUE FOUND</div>
+        <q>Things are just worth so much, as they can be sold for.</q>
+        <small>Nicholas Barbon, A Discourse of Trade (1690)</small>
+        <q style="margin-top:12px">Things of no Use, have no Value, as the English Phrase is, They are good for nothing.</q>
+        <small>Barbon again</small>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel lime">
+        <h3>The export machine</h3>
+        <p>Mercantilists wanted exports to exceed imports. Money would flow in, prices would rise, and above all people would have <b>work</b>. Full employment was the thread running through their policies.</p>
+        <div class="ctrl"><label for="exp">Exports <output id="expOut"></output></label><input type="range" id="exp" min="0" max="100" value="50"></div>
+        <div class="ctrl"><label for="imp">Imports <output id="impOut"></output></label><input type="range" id="imp" min="0" max="100" value="50"></div>
+        <div class="facts">
+          <div class="fact"><div class="fk">MONEY FLOWING IN</div><div class="fv" id="moneyV"></div></div>
+          <div class="fact"><div class="fk">PRICES</div><div class="fv" id="priceV"></div></div>
+        </div>
+        <div style="margin-top:10px;font-weight:800">Employment</div>
+        <div class="meter"><i id="jobM" style="background:var(--lime)"></i></div>
+        <div class="readout" id="tradeRead"></div>
+        <div class="cite">pp. 26; the relationship is the mercantilists' belief, sketched illustratively.</div>
+      </div>
+      <div class="panel pink">
+        <h3>Mandeville's beehive</h3>
+        <p>In <i>The Fable of the Bees</i> (1714), a grumbling hive of vice prospers. When it turns honest, trade collapses. The old sins turn out to be what keep the economy busy. Switch the vices on and off.</p>
+        <div id="vices"></div>
+        <div class="hive" id="hive" aria-label="The hive"></div>
+        <div style="margin-top:10px;font-weight:800">Trade &amp; jobs in the hive</div>
+        <div class="meter"><i id="hiveM" style="background:var(--orange)"></i></div>
+        <div class="readout" id="hiveRead"></div>
+        <div class="cite">p. 32</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="view" id="v-how">
+    <div class="panel hero teal" style="--c:var(--teal)">
+      <span class="k">CLUE 2</span>
+      <h2>How will we make it?</h2>
+      <p class="lede">At first, workers still owned their tools and the lords took the surplus. Merchants profited by moving goods, not by making them. Then competition squeezed trading profits, guild masters turned into employers, and thinkers began to say <b>labor</b> is what creates value.</p>
+    </div>
+
+    <div class="grid g12">
+      <div class="panel teal">
+        <h3>Buy low, sell high</h3>
+        <p>A merchant buys pepper where it's cheap and sells it in London where it's dear. Then other merchants smell the profit. Add rivals, or get a royal charter to shut them out.</p>
+        <div class="ctrl"><label for="riv">Merchants in the trade <output id="rivOut"></output></label><input type="range" id="riv" min="1" max="12" value="1"></div>
+        <div class="row">
+          <button class="pill yellow" type="button" id="charter" aria-pressed="false">👑 Royal monopoly charter</button>
+          <button class="pill lime" type="button" id="inflate" aria-pressed="false">📈 Prices rising (16th-c. inflation)</button>
+        </div>
+        <svg class="chart" id="arbChart" viewBox="0 0 520 200" role="img" aria-label="Buying price, selling price, and profit per merchant" style="margin-top:12px"></svg>
+        <div class="readout" id="arbRead"></div>
+        <div class="cite">Mechanism from pp. 24–25 and 28; numbers illustrative.</div>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="clue">
+          <div class="ct">🔎 CLUE FOUND</div>
+          <q>…it is the labor and industry of the people that alone brings wealth…</q>
+          <small>Daniel Defoe, A General History of Trade (1713)</small>
+        </div>
+        <div class="clue" style="background:var(--lime)">
+          <div class="ct">🔎 THE SMOKING GUN</div>
+          <q>…regulated by the Quantity of Labour necessarily required, and commonly taken in producing them.</q>
+          <small>Anonymous, Some Thoughts on the Interest of Money (1738), on what sets the value of goods exchanged</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel lime">
+      <h3>Who controls production? · step through</h3>
+      <div class="stages" id="stages" role="group" aria-label="Forms of production"></div>
+      <div class="facts" id="stageFacts"></div>
+      <p id="stageNote" style="margin-top:12px; font-weight:700"></p>
+      <div class="cite">pp. 23, 28, 33</div>
+    </div>
+
+    <div class="panel yellow">
+      <h3>Trading goods = trading labor</h3>
+      <p>Once work was divided into specialties, Mandeville saw that when a weaver's cloth is swapped for a baker's bread, what's really being exchanged is <b>labor for labor</b>. Raw nature only becomes a commodity after labor has worked on it. Writers like Cary and Hay went further: profit is the surplus left after workers have what they need to live. What none of them could yet explain was how labor could be both the measure of price <i>and</i> the source of profit. That puzzle was left for Adam Smith.</p>
+      <div class="cite">pp. 33–35</div>
+    </div>
+  </section>
+
+  <!-- ================= SHARE ================= -->
+  <section class="view" id="v-share">
+    <div class="panel hero pink" style="--c:var(--pink)">
+      <span class="k">CLUE 3</span>
+      <h2>How will we share it?</h2>
+      <p class="lede">When the Church lost its power, the Tudor state took over the care of the poor and treated poverty as a failure of the <i>system</i>, not the person. But the same state capped wages for the employers' benefit. Across the Channel, Quesnay drew the first map of where the surplus goes.</p>
+    </div>
+
+    <div class="panel pink">
+      <h3>Sort the poor · the Poor Law of 1601</h3>
+      <p>Click a person, then click where the 1601 law would send them.</p>
+      <div class="people" id="people"></div>
+      <div class="bins" id="bins"></div>
+      <div class="readout" id="sortRead">0 of 6 sorted.</div>
+      <div class="cite">Categories from p. 27.</div>
+    </div>
+
+    <div class="grid g12">
+      <div class="panel orange">
+        <h3>The maximum wage</h3>
+        <p>The Statute of Artificers (1563) set the <b>highest</b> wages a worker could be paid. The justices who set them were usually employers. Prices rose faster than the caps.</p>
+        <div class="ctrl"><label for="yrs">Years after 1563 <output id="yrsOut"></output></label><input type="range" id="yrs" min="0" max="60" value="30"></div>
+        <svg class="chart" id="wageChart" viewBox="0 0 520 200" role="img" aria-label="Prices versus maximum wage over time"></svg>
+        <div class="readout" id="wageRead"></div>
+        <div class="cite">p. 27; growth rates illustrative.</div>
+      </div>
+      <div class="panel teal">
+        <h3>A paternal state</h3>
+        <p>The Poor Laws assumed poverty "was a function of the economic system," so those who benefited from the system should support its victims. Parishes had to levy a compulsory <b>poor rate</b> (1572), and the poor gained a formal right to relief (1601).</p>
+        <p>But paternalism never meant raising the poor up. Like the medieval lords, Tudor monarchs believed the lower classes should be kept in their place.</p>
+        <p style="margin:0"><b>Two centuries later,</b> Malthus would attack these same Poor Laws. <a href="../malthus/#share">See Case 003 →</a></p>
+        <div class="cite">pp. 26–28</div>
+      </div>
+    </div>
+
+    <div class="panel lime">
+      <h3>Quesnay's Tableau économique · follow the money</h3>
+      <p>The Physiocrats' model of France: <b>farmers</b> (the "productive" class) grow a surplus, pay it to the <b>landlords</b> (the "idle" class) as rent, and landlords spend it on food and on goods from the <b>artisans</b> (the "sterile" class). As long as money keeps circulating, next year starts where this one did. But what if the landlords <b>hoard</b> part of their rent?</p>
+      <div class="grid g12" style="align-items:center">
+        <svg class="tableau" id="tableau" viewBox="0 0 520 330" role="img" aria-label="Circular flow between farmers, landlords, and artisans"></svg>
+        <div>
+          <div class="ctrl"><label for="hoard">Landlords hoard <output id="hoardOut"></output></label><input type="range" id="hoard" min="0" max="50" step="5" value="0"></div>
+          <svg class="chart" id="tabChart" viewBox="0 0 300 170" role="img" aria-label="Farm output over six years"></svg>
+          <div class="readout" id="tabRead"></div>
+        </div>
+      </div>
+      <div class="cite">Flows simplified from pp. 36–37 (in milliards of livres); the hoarding path is illustrative. The authors note this anticipates Malthus's gluts and Keynes.</div>
+    </div>
+  </section>
+
+  <!-- ================= VERDICT ================= -->
+  <section class="view" id="v-verdict">
+    <div class="panel hero yellow" style="--c:var(--yellow)">
+      <span class="k">THE VERDICT</span>
+      <h2>Let's see who these ghosts really are</h2>
+      <p class="lede">Each era's theory haunted economics like a ghost. Pull off the mask and you'll find the class whose interests it served.</p>
+    </div>
+
+    <div class="ghosts" id="ghosts"></div>
+    <div class="row" style="justify-content:center"><button class="pill orange" type="button" id="unmaskAll">Unmask them all!</button></div>
+
+    <div class="panel purple">
+      <h3>The three questions, era by era</h3>
+      <div class="tbl">
+        <table class="verdict">
+          <thead><tr><th></th><th>Merchant era</th><th>Individualists &amp; labor writers</th><th>Physiocrats</th></tr></thead>
+          <tbody>
+            <tr><th>What</th><td>Exports, for jobs and national power</td><td>Whatever profit calls for; luxury keeps the hive busy</td><td>Farm output, the only true surplus</td></tr>
+            <tr><th>How</th><td>Regulated, merchant-controlled trade; monopolies</td><td>Free markets, wage labor, division of labor</td><td>Farming and manufacturing feed each other</td></tr>
+            <tr><th>Share</th><td>Merchants and lords split the surplus; the Crown cares for the poor</td><td>Profit is the surplus after workers' needs</td><td>Rent goes to idle landlords, unquestioned</td></tr>
+            <tr><th>Value from</th><td>Market price, usefulness, scarcity</td><td>Labor</td><td>Nature, through the soil</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel teal">
+        <h3>Echoes in later cases</h3>
+        <p>🐝 Mandeville's private vices, public benefits → <b>Smith's invisible hand</b>.</p>
+        <p>💸 Quesnay's hoarding jams → <b>Malthus's gluts</b> (and later Keynes).</p>
+        <p>🧹 The Physiocrats' unproductive labor → <b>Malthus's "personal services."</b></p>
+        <p style="margin:0">🏚️ The 1601 Poor Law → the law <b>Malthus</b> attacked in 1798.</p>
+      </div>
+      <div class="panel final" style="--c:var(--purple)">
+        <span class="k" style="color:var(--ink)">CASE CLOSED?</span>
+        <h2>Not quite</h2>
+        <p style="font-weight:700">These thinkers sensed that labor was behind profit, but couldn't explain how. In 1776 Adam Smith picked up the trail.</p>
+        <div class="row" style="justify-content:center"><a class="pill orange" href="../smith/">Open Case 002: Adam Smith ▶</a></div>
+      </div>
+    </div>
+
+    <div class="panel orange" style="text-align:center">
+      <span class="k">IDEAS IN ACTION</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px);color:var(--purple)">The Haunting of Mercantile Manor</h2>
+      <p style="font-weight:700;max-width:68ch;margin:8px auto 12px">A haunted-house mystery game. A ghost hides behind one answer to each question: <b style="color:#b35a00">what</b> to make, <b style="color:#167a6e">how</b> to make it, and how to <b style="color:#c2306a">share</b> it. Wake sleeping clues, catch the lying Impostor in your gang, and pull off the mask before dawn.</p>
+      <div class="row" style="justify-content:center"><a class="pill orange" href="game/" style="font-size:19px">Enter the manor 👻</a></div>
+    </div>
+  </section>
+
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn prev" href="../"><span class="d">◀ ALL CASE FILES</span><span class="t">⌂ Home</span></a>
+    <a class="cn next" href="../smith/"><span class="d">NEXT CASE ▶</span><span class="t">Case 002 · Adam Smith</span></a>
+  </nav>
+
+  <p class="foot">Interpretation follows E.K. Hunt &amp; Mark Lautzenheiser, <i>History of Economic Thought</i>, ch. 2, pp. 23–39. Quotations from Barbon, Defoe, Hobbes, North, Mandeville, and the 1738 pamphlet are their own words.</p>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const N = v => Math.round(v);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const COL = {teal:"#3fb8a9", lime:"#a6d64a", orange:"#f5892a", yellow:"#ffd23f", pink:"#ff7aa8", purple:"#5b2e91", ink:"#1a0f2e", cream:"#fff4dc"};
+
+  /* ---------- routing ---------- */
+  const views = ["overview","what","how","share","verdict"];
+  function route(){
+    const h = location.hash.slice(1), v = views.includes(h) ? h : "overview";
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "v-" + v));
+    $$(".tab").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + v));
+    if (location.hash) window.scrollTo({top:$(".tabs").offsetTop, behavior:"instant" in window ? "instant" : "auto"});
+  }
+  window.addEventListener("hashchange", route); route();
+
+  /* ---------- follow the power ---------- */
+  const ERAS = [
+    {from:1500, to:1600, n:"Merchants & the Crown", c:COL.orange,
+     power:"Great trading companies and the Tudor monarchy", prod:"Workers still own their tools; lords take the surplus",
+     value:"Market price: usefulness, supply and demand", profit:"Trade: buy cheap, sell dear, hold monopolies"},
+    {from:1600, to:1700, n:"Masters become employers", c:COL.teal,
+     power:"Producer-capitalists rising out of the guilds", prod:"Putting-out system; guild masters hire journeymen",
+     value:"Still mostly market price, but costs creep back in", profit:"Self-interest is natural, so free the market"},
+    {from:1700, to:1777, n:"Producer-capitalists", c:COL.lime,
+     power:"Capitalists who control production", prod:"A 'free' wage labor force; division of labor",
+     value:"Labor: the quantity of labor needed", profit:"The surplus left after workers' needs"}
+  ];
+  const EVENTS = [
+    [1524,"German peasants' revolt; Luther urges princes to crush it"],[1531,"First Poor Law: 'deserving' vs 'undeserving' poor"],
+    [1534,"Henry VIII breaks with Rome; the state takes on the Church's role"],[1561,"First important patent of monopoly"],
+    [1563,"Statute of Artificers sets maximum wages"],[1572,"Compulsory poor rate"],[1576,"Houses of correction for vagrants"],
+    [1601,"The Poor Law of 1601"],[1624,"Statute of Monopolies"],[1651,"Hobbes's Leviathan: all motives are self-interest"],
+    [1690,"Barbon's Discourse of Trade"],[1691,"Dudley North's case for free markets"],[1696,"Cary: labor adds the value to exports"],
+    [1713,"Defoe: labor alone brings wealth"],[1714,"Mandeville's Fable of the Bees"],[1738,"Anonymous pamphlet: value set by labor"],
+    [1758,"Quesnay's Tableau économique"],[1776,"Turgot falls; Smith's Wealth of Nations"]
+  ];
+  $("#eras").innerHTML = ERAS.map((e, i) => `<div class="era" data-era="${i}" style="--c:${e.c}">${e.n}<br><small style="font-family:var(--body);font-weight:800">${e.from}–${Math.min(e.to, 1776)}</small></div>`).join("");
+  $("#evlist").innerHTML = EVENTS.map(e => `<div class="ev" data-y="${e[0]}"><span class="y">${e[0]}</span><span>${e[1]}</span></div>`).join("");
+  function drawEra(){
+    const y = +$("#yr").value; $("#yrOut").textContent = y;
+    const i = ERAS.findIndex(e => y >= e.from && y < e.to), e = ERAS[i];
+    $$(".era").forEach((el, j) => el.classList.toggle("on", j === i));
+    $("#eraFacts").innerHTML = `
+      <div class="fact"><div class="fk">WHO HOLDS POWER</div><div class="fv">${e.power}</div></div>
+      <div class="fact"><div class="fk">HOW THINGS ARE MADE</div><div class="fv">${e.prod}</div></div>
+      <div class="fact"><div class="fk">WHAT GIVES VALUE</div><div class="fv">${e.value}</div></div>
+      <div class="fact"><div class="fk">WHERE PROFIT COMES FROM</div><div class="fv">${e.profit}</div></div>`;
+    $$(".ev").forEach(el => { const ey = +el.dataset.y; el.classList.toggle("past", ey <= y); el.classList.toggle("future", ey > y); });
+    const last = $$(".ev.past").pop(), list = $("#evlist");
+    if (last) list.scrollTop = Math.max(0, last.offsetTop - list.offsetTop - list.clientHeight / 2);
+  }
+  $("#yr").addEventListener("input", drawEra); drawEra();
+
+  /* ---------- suspects ---------- */
+  const fig = (hat, coat, extra = "") => `<svg viewBox="0 0 64 72" aria-hidden="true">
+    <ellipse cx="32" cy="68" rx="20" ry="3" fill="#0003"/>
+    <path d="M14 70 Q14 44 32 42 Q50 44 50 70 Z" fill="${coat}" stroke="#1a0f2e" stroke-width="3"/>
+    <circle cx="32" cy="28" r="13" fill="#ffd9b8" stroke="#1a0f2e" stroke-width="3"/>
+    <circle cx="27" cy="27" r="2" fill="#1a0f2e"/><circle cx="37" cy="27" r="2" fill="#1a0f2e"/>
+    <path d="M27 34 Q32 37 37 34" stroke="#1a0f2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    ${hat}${extra}</svg>`;
+  const HATS = {
+    tricorn:`<path d="M14 18 Q32 4 50 18 Q32 14 14 18Z" fill="#1a0f2e"/>`,
+    crown:`<path d="M20 16 L22 6 L27 12 L32 4 L37 12 L42 6 L44 16 Z" fill="#ffd23f" stroke="#1a0f2e" stroke-width="2.5"/>`,
+    wig:`<path d="M18 30 Q14 12 32 12 Q50 12 46 30 Q50 38 44 40 L44 26 Q32 18 20 26 L20 40 Q14 38 18 30Z" fill="#f2efe6" stroke="#1a0f2e" stroke-width="2.5"/>`,
+    tall:`<rect x="21" y="2" width="22" height="14" fill="#1a0f2e"/><rect x="15" y="14" width="34" height="4" fill="#1a0f2e"/>`,
+    cap:`<path d="M18 20 Q32 6 46 20 Z" fill="#a6d64a" stroke="#1a0f2e" stroke-width="2.5"/>`,
+    beret:`<ellipse cx="32" cy="15" rx="15" ry="6" fill="#ff7aa8" stroke="#1a0f2e" stroke-width="2.5"/>`
+  };
+  const SUSPECTS = [
+    {n:"Nicholas Barbon", a:"The Market Man", d:"English merchant, 1690", hat:HATS.tricorn, coat:COL.orange,
+     what:"Whatever buyers want. Value comes from use; price from plenty and scarcity.", how:"Buy, hold, and sell. When goods are plentiful, lay them up until the price rises.", share:"The merchant's profit lives in the gap between buying and selling prices.",
+     clue:"The Market is the best Judge of value.", src:"A Discourse of Trade (1690)"},
+    {n:"The Tudor Crown", a:"The Paternal State", d:"Henry VIII to Elizabeth I", hat:HATS.crown, coat:COL.purple,
+     what:"Exports and new industries, to end unemployment.", how:"Regulate everything: standards, apprenticeships, patents of monopoly.", share:"Relief for the poor, paid by a compulsory parish rate, but wages capped for employers.",
+     clue:"Poverty is a function of the economic system, not a personal sin.", src:"The idea behind the Tudor statutes, as the authors summarize it (p. 27)"},
+    {n:"Thomas Hobbes", a:"The Egoist", d:"Philosopher, Leviathan 1651", hat:HATS.wig, coat:COL.teal,
+     what:"Whatever keeps the 'vital motion' of each person going.", how:"Every act serves self-preservation, so expect self-interest everywhere.", share:"Not his focus, but his view made selfishness seem universal and natural.",
+     clue:"Grief for the calamity of another is pity, and ariseth from the imagination that the like calamity may befall himself.", src:"Leviathan (1651)"},
+    {n:"Sir Dudley North", a:"The Free Trader", d:"Merchant & writer, 1641–1691", hat:HATS.tall, coat:COL.lime,
+     what:"Whatever free competition calls forth.", how:"Leave self-interested people alone to compete in a free market.", share:"Scrap the special privileges. Those who lobby for them pass off their own gain as the public good.",
+     clue:"…each man strives that all others may be forced in their dealings to act subserviently for his Profit, but under the cover of the Publick.", src:"Discourses upon Trade (1691)"},
+    {n:"Bernard Mandeville", a:"The Beekeeper", d:"Satirist, Fable of the Bees 1714", hat:HATS.cap, coat:COL.yellow,
+     what:"Luxuries! Vanity and greed keep the hive busy.", how:"Divide the work; trade is just labor exchanged for labor.", share:"Private vices bring public benefits, so let the greedy prosper.",
+     clue:"Private Vices, Publick Benefits.", src:"Subtitle of The Fable of the Bees (1714)"},
+    {n:"François Quesnay", a:"The Doctor of Economies", d:"French Physiocrat, Tableau 1758", hat:HATS.beret, coat:COL.pink,
+     what:"Crops. Only farming yields a surplus, nature's gift.", how:"Large capitalist farms; free trade; abolish guilds and tolls.", share:"The surplus goes to landlords as rent. Tax only the land.",
+     clue:"Manufacturing is 'sterile': it only replaces its own costs.", src:"The Physiocrats' doctrine, as summarized by the authors (p. 36)"}
+  ];
+  $("#suspects").innerHTML = SUSPECTS.map((s, i) => `<button class="suspect" type="button" data-s="${i}" aria-pressed="false">${fig(s.hat, s.coat)}<span class="sn">${s.n}</span><span class="sa">"${s.a}"</span></button>`).join("");
+  function showSuspect(i){
+    const s = SUSPECTS[i];
+    $$(".suspect").forEach((b, j) => b.setAttribute("aria-pressed", i === j));
+    const d = $("#dossier");
+    d.innerHTML = `<div class="answers">
+        <div style="font-family:var(--cartoon);font-size:22px;color:var(--purple)">${s.n} <span style="font-size:14px;color:var(--orange)">· ${s.d}</span></div>
+        <div class="ans"><b style="color:var(--orange)">WHAT?</b> ${s.what}</div>
+        <div class="ans"><b style="color:var(--teal)">HOW?</b> ${s.how}</div>
+        <div class="ans"><b style="color:var(--pink)">SHARE?</b> ${s.share}</div>
+      </div>
+      <div class="clue"><div class="ct">🔎 CLUE</div><q>${s.clue}</q><small>${s.src}</small></div>`;
+    d.classList.remove("swap"); void d.offsetWidth; d.classList.add("swap");
+  }
+  $$(".suspect").forEach(b => b.addEventListener("click", () => showSuspect(+b.dataset.s)));
+  showSuspect(0);
+
+  /* ---------- Barbon's price machine ---------- */
+  const GOODS = [
+    {k:"bread", n:"🍞 Bread", use:9, note:"A want of the body. Always useful, so always wanted."},
+    {k:"silk", n:"🧣 Silk", use:6, note:"A want of the mind: fashion and show."},
+    {k:"spice", n:"🌶️ Pepper", use:7, note:"Rare in England, plentiful in the Indies."},
+    {k:"junk", n:"🕳️ A broken bucket", use:0, note:"Good for nothing, so worth nothing."}
+  ];
+  let good = 0, hoarded = 0;
+  $("#goodsRow").innerHTML = GOODS.map((g, i) => `<button class="pill cream" type="button" data-g="${i}" aria-pressed="${i === 0}">${g.n}</button>`).join("");
+  function drawPrice(){
+    const g = GOODS[good], q = Math.max(1, +$("#qty").value - hoarded);
+    $("#qtyOut").textContent = hoarded ? `${+$("#qty").value} (−${hoarded} hoarded)` : $("#qty").value;
+    const price = g.use === 0 ? 0 : g.use * 12 / q;
+    $$("[data-g]").forEach((b, i) => b.setAttribute("aria-pressed", i === good));
+    $("#priceRead").innerHTML = `Price: <b>${g.use === 0 ? "nothing" : price.toFixed(1) + " shillings"}</b><br>${g.note} ${g.use === 0 ? "" : q <= 2 ? "Scarce, so dear." : q >= 8 ? "Plentiful, so cheap." : ""}${hoarded ? ` The merchant is holding ${hoarded} back until the price rises, exactly as Barbon advised.` : ""}`;
+  }
+  $$("[data-g]").forEach(b => b.addEventListener("click", () => { good = +b.dataset.g; drawPrice(); }));
+  $("#qty").addEventListener("input", () => { hoarded = Math.min(hoarded, +$("#qty").value - 1); drawPrice(); });
+  $("#layUp").addEventListener("click", () => { hoarded = Math.min(+$("#qty").value - 1, hoarded + 2); drawPrice(); });
+  $("#release").addEventListener("click", () => { hoarded = 0; drawPrice(); });
+  drawPrice();
+
+  /* ---------- export machine ---------- */
+  function drawTrade(){
+    const x = +$("#exp").value, m = +$("#imp").value, net = x - m;
+    $("#expOut").textContent = x; $("#impOut").textContent = m;
+    $("#moneyV").textContent = net > 0 ? `+${net} coin in` : net < 0 ? `${net} coin out` : "Balanced";
+    $("#priceV").textContent = net > 10 ? "Rising 📈" : net < -10 ? "Falling 📉" : "Steady";
+    const jobs = clamp(55 + net * .45 + x * .1, 5, 100);
+    $("#jobM").style.width = jobs + "%";
+    $("#tradeRead").innerHTML = net > 0
+      ? `A <b>favorable balance</b>. Gold and silver flow in, prices rise, and the mercantilists expected the looms to fill with workers.`
+      : net < 0 ? `An <b>unfavorable balance</b>. Money drains abroad, which in the mercantilist view meant idle hands at home.`
+      : `Exports pay for imports. No gain in national treasure, and no boost to employment.`;
+  }
+  ["#exp","#imp"].forEach(s => $(s).addEventListener("input", drawTrade)); drawTrade();
+
+  /* ---------- Mandeville's hive ---------- */
+  const VICES = [
+    {k:"vanity", n:"Vanity", d:"Fine clothes, carriages, show"},
+    {k:"greed", n:"Greed", d:"Endless pursuit of profit"},
+    {k:"envy", n:"Envy & fashion", d:"Keeping up with the neighbors"},
+    {k:"prodigal", n:"Prodigality", d:"Spending it all, now"}
+  ];
+  const vOn = {vanity:true, greed:true, envy:true, prodigal:true};
+  $("#vices").innerHTML = VICES.map(v => `<button class="toggle" type="button" data-v="${v.k}"><span class="sw"></span><span>${v.n}<small>${v.d}</small></span></button>`).join("") +
+    `<div class="row" style="margin-top:8px"><button class="pill lime" type="button" id="honest">😇 Make the hive honest</button></div>`;
+  function drawHive(){
+    const on = Object.values(vOn).filter(Boolean).length;
+    const bees = 4 + on * 7;
+    $("#hive").innerHTML = Array.from({length:bees}, () => "<span>🐝</span>").join("");
+    $("#hiveM").style.width = (15 + on * 21) + "%";
+    $$("[data-v]").forEach(b => b.setAttribute("aria-pressed", vOn[b.dataset.v]));
+    $("#hiveRead").innerHTML = on === 4 ? `A grumbling, sinful, <b>thriving</b> hive. Every vice is someone's job.`
+      : on === 0 ? `The hive is honest, and nearly empty. Trade has collapsed, and the bees have flown off to a hollow tree. That was Mandeville's paradox.`
+      : `With fewer vices, there's less to make and less to sell, and the hive shrinks.`;
+  }
+  $$("[data-v]").forEach(b => b.addEventListener("click", () => { vOn[b.dataset.v] = !vOn[b.dataset.v]; drawHive(); }));
+  $("#honest").addEventListener("click", () => { Object.keys(vOn).forEach(k => vOn[k] = false); drawHive(); });
+  drawHive();
+
+  /* ---------- arbitrage ---------- */
+  let charter = false, inflate = false;
+  function drawArb(){
+    let r = +$("#riv").value; if (charter) r = 1;
+    $("#rivOut").textContent = charter ? "1 (charter!)" : r;
+    const buy = 2 + (r - 1) * .35, sell = Math.max(buy + .4, 10 - (r - 1) * .75) + (inflate ? 1.5 : 0);
+    const volume = 60, perMerchant = (sell - buy) * volume / r;
+    const svg = $("#arbChart"), max = 12, X = 60, W = 440, y = v => 175 - v / max * 150;
+    let s = "";
+    for (let v = 0; v <= 12; v += 3) s += `<line x1="${X}" x2="${X + W}" y1="${y(v)}" y2="${y(v)}" stroke="#eee"/><text x="${X - 8}" y="${y(v) + 4}" text-anchor="end">${v}s</text>`;
+    s += `<rect x="${X + 40}" y="${y(buy)}" width="110" height="${175 - y(buy)}" rx="8" fill="${COL.teal}" stroke="${COL.ink}" stroke-width="3"/><text x="${X + 95}" y="${y(buy) - 8}" text-anchor="middle">buy ${buy.toFixed(1)}s</text><text x="${X + 95}" y="193" text-anchor="middle">Indies</text>`;
+    s += `<rect x="${X + 200}" y="${y(sell)}" width="110" height="${175 - y(sell)}" rx="8" fill="${COL.orange}" stroke="${COL.ink}" stroke-width="3"/><text x="${X + 255}" y="${y(sell) - 8}" text-anchor="middle">sell ${sell.toFixed(1)}s</text><text x="${X + 255}" y="193" text-anchor="middle">London</text>`;
+    s += `<path d="M${X + 150} ${y(buy)} L${X + 200} ${y(sell)}" stroke="${COL.purple}" stroke-width="3" stroke-dasharray="6 5" fill="none"/>`;
+    s += `<text x="${X + 380}" y="80" text-anchor="middle" style="font-size:13px">profit each</text><text x="${X + 380}" y="110" text-anchor="middle" style="font-family:'Luckiest Guy';font-size:26px;fill:${COL.purple}">${N(perMerchant)}s</text>`;
+    svg.innerHTML = s;
+    $("#charter").setAttribute("aria-pressed", charter); $("#inflate").setAttribute("aria-pressed", inflate);
+    $("#riv").disabled = charter;
+    $("#arbRead").innerHTML = charter
+      ? `The company holds a <b>royal monopoly</b>. No rivals can come in, so the price gap stays wide. This is why the great merchant companies fought so hard for their privileges.`
+      : r === 1 ? `One merchant, a fat price gap, and <b>${N(perMerchant)}s</b> profit. To a merchant, profit plainly comes from the <i>exchange</i>.`
+      : `${r} merchants now ship pepper. Buying pushes the Indies price up and selling pushes London's down. The gap shrinks and each merchant's profit falls to <b>${N(perMerchant)}s</b>. Competition was killing trading profits, so capitalists turned to <b>production</b>.`;
+    if (inflate) $("#arbRead").innerHTML += `<br>📈 Rising prices add a windfall: goods bought cheap are worth more by the time they're sold.`;
+  }
+  $("#riv").addEventListener("input", drawArb);
+  $("#charter").addEventListener("click", () => { charter = !charter; drawArb(); });
+  $("#inflate").addEventListener("click", () => { inflate = !inflate; drawArb(); });
+  drawArb();
+
+  /* ---------- production stages ---------- */
+  const STAGES = [
+    {i:"🧑‍🔧", n:"Independent craftsman", tools:"The craftsman", product:"The craftsman", pace:"The craftsman", profit:"From the merchant's buying and selling",
+     note:"In the early period most producers still owned their tools. Merchants made their money in the gap between buying and selling, so theory looked to exchange."},
+    {i:"🧶", n:"Putting-out system", tools:"Often the worker; the merchant supplies materials", product:"The merchant", pace:"Partly the merchant", profit:"Merchants start reaching into production",
+     note:"As price gaps narrowed, merchants sought control of production by handing out raw materials to cottage workers and collecting the finished goods."},
+    {i:"🎩", n:"Guild master turns employer", tools:"The master", product:"The master", pace:"The master", profit:"From organizing others' labor",
+     note:"Guilds closed ranks to protect the masters. Masters stopped working alongside their journeymen and began organizing and controlling them. Journeymen became hired hands with little hope of becoming masters."},
+    {i:"🏭", n:"Free wage labor", tools:"The capitalist", product:"The capitalist", pace:"The capitalist", profit:"The surplus labor creates beyond workers' needs",
+     note:"A labor force with no means of production must sell its ability to work. Once that happened, it became clear that control of these producers was the key to profit, and theory turned to labor."}
+  ];
+  $("#stages").innerHTML = STAGES.map((s, i) => `<button class="stg" type="button" data-st="${i}" aria-pressed="${i === 0}"><span class="i">${s.i}</span>${s.n}</button>`).join("");
+  function showStage(i){
+    const s = STAGES[i];
+    $$("[data-st]").forEach((b, j) => b.setAttribute("aria-pressed", i === j));
+    $("#stageFacts").innerHTML = `
+      <div class="fact"><div class="fk">WHO OWNS THE TOOLS</div><div class="fv">${s.tools}</div></div>
+      <div class="fact"><div class="fk">WHO OWNS THE PRODUCT</div><div class="fv">${s.product}</div></div>
+      <div class="fact"><div class="fk">WHO SETS THE PACE</div><div class="fv">${s.pace}</div></div>
+      <div class="fact"><div class="fk">PROFIT SEEMS TO COME FROM</div><div class="fv">${s.profit}</div></div>`;
+    $("#stageNote").textContent = s.note;
+  }
+  $$("[data-st]").forEach(b => b.addEventListener("click", () => showStage(+b.dataset.st)));
+  showStage(0);
+
+  /* ---------- Poor Law sorter ---------- */
+  const BINS = [
+    {k:"home", n:"🏠 Relief at home", d:"for the aged and the sick"},
+    {k:"board", n:"🧒 Boarded out", d:"children too young to apprentice"},
+    {k:"work", n:"🧵 Set to work", d:"the deserving poor & unemployed"},
+    {k:"correct", n:"⛓️ House of correction", d:"'incorrigible vagrants'"}
+  ];
+  const POOR = [
+    {e:"👵", n:"Old Agnes", d:"74, too frail to spin", bin:"home"},
+    {e:"🤒", n:"John the carter", d:"laid up with fever", bin:"home"},
+    {e:"👦", n:"Little Tom", d:"6, orphaned", bin:"board"},
+    {e:"🧑‍🦰", n:"Will the weaver", d:"wool exports collapsed", bin:"work"},
+    {e:"👩", n:"Bess", d:"out of work every winter", bin:"work"},
+    {e:"🧔", n:"Sturdy Ned", d:"able-bodied, won't work, wanders", bin:"correct"}
+  ];
+  let selP = null; const placed = {};
+  function drawSort(){
+    $("#people").innerHTML = POOR.map((p, i) => `<button class="who ${placed[i] ? "placed" : ""}" type="button" data-p="${i}" aria-pressed="${selP === i}"><span class="e">${p.e}</span><b>${p.n}</b><small>${p.d}</small></button>`).join("");
+    $("#bins").innerHTML = BINS.map(b => `<button class="bin" type="button" data-b="${b.k}"><h4>${b.n}</h4><small style="font-weight:700">${b.d}</small><div class="placed-in">${POOR.filter((p, i) => placed[i] === b.k).map(p => p.e).join("")}</div></button>`).join("");
+    $$("[data-p]").forEach(b => b.addEventListener("click", () => { selP = +b.dataset.p; drawSort(); }));
+    $$("[data-b]").forEach(b => b.addEventListener("click", () => dropIn(b.dataset.b, b)));
+    const n = Object.keys(placed).length;
+    if (n === POOR.length) $("#sortRead").innerHTML = `<b>All sorted!</b> Notice the logic: the Tudor laws treated most poverty as the system's doing and gave a <i>right</i> to relief, while reserving punishment for those judged unwilling to work. Malthus would later argue that any relief at all just bred more poor.`;
+  }
+  function dropIn(k, el){
+    if (selP == null){ $("#sortRead").textContent = "Pick a person first."; return; }
+    const p = POOR[selP];
+    if (p.bin === k){ placed[selP] = k; $("#sortRead").innerHTML = `✔ Right: ${p.n} → ${BINS.find(b => b.k === k).n}. ${Object.keys(placed).length} of 6 sorted.`; selP = null; drawSort(); const nb = $(`[data-b="${k}"]`); nb.classList.add("flash-ok"); setTimeout(() => nb.classList.remove("flash-ok"), 600); }
+    else { el.classList.remove("flash-no"); void el.offsetWidth; el.classList.add("flash-no"); $("#sortRead").textContent = `✘ Not where the 1601 law would send ${p.n}. Try again.`; }
+  }
+  drawSort();
+
+  /* ---------- maximum wage ---------- */
+  function drawWage(){
+    const yrs = +$("#yrs").value; $("#yrsOut").textContent = `${yrs} (${1563 + yrs})`;
+    const price = t => 100 * Math.pow(1.015, t), wage = t => 100 * Math.pow(1.005, t);
+    const svg = $("#wageChart"), X = 50, W = 450, max = 260, y = v => 175 - (v - 60) / (max - 60) * 150, x = t => X + t / 60 * W;
+    let s = "";
+    for (let v = 80; v <= 260; v += 60) s += `<line x1="${X}" x2="${X + W}" y1="${y(v)}" y2="${y(v)}" stroke="#eee"/><text x="${X - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+    const path = f => Array.from({length:yrs + 1}, (_, t) => `${t ? "L" : "M"}${x(t).toFixed(1)} ${y(f(t)).toFixed(1)}`).join(" ");
+    s += `<path d="${path(price)}" stroke="${COL.orange}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+    s += `<path d="${path(wage)}" stroke="${COL.teal}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+    s += `<text x="${x(yrs) + 4}" y="${y(price(yrs)) - 6}" text-anchor="${yrs > 45 ? "end" : "start"}" style="fill:${COL.orange}">prices</text><text x="${x(yrs) + 4}" y="${y(wage(yrs)) + 16}" text-anchor="${yrs > 45 ? "end" : "start"}" style="fill:#1f7f74">max wage</text>`;
+    s += `<text x="${X}" y="195">1563</text><text x="${X + W}" y="195" text-anchor="end">1623</text>`;
+    svg.innerHTML = s;
+    const real = wage(yrs) / price(yrs) * 100;
+    $("#wageRead").innerHTML = `A worker's capped wage buys <b>${N(real)}%</b> of what it bought in 1563. The cap protected the employers, and the employers set the cap.`;
+  }
+  $("#yrs").addEventListener("input", drawWage); drawWage();
+
+  /* ---------- Tableau ---------- */
+  const NODES = {F:{x:110, y:250, n:"FARMERS", s:"productive class", c:COL.lime}, L:{x:260, y:70, n:"LANDLORDS", s:"idle class", c:COL.yellow}, A:{x:410, y:250, n:"ARTISANS", s:"sterile class", c:COL.teal}};
+  function arc(a, b, bend){ const A = NODES[a], B = NODES[b], mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2, dx = B.y - A.y, dy = A.x - B.x, l = Math.hypot(dx, dy); return `M${A.x} ${A.y} Q${mx + dx / l * bend} ${my + dy / l * bend} ${B.x} ${B.y}`; }
+  function drawTableau(){
+    const h = +$("#hoard").value / 100;
+    $("#hoardOut").textContent = Math.round(h * 100) + "%";
+    const flows = [
+      ["F","L",2,"rent 2",60,COL.purple],
+      ["L","F",1 - h,`food ${(1 - h).toFixed(1)}`,60,COL.orange],
+      ["L","A",1 - h,`goods ${(1 - h).toFixed(1)}`,40,COL.orange],
+      ["A","F",2 - h,`food & raw ${(2 - h).toFixed(1)}`,40,COL.orange],
+      ["F","A",1,"tools 1",40,COL.purple]
+    ];
+    let s = `<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="${COL.ink}"/></marker></defs>`;
+    flows.forEach((f, i) => {
+      const d = arc(f[0], f[1], f[4]), w = 2 + f[2] * 3;
+      s += `<path id="fp${i}" d="${d}" stroke="${f[5]}" stroke-width="${w}" fill="none" opacity="${f[2] > .05 ? .85 : .2}" marker-end="url(#ah)"/>`;
+      const A = NODES[f[0]], B = NODES[f[1]], mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2, dx = B.y - A.y, dy = A.x - B.x, l = Math.hypot(dx, dy);
+      s += `<text x="${mx + dx / l * (f[4] * .62)}" y="${my + dy / l * (f[4] * .62) + 4}" text-anchor="middle" style="font-size:12px;paint-order:stroke;stroke:#fffaf0;stroke-width:4px">${f[3]}</text>`;
+      const coins = Math.max(0, Math.round(f[2] * 2));
+      for (let k = 0; k < coins; k++) s += `<circle r="6" fill="${COL.yellow}" stroke="${COL.ink}" stroke-width="2"><animateMotion dur="${2.6 + i * .2}s" begin="${k * 1.2}s" repeatCount="indefinite"><mpath href="#fp${i}"/></animateMotion></circle>`;
+    });
+    Object.values(NODES).forEach(n => {
+      s += `<circle cx="${n.x}" cy="${n.y}" r="50" fill="${n.c}" stroke="${COL.ink}" stroke-width="4"/>`;
+      s += `<text class="lbl" x="${n.x}" y="${n.y + 2}" text-anchor="middle">${n.n}</text><text x="${n.x}" y="${n.y + 20}" text-anchor="middle" style="font-size:11px">${n.s}</text>`;
+    });
+    if (h > 0) s += `<g><text x="${NODES.L.x + 70}" y="${NODES.L.y - 30}" style="font-size:26px">💰</text><text x="${NODES.L.x + 100}" y="${NODES.L.y - 32}" style="font-size:13px">hoarded ${(2 * h).toFixed(1)}</text></g>`;
+    $("#tableau").innerHTML = s;
+
+    // six-year path: farmers' sales shrink with hoarding, and next year's surplus with them
+    const out = [5]; let ratio = (3 - 2 * h) / 3, surplus = 2;
+    for (let t = 1; t < 6; t++){ surplus *= ratio; out.push(3 + surplus); }
+    const c = $("#tabChart"), bw = 36;
+    let g = "";
+    out.forEach((v, t) => { const hgt = v / 5 * 120; g += `<rect x="${24 + t * 45}" y="${145 - hgt}" width="${bw}" height="${hgt}" rx="6" fill="${h ? COL.orange : COL.lime}" stroke="${COL.ink}" stroke-width="3"/><text x="${24 + t * 45 + bw / 2}" y="${140 - hgt}" text-anchor="middle" style="font-size:11px">${v.toFixed(1)}</text><text x="${24 + t * 45 + bw / 2}" y="163" text-anchor="middle" style="font-size:11px">yr ${t + 1}</text>`; });
+    c.innerHTML = g;
+    $("#tabRead").innerHTML = h === 0
+      ? `Money circulates in full. The farms produce <b>5 milliards</b> every year, and the economy reproduces itself.`
+      : `Hoarding ${Math.round(h * 100)}% of the rent means less spending on food and goods. Farmers sell less, the surplus shrinks, and output falls to <b>${out[5].toFixed(1)}</b> by year 6. A crisis caused by money that stopped moving.`;
+  }
+  $("#hoard").addEventListener("input", drawTableau); drawTableau();
+
+  /* ---------- unmasking ---------- */
+  const sheet = c => `<svg class="sheet" viewBox="0 0 90 96" aria-hidden="true"><path d="M10 92 Q10 20 45 8 Q80 20 80 92 L70 82 L60 92 L50 82 L40 92 L30 82 L20 92 Z" fill="${c}" stroke="${COL.ink}" stroke-width="4"/><ellipse cx="33" cy="42" rx="7" ry="10" fill="${COL.ink}"/><ellipse cx="57" cy="42" rx="7" ry="10" fill="${COL.ink}"/><ellipse cx="45" cy="64" rx="8" ry="5" fill="${COL.ink}"/></svg>`;
+  const GHOSTS = [
+    {n:"The Phantom of Trade", m:"\"Profit comes from buying and selling!\"", c:"#e8e0ff",
+     who:"Merchant capital", why:"When lords still controlled production, merchants really did get their share of the surplus through exchange. The theory described what merchants could see from where they stood, and it justified their monopolies."},
+    {n:"The Specter of Self-Interest", m:"\"All people are selfish. Set them free and all will be well!\"", c:"#e3f7d0",
+     who:"The rising producer-capitalists", why:"Most writers were capitalists or worked for them, so they took capitalists' motives to be human nature. Individualism and the Protestant ethic freed profit-seeking from old restrictions and old guilt."},
+    {n:"The Ghost of Nature's Gift", m:"\"Only the soil creates a surplus!\"", c:"#ffe9c9",
+     who:"The landlords' rent, left untouched", why:"The Physiocrats wanted capitalist reform, yet never questioned the nobility's right to rent. The nobles saw the threat anyway, and only the Revolution of 1789 could make the change."}
+  ];
+  $("#ghosts").innerHTML = GHOSTS.map((g, i) => `<div class="ghostcard" id="gc${i}"><div class="flip">
+      <div class="face front">${sheet(g.c)}<h3>${g.n}</h3><p>${g.m}</p><button class="pill orange" type="button" data-un="${i}">Unmask!</button></div>
+      <div class="face back"><span class="reveal">IT WAS…</span><h3>${g.who}</h3><p style="font-weight:700">${g.why}</p><button class="pill cream" type="button" data-re="${i}">Put the mask back</button></div>
+    </div></div>`).join("");
+  $$("[data-un]").forEach(b => b.addEventListener("click", () => $("#gc" + b.dataset.un).classList.add("unmasked")));
+  $$("[data-re]").forEach(b => b.addEventListener("click", () => $("#gc" + b.dataset.re).classList.remove("unmasked")));
+  $("#unmaskAll").addEventListener("click", () => GHOSTS.forEach((_, i) => setTimeout(() => $("#gc" + i).classList.add("unmasked"), i * 350)));
+})();
+</script>
+</body>
+</html>

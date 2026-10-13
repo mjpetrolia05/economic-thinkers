@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adam Smith · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Crimson+Pro:ital,wght@0,500;1,400;1,500&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C1222; --ink2:#111A2E; --panel:#182340; --panel2:#1F2C4E; --line:#2B3A60; --line2:#3A4C7A;
+  --brass:#E0B45A; --brass2:#B8863A; --brass-dim:#6B5528;
+  --text:#EDE7D6; --muted:#98A3BE; --faint:#5E6A8A;
+  --parch:#F1E4C3; --parch2:#E3D2A6; --parch-ink:#3B2E1A; --parch-muted:#7A6A4A;
+  --good:#6FD08C; --bad:#F06A6A;
+  --forest:#2E9E6B; --steppe:#C99A3A; --field:#E8C15A; --hill:#B8613C; --coast:#3A8FD9; --fair:#8C7CC0;
+  --display:"Cinzel",Georgia,"Times New Roman",serif;
+  --serif:"Crimson Pro",Georgia,"Times New Roman",serif;
+  --ui:"Nunito Sans","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  color:var(--text); font-family:var(--ui); font-size:15px; line-height:1.55;
+  background:
+    radial-gradient(1200px 600px at 20% -10%, #1B2A4F 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 20%, #2A1E4A 0%, transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+}
+a{color:var(--brass)}
+button{font:inherit; color:inherit; cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
+.app{max-width:1240px; margin:0 auto; padding:12px 16px 48px; display:grid; gap:14px}
+h1,h2,h3,h4{font-family:var(--display); font-weight:700; letter-spacing:.05em; margin:0}
+p{margin:0 0 .8em}
+.serif{font-family:var(--serif)}
+.muted{color:var(--muted)}
+.cite{font-size:11px; letter-spacing:.06em; color:var(--faint); margin-top:8px}
+
+/* ---- header ---- */
+.top{display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; justify-content:space-between; padding:10px 14px; background:linear-gradient(180deg,var(--panel),var(--ink2)); border:1px solid var(--line); border-radius:10px}
+.brand{display:flex; align-items:center; gap:12px; min-width:0}
+.brand h1{font-weight:800; font-size:22px; letter-spacing:.06em; color:var(--brass); text-shadow:0 0 18px rgba(224,180,90,.35)}
+.brand small{display:block; font-family:var(--serif); font-style:italic; font-size:13px; color:var(--muted); letter-spacing:0}
+.sigil{width:36px; height:36px; flex:none}
+.actions{display:flex; gap:8px; flex-wrap:wrap}
+.btn{display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border-radius:9px; border:1px solid var(--line2); background:linear-gradient(180deg,var(--panel2),var(--panel)); color:var(--text); font-weight:700; font-size:13px; text-decoration:none; transition:border-color .15s,transform .08s}
+.btn:hover{border-color:var(--brass); transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(180deg,#F0C76B,#C9964A); color:#1A1406; border-color:#F3D48A; font-family:var(--display); letter-spacing:.06em; font-weight:800}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn[aria-pressed="true"]{border-color:var(--brass); background:linear-gradient(180deg,rgba(224,180,90,.22),rgba(224,180,90,.06)); color:var(--brass)}
+
+/* ---- tabs (styled like the game's stepper) ---- */
+.stepper{display:grid; grid-template-columns:repeat(5,1fr); gap:6px}
+.step{display:block; padding:9px 6px; text-align:center; border-radius:8px; border:1px solid var(--line); background:rgba(0,0,0,.2); color:var(--faint); text-decoration:none}
+.step .q{font-family:var(--display); font-weight:800; letter-spacing:.14em; font-size:12px}
+.step .d{font-size:11px; margin-top:2px}
+.step:hover{color:var(--text); border-color:var(--line2)}
+.step.active{border-color:var(--brass); color:var(--text); background:linear-gradient(180deg,rgba(224,180,90,.16),rgba(224,180,90,.04)); box-shadow:0 0 0 1px rgba(224,180,90,.25) inset}
+.step.active .q{color:var(--brass); animation:stepglow 1.8s ease-in-out infinite}
+@keyframes stepglow{0%,100%{text-shadow:none}50%{text-shadow:0 0 12px rgba(224,180,90,.7)}}
+
+section.view{display:none}
+section.view.active{display:grid; gap:14px; animation:rise .35s ease}
+@keyframes rise{from{transform:translateY(12px); opacity:0}to{transform:none; opacity:1}}
+
+/* ---- cards ---- */
+.card{background:linear-gradient(180deg,var(--panel),var(--ink2)); border:1px solid var(--line); border-radius:12px; padding:16px 18px; min-width:0}
+.card h4{font-weight:700; letter-spacing:.1em; font-size:12px; color:var(--brass); margin-bottom:10px}
+.card h3{font-size:17px; color:var(--text); margin-bottom:8px}
+.grid{display:grid; gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g12{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+.hero{position:relative; overflow:hidden; border-color:var(--line2); padding:22px 24px}
+.hero::after{content:""; position:absolute; right:-60px; top:-60px; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle,var(--brass) 0%,transparent 70%); opacity:.12; pointer-events:none}
+.hero .kick{font-family:var(--display); font-size:11px; letter-spacing:.2em; color:var(--muted)}
+.hero h2{font-size:clamp(26px,4vw,40px); font-weight:800; color:var(--brass); margin:6px 0 10px; text-shadow:0 0 30px rgba(224,180,90,.25)}
+.lede{font-family:var(--serif); font-size:19px; line-height:1.45; max-width:68ch; border-left:3px solid var(--brass); padding-left:14px; margin:0}
+.qcard{border-left:4px solid var(--c); text-decoration:none; color:inherit; display:block; transition:transform .12s,border-color .15s}
+.qcard:hover{transform:translateY(-3px); border-color:var(--c)}
+.qcard .n{font-family:var(--display); font-weight:800; font-size:30px; color:var(--c); line-height:1}
+.qcard h3{margin:6px 0}
+.qcard p{margin:0; color:var(--muted); font-size:14px}
+
+/* parchment quote (like the game's rule cards) */
+.parch{background:radial-gradient(120% 80% at 50% 0%,#FBF3DC 0%,var(--parch) 60%,var(--parch2) 100%); color:var(--parch-ink); border-radius:10px; padding:16px 18px; border:1px solid #C9B27E; box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.parch .pn{font-family:var(--display); font-size:10px; letter-spacing:.16em; color:#8A6A2E}
+.parch .pq{font-family:var(--serif); font-style:italic; font-size:18px; line-height:1.4; color:#4A3A22; margin:6px 0}
+.parch .pq::before{content:"“"}.parch .pq::after{content:"”"}
+.parch .pa{font-size:11px; letter-spacing:.06em; color:var(--parch-muted)}
+.tilt{transform:rotate(-.8deg)}
+.grid > .parch{align-self:start}
+
+/* ---- four stages explorer ---- */
+.stages{display:grid; grid-template-columns:repeat(4,1fr); gap:10px}
+.stagebtn{position:relative; display:grid; justify-items:center; gap:6px; padding:12px 6px 10px; border-radius:12px; border:1px solid var(--line); background:rgba(0,0,0,.22); transition:border-color .15s,transform .12s}
+.stagebtn:hover{transform:translateY(-2px); border-color:var(--line2)}
+.stagebtn[aria-pressed="true"]{border-color:var(--sc); box-shadow:0 0 18px -4px var(--sc); background:linear-gradient(180deg,color-mix(in srgb,var(--sc) 18%,transparent),rgba(0,0,0,.2))}
+.stagebtn svg{width:58px; height:64px}
+.stagebtn .sn{font-family:var(--display); font-weight:800; letter-spacing:.12em; font-size:12px}
+.stagebtn .si{font-size:10px; color:var(--muted); letter-spacing:.1em}
+.arrowline{height:2px; background:linear-gradient(90deg,var(--forest),var(--steppe),var(--field),var(--coast)); border-radius:2px; margin:12px 0 2px; opacity:.6}
+.stage-detail{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:14px; margin-top:14px}
+.stage-detail .badge{display:inline-block; font-family:var(--display); font-weight:800; letter-spacing:.12em; font-size:12px; padding:4px 10px; border-radius:6px; color:var(--ink); background:var(--sc)}
+.stage-detail .sub2{font-family:var(--serif); font-style:italic; color:var(--muted); font-size:15px; margin:6px 0 12px}
+.facts{display:grid; grid-template-columns:repeat(2,1fr); gap:8px}
+.fact{background:rgba(0,0,0,.25); border:1px solid var(--line); border-radius:8px; padding:8px 10px}
+.fact .k{font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+.fact .v{font-weight:700; font-size:14px}
+.swap{animation:swapin .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes swapin{from{opacity:0; transform:translateX(14px)}to{opacity:1; transform:none}}
+
+/* ---- controls ---- */
+.ctrl{margin:12px 0}
+.ctrl label{display:flex; justify-content:space-between; gap:10px; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+.ctrl label output{color:var(--brass); font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:99px; background:var(--ink); border:1px solid var(--line2); outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:linear-gradient(180deg,#F3D48A,#B8863A); border:2px solid var(--ink); cursor:pointer; box-shadow:0 0 10px rgba(224,180,90,.5)}
+input[type=range]::-moz-range-thumb{width:18px; height:18px; border-radius:50%; background:linear-gradient(180deg,#F3D48A,#B8863A); border:2px solid var(--ink); cursor:pointer}
+.row{display:flex; flex-wrap:wrap; gap:8px}
+.readout{margin-top:12px; padding:10px 12px; border-radius:10px; background:rgba(0,0,0,.28); border:1px dashed var(--line2); font-size:14px}
+.readout b{color:var(--brass)}
+.chip{display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; background:rgba(0,0,0,.28); border:1px solid var(--line); font-size:12px; font-weight:700; font-variant-numeric:tabular-nums}
+
+/* retainers grid */
+.people{display:grid; grid-template-columns:repeat(20,1fr); gap:3px; margin-top:10px}
+.people i{aspect-ratio:1; border-radius:50%; background:var(--field); transition:background .3s,opacity .3s,transform .3s}
+.people i.gone{background:var(--line); opacity:.35; transform:scale(.7)}
+.goods{display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; min-height:26px}
+.goods span{font-size:18px; animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(0)}to{transform:none}}
+.meter{height:10px; border-radius:99px; background:var(--ink); border:1px solid var(--line); overflow:hidden}
+.meter i{display:block; height:100%; border-radius:99px; transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+/* stacked bar */
+.stack{display:flex; height:46px; border-radius:10px; overflow:hidden; border:1px solid var(--line2); margin-top:10px}
+.stack > div{display:grid; place-items:center; font-size:12px; font-weight:800; color:var(--ink); text-align:center; line-height:1.15; padding:0 4px; transition:flex-grow .6s cubic-bezier(.2,.8,.2,1),background .4s; overflow:hidden; white-space:nowrap}
+.stack-labels{display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-top:6px}
+
+/* tug of war */
+svg.tug{width:100%; height:auto; display:block}
+svg.tug text{font-family:var(--ui); font-size:12px; fill:var(--muted)}
+.toggle{display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:rgba(0,0,0,.22); text-align:left; width:100%; transition:border-color .15s}
+.toggle + .toggle{margin-top:8px}
+.toggle .sw{flex:none; width:36px; height:20px; border-radius:99px; background:var(--line); position:relative; transition:background .2s; margin-top:2px}
+.toggle .sw::after{content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:var(--text); transition:transform .2s}
+.toggle[aria-pressed="true"]{border-color:var(--brass-dim)}
+.toggle[aria-pressed="true"] .sw{background:var(--brass2)}
+.toggle[aria-pressed="true"] .sw::after{transform:translateX(16px)}
+.toggle .t{font-weight:800}
+.toggle .s{font-size:12px; color:var(--muted)}
+
+/* two smiths */
+.twin{display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch}
+.twin .vs{align-self:center; font-family:var(--display); font-weight:800; color:var(--brass); font-size:20px}
+.twin .side{border-radius:12px; padding:16px; border:1px solid var(--line2); background:rgba(0,0,0,.22)}
+.twin .side h3{color:var(--brass)}
+.twin ul{margin:0; padding-left:18px; color:var(--muted)}
+.twin li{margin-bottom:4px}
+table.verdict{width:100%; border-collapse:collapse; font-size:14px}
+table.verdict th{text-align:left; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:700; padding:8px; border-bottom:1px solid var(--line)}
+table.verdict td{padding:10px 8px; border-bottom:1px solid rgba(43,58,96,.6); vertical-align:top}
+table.verdict td:first-child{font-family:var(--display); font-weight:800; color:var(--brass); white-space:nowrap}
+.tbl{overflow-x:auto}
+
+/* ideas in action */
+.action-cta{position:relative; overflow:hidden; border-color:var(--brass-dim); background:linear-gradient(135deg,rgba(224,180,90,.14),var(--ink2) 60%)}
+.action-cta h2{font-size:clamp(22px,3vw,30px); font-weight:800; color:var(--brass); margin-bottom:6px}
+.rules{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0}
+.rule{border-radius:8px; padding:10px; border:1px solid #5A4826; background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 2px,transparent 2px 6px),linear-gradient(160deg,#3A2E1A,#241C10); color:var(--parch-muted)}
+.rule .rn{font-family:var(--display); font-size:10px; letter-spacing:.12em; color:#8A7248}
+.rule .rt{font-family:var(--display); font-weight:700; font-size:13px; color:#D9C48E; margin:2px 0}
+.rule .re{font-size:12px; color:#B8A57A; line-height:1.35}
+
+/* previous / next case tabs */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px}
+.cn{display:flex; flex-direction:column; gap:3px; text-decoration:none; color:var(--text); padding:14px 18px; border-radius:12px; border:1px solid var(--line2); background:linear-gradient(180deg,var(--panel2),var(--panel)); transition:border-color .15s, transform .12s}
+.cn.next{text-align:right}
+.cn:hover{border-color:var(--brass); transform:translateY(-2px)}
+.cn .d{font-family:var(--display); font-weight:800; font-size:11px; letter-spacing:.16em; color:var(--muted)}
+.cn .t{font-family:var(--display); font-weight:700; font-size:clamp(15px,2vw,19px); letter-spacing:.04em; color:var(--brass)}
+.cn.off{opacity:.45; pointer-events:none}
+@media (max-width:560px){ .casenav{grid-template-columns:1fr} .cn.next{text-align:left} }
+@media (max-width:980px){
+  .g3{grid-template-columns:1fr}
+  .g12,.stage-detail{grid-template-columns:1fr}
+  .rules{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  .g2{grid-template-columns:1fr}
+  .stages{grid-template-columns:repeat(2,1fr)}
+  .stepper{display:flex; overflow-x:auto; scrollbar-width:none}
+  .step{flex:0 0 auto; padding:8px 14px}
+  .step .d{display:none}
+  .step .q{font-size:11px; letter-spacing:.1em}
+  .hero h2{font-size:22px}
+  .lede{font-size:17px}
+  .twin{grid-template-columns:1fr}
+  .twin .vs{justify-self:center}
+  .people{grid-template-columns:repeat(10,1fr)}
+  .facts{grid-template-columns:1fr}
+}
+@media (max-width:460px){ .rules{grid-template-columns:1fr} .brand small{display:none} }
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="brand">
+      <svg class="sigil" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3D48A"/><stop offset="1" stop-color="#B8863A"/></linearGradient></defs><polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" fill="none" stroke="url(#sg)" stroke-width="2"/><path d="M13 26c3-9 8-12 14-14-2 5-5 8-8 9 2 1 4 1 6 0-3 4-8 6-12 5z" fill="url(#sg)"/></svg>
+      <div><h1>ADAM SMITH</h1><small>four stages · three questions · one invisible hand</small></div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../">⌂ Home</a>
+      <a class="btn" href="../before-smith/">◀ Case 001</a>
+      <a class="btn primary" href="game/">Ideas in Action ▶</a>
+    </div>
+  </header>
+
+  <nav class="stepper" aria-label="Sections">
+    <a class="step" href="#overview"><div class="q">OVERVIEW</div><div class="d">the four stages</div></a>
+    <a class="step" href="#what"><div class="q">WHAT</div><div class="d">will we make?</div></a>
+    <a class="step" href="#how"><div class="q">HOW</div><div class="d">will we make it?</div></a>
+    <a class="step" href="#share"><div class="q">SHARE</div><div class="d">who gets it?</div></a>
+    <a class="step" href="#verdict"><div class="q">VERDICT</div><div class="d">two Smiths</div></a>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view" id="v-overview">
+    <div class="card hero">
+      <div class="kick">CASE NO. 002 · 1723 – 1790 · SCOTLAND</div>
+      <h2>How a society makes its living shapes everything else</h2>
+      <p class="lede">For Smith, the way people produce and distribute the necessities of life decides their institutions: who owns what, who governs, who obeys. He saw class conflict clearly. Yet he also believed an <b>invisible hand</b> steers selfish, conflicting actions toward a harmony that nobody intended. Hunt and Lautzenheiser call this the most important incongruity, if not contradiction, in his writing.</p>
+    </div>
+
+    <div class="grid g3">
+      <a class="card qcard" href="#what" style="--c:var(--forest)"><div class="n">I</div><h3>What will we make?</h3><p>Game, cattle, grain, then manufactures. And why a trick of nature makes people want baubles.</p></a>
+      <a class="card qcard" href="#how" style="--c:var(--field)"><div class="n">II</div><h3>How will we make it?</h3><p>Labor creates all wealth, tools are stored-up labor, and producers with no property won't work hard.</p></a>
+      <a class="card qcard" href="#share" style="--c:var(--coast)"><div class="n">III</div><h3>How will we share it?</h3><p>Rent, wages, profit, and a wage bargain between unequal sides.</p></a>
+    </div>
+
+    <div class="card">
+      <h4>THE FOUR STAGES OF SOCIETY · click a stage</h4>
+      <div class="stages" id="stages" role="group" aria-label="Stages of society"></div>
+      <div class="arrowline" aria-hidden="true"></div>
+      <div class="cite">No society is bound to climb. It advances only when geography, economy, and culture allow, and the economic base shapes institutions without rigidly determining them. (p. 44)</div>
+      <div class="stage-detail" id="stageDetail"></div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT ================= -->
+  <section class="view" id="v-what">
+    <div class="card hero" style="--brass:#5FC994">
+      <div class="kick">QUESTION I</div>
+      <h2 style="color:var(--forest)">What will we make?</h2>
+      <p class="lede" style="border-color:var(--forest)">The answer changes with each stage: game in the forest, cattle on the steppe, grain on the manor, manufactures in the town. What pushes a society from one to the next is a desire that, in Smith's view, rests on an illusion.</p>
+    </div>
+
+    <div class="grid g12">
+      <div class="card">
+        <h4>THE LORD'S SURPLUS · rustic hospitality or baubles?</h4>
+        <p>A great proprietor's land yields a surplus that can feed <b>100 people</b>. Without towns or foreign trade there is nothing to buy, so he can only use it by keeping retainers, and people fed entirely by his bounty must obey him.</p>
+        <div class="row" role="group" aria-label="Market">
+          <button class="btn" type="button" id="mkOff" aria-pressed="true">No towns, no trade</button>
+          <button class="btn" type="button" id="mkOn" aria-pressed="false">Cities & manufactures arrive</button>
+        </div>
+        <div class="ctrl" id="luxCtrl" style="opacity:.4">
+          <label for="lux">Surplus traded for manufactured goods <output id="luxOut">0%</output></label>
+          <input type="range" id="lux" min="0" max="100" step="5" value="0" disabled>
+        </div>
+        <div class="people" id="people" aria-label="Retainers"></div>
+        <div class="goods" id="goods" aria-label="Luxuries bought"></div>
+        <div class="grid g2" style="margin-top:12px">
+          <div><div class="fact"><div class="k">Lord's power (retainers)</div><div class="v" id="powV"></div></div><div class="meter" style="margin-top:6px"><i id="powM" style="background:var(--bad)"></i></div></div>
+          <div><div class="fact"><div class="k">Farm efficiency</div><div class="v" id="effV"></div></div><div class="meter" style="margin-top:6px"><i id="effM" style="background:var(--good)"></i></div></div>
+        </div>
+        <div class="readout" id="luxRead"></div>
+        <div class="cite">Mechanism from pp. 45–47; the numbers are illustrative.</div>
+      </div>
+      <div class="grid">
+        <div class="parch tilt">
+          <div class="pn">NATURE'S DECEPTION</div>
+          <div class="pq">It is this deception which rouses and keeps in continual motion the industry of mankind.</div>
+          <div class="pa">Adam Smith, Theory of Moral Sentiments</div>
+        </div>
+        <div class="card">
+          <h3>The illusion that builds cities</h3>
+          <p>Nature fools people into thinking wealth brings happiness. Smith thought this was false, but he admired what it does: it drives people to farm, build, found cities, and invent. What gets made is steered by a desire nobody would defend on reflection.</p>
+          <div class="cite">p. 46</div>
+        </div>
+        <div class="card">
+          <h3>An unintended revolution</h3>
+          <p>Lords traded their surplus for manufactures out of what Smith called "the most childish vanity." Merchants and artisans sold to them just to turn a penny. Neither side foresaw that together they were dissolving feudal power and creating commercial society.</p>
+          <div class="cite">p. 47</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="view" id="v-how">
+    <div class="card hero">
+      <div class="kick">QUESTION II</div>
+      <h2 style="color:var(--field)">How will we make it?</h2>
+      <p class="lede" style="border-color:var(--field)">Smith was clear that labor makes wealth. Tools raise productivity, but tools are themselves the product of earlier labor. And people work hard only when they may own what they produce.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="parch">
+        <div class="pn">THE SOURCE OF WEALTH</div>
+        <div class="pq">It was not by gold or by silver, but by labour, that all the wealth of the world was originally purchased.</div>
+        <div class="pa">Adam Smith, Wealth of Nations</div>
+      </div>
+      <div class="parch">
+        <div class="pn">THE ONLY WAY TO GROW</div>
+        <div class="pq">…by increasing either the number of productive labourers, or the productive powers of those labourers.</div>
+        <div class="pa">Adam Smith, Wealth of Nations, on raising the annual produce</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>WHAT'S INSIDE A BOLT OF CLOTH?</h4>
+      <p>A weaver works a loom and produces cloth worth 100. Some observers say two things produced it: labor <i>and</i> capital. Open up the loom to see what Smith and the labor theorists saw.</p>
+      <div class="row">
+        <button class="btn" type="button" id="toolA" aria-pressed="true">The "two inputs" view</button>
+        <button class="btn" type="button" id="toolB" aria-pressed="false">Open up the loom</button>
+      </div>
+      <div class="stack" id="toolStack"></div>
+      <div class="stack-labels"><span>0</span><span>value of the cloth: 100</span></div>
+      <div class="readout" id="toolRead"></div>
+      <div class="cite">pp. 48–49; numbers illustrative.</div>
+    </div>
+
+    <div class="grid g12">
+      <div class="card">
+        <h4>NO PROPERTY, NO INDUSTRY</h4>
+        <p>Slide from serfdom toward free producers who keep what they make. Lords freed serfs for purely selfish reasons, because free producers work harder. The result looks like enlightened morality, but Smith credited it to the invisible hand.</p>
+        <div class="ctrl">
+          <label for="keep">Share of their own produce producers may keep <output id="keepOut"></output></label>
+          <input type="range" id="keep" min="0" max="100" step="5" value="0">
+        </div>
+        <div class="grid g2">
+          <div><div class="fact"><div class="k">Effort</div><div class="v" id="effortV"></div></div><div class="meter" style="margin-top:6px"><i id="effortM" style="background:var(--field)"></i></div></div>
+          <div><div class="fact"><div class="k">Lord's income from the estate</div><div class="v" id="lordV"></div></div><div class="meter" style="margin-top:6px"><i id="lordM" style="background:var(--steppe)"></i></div></div>
+        </div>
+        <div class="readout" id="keepRead"></div>
+        <div class="cite">Argument from p. 47; the effort curve is illustrative.</div>
+      </div>
+      <div class="parch tilt">
+        <div class="pn">WHY SERFS DON'T HURRY</div>
+        <div class="pq">A person who can acquire no property, can have no other interest but to eat as much, and to labour as little as possible.</div>
+        <div class="pa">Adam Smith, Wealth of Nations</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SHARE ================= -->
+  <section class="view" id="v-share">
+    <div class="card hero">
+      <div class="kick">QUESTION III</div>
+      <h2 style="color:var(--coast)">How will we share it?</h2>
+      <p class="lede" style="border-color:var(--coast)">Property decides who gets what, and government exists to protect property. In commercial society the produce splits three ways: rent, wages, and profit. The split between wages and profit is settled by a struggle between unequal sides.</p>
+    </div>
+
+    <div class="grid g12">
+      <div class="card">
+        <h4>THE THREE ORDERS</h4>
+        <p>Who owns the land and the tools? Smith said that where workers own the means of production, the whole produce of labor belongs to the laborer. Once stock and land are owned by others, those owners take a share before the worker is allowed to produce.</p>
+        <div class="row">
+          <button class="btn" type="button" id="ownW" aria-pressed="true">Workers own land & tools</button>
+          <button class="btn" type="button" id="ownC" aria-pressed="false">Land & stock owned by others</button>
+        </div>
+        <div class="stack" id="orderStack"></div>
+        <div class="readout" id="orderRead"></div>
+        <div class="cite">pp. 47–48; split is illustrative.</div>
+      </div>
+      <div class="parch tilt">
+        <div class="pn">WHAT GOVERNMENT IS FOR</div>
+        <div class="pq">Civil government, so far as it is instituted for the security of property, is in reality instituted for the defence of the rich against the poor.</div>
+        <div class="pa">Adam Smith, Wealth of Nations</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>THE WAGE BARGAIN · who pulls harder?</h4>
+      <p>"The workmen desire to get as much, the masters to give as little as possible." Smith named three advantages that let masters win. Switch them on and off.</p>
+      <div class="grid g12" style="align-items:center">
+        <svg class="tug" id="tug" viewBox="0 0 600 190" role="img" aria-label="Tug of war between workers and masters over the wage"></svg>
+        <div>
+          <button class="toggle" type="button" data-adv="wealth" aria-pressed="true"><span class="sw"></span><span><span class="t">Deep pockets</span><br><span class="s">Masters can live a year or two on their stock. Few workers can last a month.</span></span></button>
+          <button class="toggle" type="button" data-adv="law" aria-pressed="true"><span class="sw"></span><span><span class="t">The law</span><br><span class="s">Parliament bans workers' combinations but not masters'. The magistrate answers the masters' call.</span></span></button>
+          <button class="toggle" type="button" data-adv="quiet" aria-pressed="true"><span class="sw"></span><span><span class="t">Silence &amp; opinion</span><br><span class="s">Masters combine quietly, "the natural state of things which nobody ever hears of." Workers' combinations are loudly condemned.</span></span></button>
+        </div>
+      </div>
+      <div class="readout" id="tugRead"></div>
+      <div class="cite">The three sources of masters' power are from pp. 48–49; the wage figures are illustrative.</div>
+    </div>
+  </section>
+
+  <!-- ================= VERDICT ================= -->
+  <section class="view" id="v-verdict">
+    <div class="card">
+      <h4>TWO SMITHS</h4>
+      <div class="twin">
+        <div class="side">
+          <h3>Smith of class conflict</h3>
+          <ul>
+            <li>Property creates government, and government defends the rich.</li>
+            <li>Labor alone creates wealth; profit is what owners take from it.</li>
+            <li>Masters overpower workers through wealth, law, and opinion.</li>
+          </ul>
+        </div>
+        <div class="vs">VS</div>
+        <div class="side">
+          <h3>Smith of the invisible hand</h3>
+          <ul>
+            <li>Selfish acts add up to a harmony no one intended.</li>
+            <li>Vain lords and penny-turning merchants create freedom.</li>
+            <li>What looks like human wisdom is "the wisdom of God."</li>
+          </ul>
+        </div>
+      </div>
+      <p class="serif" style="font-size:17px; margin:14px 0 0">The authors argue that both streams of later economics, the one that stresses conflict and the one that stresses harmony, trace their roots to this tension in Smith (and later Ricardo). <span class="cite">p. 44</span></p>
+    </div>
+
+    <div class="card">
+      <h4>THE THREE QUESTIONS, ANSWERED</h4>
+      <div class="tbl">
+        <table class="verdict">
+          <tr><th>Question</th><th>Smith's answer</th><th>The tension</th></tr>
+          <tr><td>What</td><td>Whatever the stage allows, and in commerce, manufactures for people chasing the illusion that wealth brings happiness.</td><td>A deception drives progress, and he approves of the result.</td></tr>
+          <tr><td>How</td><td>By labor, the sole source of value. Tools are past labor, and free producers with property work hardest.</td><td>Freedom arrives through lords' self-interest, not anyone's design.</td></tr>
+          <tr><td>Share</td><td>By property: rent, wages, profit. Wages are fixed by a struggle the masters usually win.</td><td>He saw the conflict plainly, yet trusted an invisible hand to harmonize it.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card action-cta">
+      <h2>Ideas in Action</h2>
+      <p class="serif" style="font-size:17px; max-width:70ch">Lead a society through hunting, pasturage, agriculture, and commerce in <b>Invisible Hand</b>, a strategy game built on this chapter. Its eight hidden rules are Smith's ideas, and you learn each one by breaking it.</p>
+      <div class="rules" id="rules"></div>
+      <a class="btn primary" href="game/" style="font-size:15px; padding:12px 20px">Play Invisible Hand ▶</a>
+    </div>
+  </section>
+
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn" href="../before-smith/"><span class="d">◀ PREVIOUS CASE</span><span class="t">Case 001 · Before Adam Smith</span></a>
+    <a class="cn next" href="../malthus/"><span class="d">NEXT CASE ▶</span><span class="t">Case 003 · Malthus</span></a>
+  </nav>
+
+  <div class="cite" style="text-align:center">Interpretation follows E.K. Hunt &amp; Mark Lautzenheiser, <i>History of Economic Thought</i>, ch. 3, pp. 44–49. Smith's own words are quoted from <i>Wealth of Nations</i> and <i>Theory of Moral Sentiments</i>.</div>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+
+  /* ---------- routing ---------- */
+  const views = ["overview","what","how","share","verdict"];
+  function route(){
+    const h = location.hash.slice(1);
+    const v = views.includes(h) ? h : "overview";
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "v-" + v));
+    $$(".stepper .step").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + v));
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
+  /* ---------- four stages ---------- */
+  const STAGES = [
+    {k:"hunting", n:"HUNTING", c:"var(--forest)", light:"#5FC994", ex:"Hunting peoples of North America (Smith's example)",
+     sub:"Neither sovereign nor commonwealth",
+     made:"Game and what can be gathered", prop:"Nothing worth accumulating", gov:"None; no one to protect", power:"Shared poverty means equality",
+     note:"With no wealth that can be stored up, there is no economic basis for privilege or power.",
+     q:"In this state of things there is properly neither sovereign nor commonwealth.", src:"Wealth of Nations"},
+    {k:"pasturage", n:"PASTURAGE", c:"var(--steppe)", light:"#E9C36A", ex:"Nomadic herding peoples (Smith named Tartars and Arabs)",
+     sub:"The first property that can be accumulated",
+     made:"Cattle and herds", prop:"Cattle, the first property", gov:"Civil government appears", power:"Owners of herds",
+     note:"Once herds can be hoarded, some must be protected from others, and subordination grows with property.",
+     q:"The acquisition of valuable and extensive property, therefore, necessarily requires the establishment of civil government.", src:"Wealth of Nations"},
+    {k:"agriculture", n:"AGRICULTURE", c:"var(--field)", light:"#FBE08E", ex:"Medieval, feudal western Europe",
+     sub:"Every landlord a sort of petty prince",
+     made:"Grain from great estates", prop:"Land, engrossed by a few", gov:"The lord is judge, lawmaker, and war leader", power:"Hereditary nobility",
+     note:"Primogeniture keeps estates whole. With nothing to buy, a lord spends his surplus on retainers who must obey him.",
+     q:"His tenants were his subjects. He was their judge, and in some respects their legislator in peace and their leader in war.", src:"Wealth of Nations"},
+    {k:"commerce", n:"COMMERCE", c:"var(--coast)", light:"#6FB6F5", ex:"The rise of European trading cities: capitalism",
+     sub:"Rent, wages, and profit",
+     made:"Manufactures, traded for farm surplus", prop:"Land, stock, and labor", gov:"Wider rights and freedom for producers", power:"Landlords and, above all, capitalists",
+     note:"Towns give lords something to buy, farming becomes efficient, and producers gain rights. Smith saw this as the highest stage.",
+     q:"These are the three great, original and constituent orders of every civilized country.", src:"Wealth of Nations, on those who live by rent, wages, and profit"}
+  ];
+  const hexSvg = (c, light, i) => `<svg viewBox="0 0 58 64" aria-hidden="true"><defs><linearGradient id="hg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${light}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs><polygon points="29,2 55,17 55,47 29,62 3,47 3,17" fill="url(#hg${i})" stroke="rgba(0,0,0,.4)" stroke-width="2"/><text x="29" y="40" text-anchor="middle" font-family="Cinzel, serif" font-weight="800" font-size="20" fill="#0C1222">${["I","II","III","IV"][i]}</text></svg>`;
+  const stagesBox = $("#stages");
+  STAGES.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "stagebtn"; b.style.setProperty("--sc", s.c);
+    b.innerHTML = hexSvg(getComputedStyle(document.documentElement).getPropertyValue("--" + ["forest","steppe","field","coast"][i]).trim(), s.light, i) + `<span class="sn">${s.n}</span><span class="si">STAGE ${i + 1}</span>`;
+    b.addEventListener("click", () => showStage(i));
+    stagesBox.appendChild(b);
+  });
+  function showStage(i){
+    const s = STAGES[i];
+    $$(".stagebtn").forEach((b, j) => b.setAttribute("aria-pressed", i === j));
+    const d = $("#stageDetail");
+    d.style.setProperty("--sc", s.c);
+    d.innerHTML = `
+      <div>
+        <span class="badge">${s.n}</span>
+        <div class="sub2">${s.sub} · ${s.ex}</div>
+        <div class="facts">
+          <div class="fact"><div class="k">What is made</div><div class="v">${s.made}</div></div>
+          <div class="fact"><div class="k">Main property</div><div class="v">${s.prop}</div></div>
+          <div class="fact"><div class="k">Government</div><div class="v">${s.gov}</div></div>
+          <div class="fact"><div class="k">Who holds power</div><div class="v">${s.power}</div></div>
+        </div>
+        <p style="margin-top:12px">${s.note}</p>
+      </div>
+      <div class="parch tilt"><div class="pn">STAGE ${i + 1} · IN SMITH'S WORDS</div><div class="pq">${s.q}</div><div class="pa">Adam Smith, ${s.src}</div></div>`;
+    d.classList.remove("swap"); void d.offsetWidth; d.classList.add("swap");
+  }
+  showStage(0);
+
+  /* ---------- lord's surplus ---------- */
+  const people = $("#people");
+  for (let i = 0; i < 100; i++) people.appendChild(document.createElement("i"));
+  let market = false;
+  const lux = $("#lux");
+  function drawLux(){
+    const share = market ? +lux.value : 0;
+    $("#luxOut").textContent = share + "%";
+    const retainers = 100 - share;
+    $$("#people i").forEach((p, i) => p.classList.toggle("gone", i >= retainers));
+    const nGoods = Math.round(share / 10);
+    const g = $("#goods");
+    const icons = ["🕰️","🪞","💍","🧵","🍷","🪑","📚","🎻","🏺","👒"];
+    if (g.children.length !== nGoods){
+      g.innerHTML = "";
+      for (let i = 0; i < nGoods; i++){ const s = document.createElement("span"); s.textContent = icons[i]; g.appendChild(s); }
+    }
+    const eff = 30 + share * .6;
+    $("#powV").textContent = retainers + " retainers"; $("#powM").style.width = retainers + "%";
+    $("#effV").textContent = Math.round(eff) + " / 90"; $("#effM").style.width = (eff / 90 * 100) + "%";
+    $("#luxCtrl").style.opacity = market ? 1 : .4; lux.disabled = !market;
+    $("#mkOff").setAttribute("aria-pressed", !market); $("#mkOn").setAttribute("aria-pressed", market);
+    let msg;
+    if (!market) msg = `With nothing to buy, the whole surplus feeds <b>100 retainers</b>. Fed by his bounty and with nothing to give in return, they <b>must obey him</b>, like soldiers paid by a prince.`;
+    else if (share === 0) msg = `Towns now sell clocks, mirrors, and fine cloth. Slide to see what the lord does with his surplus.`;
+    else if (share < 100) msg = `The lord swaps food for baubles, so he dismisses <b>${share} retainers</b> and "unnecessary" tenants. His farms get more efficient, and his private army shrinks.`;
+    else msg = `Every retainer is gone. For "the most childish vanity," the lord has traded away his power. <b>No one planned this</b>, which is Smith's invisible hand at work.`;
+    $("#luxRead").innerHTML = msg;
+  }
+  $("#mkOff").addEventListener("click", () => { market = false; lux.value = 0; drawLux(); });
+  $("#mkOn").addEventListener("click", () => { market = true; drawLux(); });
+  lux.addEventListener("input", drawLux);
+  drawLux();
+
+  /* ---------- tools are past labor ---------- */
+  let opened = false;
+  function drawTools(){
+    const st = $("#toolStack");
+    st.innerHTML = opened
+      ? `<div style="flex-grow:60;background:var(--field)">labor today · 60</div><div style="flex-grow:25;background:#D9A94A">labor that built the loom · 25</div><div style="flex-grow:15;background:#C9963A">labor that mined its iron · 15</div>`
+      : `<div style="flex-grow:60;background:var(--field)">labor · 60</div><div style="flex-grow:40;background:var(--coast);color:var(--text)">"capital" (the loom) · 40</div>`;
+    $("#toolA").setAttribute("aria-pressed", !opened); $("#toolB").setAttribute("aria-pressed", opened);
+    $("#toolRead").innerHTML = opened
+      ? `Look inside the "capital" and you find <b>more labor</b>, done earlier, by other people. Production is a series of human exertions through time. Owning the loom is a legal relationship, not a productive act.`
+      : `On this view, labor and capital both "produce" the cloth, so both deserve a reward. Some schools of economics still see it this way.`;
+  }
+  $("#toolA").addEventListener("click", () => { opened = false; drawTools(); });
+  $("#toolB").addEventListener("click", () => { opened = true; drawTools(); });
+  drawTools();
+
+  /* ---------- no property, no industry ---------- */
+  const keep = $("#keep");
+  function drawKeep(){
+    const k = +keep.value / 100;
+    const effort = 15 + 85 * Math.pow(k, .55);
+    const output = effort;
+    const lordIncome = output * (1 - k * .6);
+    $("#keepOut").textContent = Math.round(k * 100) + "%";
+    $("#effortV").textContent = Math.round(effort) + " / 100"; $("#effortM").style.width = effort + "%";
+    $("#lordV").textContent = Math.round(lordIncome); $("#lordM").style.width = lordIncome + "%";
+    $("#keepRead").innerHTML = k === 0
+      ? `Serfs own nothing, so they eat as much and work as little as they can. The lord gets a large share of a <b>very small</b> output.`
+      : k < .5
+      ? `As producers keep more, effort climbs fast. The lord's income <b>rises</b> even though his share falls.`
+      : `Free producers with property rights work hardest. The lord gave up control out of pure self-interest, and a moral-looking result emerged that no one designed.`;
+  }
+  keep.addEventListener("input", drawKeep);
+  drawKeep();
+
+  /* ---------- three orders ---------- */
+  let capitalist = false;
+  function drawOrders(){
+    $("#orderStack").innerHTML = capitalist
+      ? `<div style="flex-grow:50;background:var(--field)">wages · 50</div><div style="flex-grow:30;background:var(--coast);color:var(--text)">profit · 30</div><div style="flex-grow:20;background:var(--steppe)">rent · 20</div>`
+      : `<div style="flex-grow:100;background:var(--field)">the whole produce of labor → the laborer · 100</div>`;
+    $("#ownW").setAttribute("aria-pressed", !capitalist); $("#ownC").setAttribute("aria-pressed", capitalist);
+    $("#orderRead").innerHTML = capitalist
+      ? `Now there are three orders: those who live by <b>rent</b>, by <b>wages</b>, and by <b>profit</b>. The value workers add to materials "resolves itself in the profits of their employer."`
+      : `Where laborers own their land and tools, nobody else has a claim. Everything they produce is theirs.`;
+  }
+  $("#ownW").addEventListener("click", () => { capitalist = false; drawOrders(); });
+  $("#ownC").addEventListener("click", () => { capitalist = true; drawOrders(); });
+  drawOrders();
+
+  /* ---------- tug of war ---------- */
+  const adv = {wealth: true, law: true, quiet: true};
+  const W = {wealth: 12, law: 10, quiet: 6};
+  function drawTug(){
+    const pull = Object.keys(adv).reduce((s, k) => s + (adv[k] ? W[k] : 0), 0);
+    const wage = 60 - pull;                        // workers' share of produce, illustrative
+    const knot = 300 + pull * 7;                   // rope drifts toward the masters
+    const svg = $("#tug");
+    const figure = (x, col, flip) => `<g transform="translate(${x},92) scale(${flip ? -1 : 1},1)"><circle cx="0" cy="-34" r="9" fill="${col}"/><path d="M0 -24 L0 6 M0 -14 L22 -6 M0 6 L-12 30 M0 6 L10 30" stroke="${col}" stroke-width="5" stroke-linecap="round" fill="none"/></g>`;
+    svg.innerHTML = `
+      <rect x="0" y="0" width="600" height="190" rx="12" fill="rgba(0,0,0,.25)"/>
+      <line x1="300" y1="20" x2="300" y2="150" stroke="#3A4C7A" stroke-width="2" stroke-dasharray="5 5"/>
+      <text x="300" y="16" text-anchor="middle">fair split</text>
+      <line x1="70" y1="86" x2="530" y2="86" stroke="#C9A85A" stroke-width="5" stroke-linecap="round"/>
+      <rect x="${knot - 8}" y="76" width="16" height="20" rx="3" fill="#E0B45A" style="transition:x .6s"/>
+      ${figure(60, "#E8C15A", false)}${figure(100, "#E8C15A", false)}
+      ${figure(540, "#6FB6F5", true)}${figure(500, "#6FB6F5", true)}
+      <text x="80" y="150" text-anchor="middle" style="font-weight:800;fill:#E8C15A">WORKERS</text>
+      <text x="520" y="150" text-anchor="middle" style="font-weight:800;fill:#6FB6F5">MASTERS</text>
+      <text x="300" y="178" text-anchor="middle" style="font-size:14px;fill:#EDE7D6">Wage settles at <tspan style="font-weight:800;fill:#E0B45A">${wage}%</tspan> of the produce</text>`;
+    $$("[data-adv]").forEach(b => b.setAttribute("aria-pressed", adv[b.dataset.adv]));
+    const on = Object.values(adv).filter(Boolean).length;
+    $("#tugRead").innerHTML = on === 3
+      ? `With all three advantages, Smith had "no doubt" which side wins. Workers' combinations "generally end in nothing, but the punishment or ruin of the ring-leaders."`
+      : on === 0
+      ? `Take away every advantage and the bargain becomes a contest between equals. Smith never described such a world, which is the point.`
+      : `Each advantage you remove moves the wage back toward the workers. The masters' power comes from wealth, opinion, and control of government, working together.`;
+  }
+  $$("[data-adv]").forEach(b => b.addEventListener("click", () => { adv[b.dataset.adv] = !adv[b.dataset.adv]; drawTug(); }));
+  drawTug();
+
+  /* ---------- game rules ---------- */
+  const RULES = [
+    ["The Sovereign", "Property brings government with it."],
+    ["Defence of the Rich", "Government protects those who have property."],
+    ["Rustic Hospitality", "With no market, a surplus buys retainers."],
+    ["Nature's Deception", "Baubles dissolve feudal power."],
+    ["No Property, No Industry", "Unfree producers barely work."],
+    ["Combinations", "The law lets masters combine, not workers."],
+    ["The Three Orders", "Rent, wages, and profit."],
+    ["The Invisible Hand", "Selfish acts, unintended results."]
+  ];
+  $("#rules").innerHTML = RULES.map((r, i) => `<div class="rule"><div class="rn">RULE ${i + 1}</div><div class="rt">${r[0]}</div><div class="re">${r[1]}</div></div>`).join("");
+})();
+</script>
+</body>
+</html>

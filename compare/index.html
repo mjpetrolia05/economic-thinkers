@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Line-Up · Great Economic Thinkers</title>
+<meta name="description" content="Compare what each thinker said about what to make, how to make it, and how to share it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Special+Elite&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a; --coal:#141414; --smoke:#1f1f1f; --ash:#6f6f6f; --fog:#b5b5b5; --paper:#ecebe6; --white:#fafaf7;
+  --display:"Playfair Display",Didot,"Bodoni 72",Georgia,serif;
+  --type:"Special Elite","Courier New",Courier,monospace;
+  --body:"Source Serif 4",Georgia,serif;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html,body{margin:0; overflow-x:clip}
+body{background:var(--black); color:var(--paper); font-family:var(--body); font-size:17px; line-height:1.55}
+body::after{content:""; position:fixed; inset:0; pointer-events:none; z-index:50; background-image:var(--grain); opacity:.08; mix-blend-mode:screen; animation:grain .9s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-8px,6px)}50%{transform:translate(6px,-4px)}75%{transform:translate(-4px,-8px)}100%{transform:translate(0,0)}}
+@media (prefers-reduced-motion:reduce){body::after,.blinds{animation:none !important} *{transition:none !important}}
+a{color:inherit}
+button{font:inherit; color:inherit; cursor:pointer; background:none; border:0; padding:0}
+button:focus-visible,a:focus-visible{outline:2px solid var(--white); outline-offset:3px}
+.type{font-family:var(--type); letter-spacing:.06em; text-transform:uppercase}
+.wrap{max-width:1180px; margin:0 auto; padding:0 16px}
+
+/* ---------- top bar ---------- */
+.bar{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px; max-width:1180px; margin:0 auto; position:relative; z-index:3}
+.bar a{text-decoration:none; font-size:.8rem; border:1px solid var(--ash); padding:7px 12px}
+.bar a:hover{border-color:var(--white); background:var(--white); color:var(--black)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; overflow:hidden; isolation:isolate; padding:30px 16px 60px; text-align:center; border-bottom:1px solid var(--smoke)}
+.hero::before{content:""; position:absolute; inset:-10%; z-index:-2; background:radial-gradient(ellipse 55% 70% at 50% 30%,#363636 0%,#181818 45%,var(--black) 78%)}
+.blinds{position:absolute; inset:-20% -30%; z-index:-1; pointer-events:none; background:repeating-linear-gradient(180deg,rgba(255,255,255,.07) 0 30px,transparent 30px 56px); transform:rotate(-12deg) skewX(-16deg);
+  -webkit-mask-image:radial-gradient(ellipse 50% 60% at 50% 35%,#000 20%,transparent 72%); mask-image:radial-gradient(ellipse 50% 60% at 50% 35%,#000 20%,transparent 72%); animation:sway 14s ease-in-out infinite alternate}
+@keyframes sway{to{transform:rotate(-11deg) skewX(-16deg) translateY(12px)}}
+.stamp{display:inline-block; border:2px solid var(--paper); padding:6px 14px; font-size:.78rem; transform:rotate(-2deg); margin-bottom:18px}
+h1{font-family:var(--display); font-weight:900; font-size:clamp(2.6rem,8vw,6rem); line-height:.95; margin:0; text-transform:uppercase; color:var(--white)}
+h1 em{display:block; font-weight:400; font-size:.42em; text-transform:none; color:var(--fog); margin-top:10px}
+.lede{max-width:640px; margin:18px auto 0; color:var(--fog); font-style:italic; font-size:1.1rem}
+
+/* ---------- the line-up ---------- */
+section{padding:50px 0}
+.eyebrow{color:var(--ash); font-size:.78rem; margin-bottom:8px}
+h2{font-family:var(--display); font-weight:700; font-size:clamp(1.8rem,4.5vw,2.8rem); margin:0 0 10px; color:var(--white); line-height:1.05}
+h2 em{font-weight:400}
+.hint{color:var(--fog); margin:0 0 22px}
+.lineup{position:relative; padding:20px 14px 10px; border:1px solid var(--smoke);
+  background:
+    repeating-linear-gradient(180deg,transparent 0 23px,rgba(255,255,255,.12) 23px 24px),
+    linear-gradient(180deg,#1a1a1a,#0e0e0e)}
+.lineup::before{content:"7'  ·  6'  ·  5'  ·  4'"; position:absolute; left:8px; top:8px; font-family:var(--type); font-size:.7rem; color:#555; writing-mode:vertical-rl}
+.suspects{display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:8px; padding-left:16px}
+.sus{position:relative; display:grid; justify-items:center; gap:6px; padding:10px 4px 0; text-align:center; transition:transform .2s; filter:grayscale(1)}
+.sus svg{width:100%; max-width:110px; height:auto; transition:filter .25s, transform .25s; filter:brightness(.7)}
+.sus:hover svg{filter:brightness(1); transform:translateY(-4px)}
+.sus .plate{width:100%; background:var(--paper); color:var(--black); padding:6px 4px; font-family:var(--type); font-size:.68rem; line-height:1.25; border:1px solid #000}
+.sus .plate b{display:block; font-family:var(--display); font-weight:900; font-size:.95rem; letter-spacing:0; text-transform:none}
+.sus[aria-pressed="true"] svg{filter:brightness(1.25) drop-shadow(0 0 18px rgba(255,255,255,.35))}
+.sus[aria-pressed="true"] .plate{background:var(--white); box-shadow:0 0 0 2px var(--white)}
+.sus .booked{position:absolute; top:14px; left:50%; transform:translateX(-50%) rotate(-10deg); font-family:var(--type); font-size:.7rem; border:2px solid var(--white); color:var(--white); padding:2px 6px; background:rgba(0,0,0,.6); opacity:0; transition:opacity .2s}
+.sus[aria-pressed="true"] .booked{opacity:1}
+.sus .no{position:absolute; top:4px; right:6px; font-family:var(--type); font-size:.65rem; color:#666}
+
+.controls{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; justify-content:space-between; margin-top:20px}
+.group{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.group .lbl{font-size:.72rem; color:var(--ash); margin-right:4px}
+.chip{font-family:var(--type); font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; border:1px solid var(--ash); padding:7px 11px; color:var(--paper); transition:background .15s,color .15s,border-color .15s}
+.chip:hover{border-color:var(--white)}
+.chip[aria-pressed="true"]{background:var(--white); color:var(--black); border-color:var(--white)}
+.count{font-size:.78rem; color:var(--fog)}
+
+/* ---------- comparison board ---------- */
+.board-wrap{overflow-x:auto; margin-top:26px; border:1px solid var(--smoke); background:#0e0e0e}
+table.board{width:100%; border-collapse:collapse; min-width:calc(150px + var(--n,2) * 220px)}
+.board th, .board td{vertical-align:top; text-align:left; border-bottom:1px solid #262626; padding:16px}
+.board thead th{position:sticky; top:0; background:#0e0e0e; z-index:1; border-bottom:1px solid var(--ash)}
+.board .rowh{width:150px; font-family:var(--type); font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--fog)}
+.board .rowh b{display:block; font-family:var(--display); font-weight:900; font-size:1.25rem; color:var(--white); letter-spacing:0; text-transform:none; margin-bottom:2px}
+.who{display:flex; gap:12px; align-items:center}
+.who svg{width:54px; height:auto; flex:none; filter:grayscale(1) brightness(1.1)}
+.who .nm{font-family:var(--display); font-weight:900; font-size:1.2rem; color:var(--white); line-height:1.1}
+.who .yr{font-family:var(--type); font-size:.72rem; color:var(--ash)}
+.who .x{margin-left:auto; font-family:var(--type); font-size:.8rem; color:var(--ash); border:1px solid #333; width:26px; height:26px; display:grid; place-items:center}
+.who .x:hover{color:var(--white); border-color:var(--white)}
+.cell{background:var(--paper); color:var(--black); padding:12px 14px; position:relative; transition:transform .2s, box-shadow .2s; min-height:100%}
+.cell p{margin:0 0 8px; font-size:1rem; line-height:1.4}
+.tag{display:inline-block; font-family:var(--type); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; border:1px solid var(--black); padding:2px 7px}
+.cell.match{box-shadow:0 0 0 3px var(--white), 0 0 26px rgba(255,255,255,.25)}
+.cell.match .tag{background:var(--black); color:var(--white)}
+.cell a.more{display:block; margin-top:10px; font-family:var(--type); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; text-decoration:none; border-top:1px dashed #888; padding-top:8px}
+.cell a.more:hover{text-decoration:underline}
+.agree{font-family:var(--type); font-size:.72rem; color:var(--white); margin-top:8px; text-transform:uppercase; letter-spacing:.05em}
+tr.dim{display:none}
+.empty{padding:50px 20px; text-align:center; color:var(--ash); font-style:italic}
+
+/* ---------- files ---------- */
+.files{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px}
+.file{display:block; text-decoration:none; background:var(--paper); color:var(--black); padding:18px; position:relative; transition:transform .25s, box-shadow .25s}
+.file:hover{transform:translateY(-4px) rotate(-.5deg); box-shadow:0 0 0 2px var(--white)}
+.file .no{font-family:var(--type); font-size:.75rem}
+.file h3{font-family:var(--display); font-weight:900; font-size:1.4rem; margin:6px 0 4px}
+.file p{margin:0; font-style:italic; font-size:.95rem; color:#333}
+.file .go{display:block; margin-top:12px; font-family:var(--type); font-size:.75rem; text-transform:uppercase; border-top:1px dashed #777; padding-top:8px}
+/* who said it teaser */
+.wsi{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:center; border-top:1px solid var(--smoke); border-bottom:1px solid var(--smoke); padding:40px 0}
+.wsi-btn{display:inline-block; text-decoration:none; font-size:.85rem; padding:11px 18px; background:var(--white); color:var(--black); border:2px solid var(--white)}
+.wsi-btn:hover{background:transparent; color:var(--white)}
+.wsi-card{position:relative; display:block; text-decoration:none; background:var(--paper); color:var(--black); padding:40px 28px 26px; transform:rotate(1deg); box-shadow:0 30px 60px -20px #000; transition:transform .3s}
+.wsi-card:hover{transform:rotate(0) translateY(-4px)}
+.wsi-tag{position:absolute; top:-12px; left:22px; background:var(--white); border:1px solid #000; padding:3px 9px; font-size:.72rem}
+.wsi-q{display:block; font-family:var(--type); font-size:clamp(1.2rem,2.8vw,1.6rem); line-height:1.4}
+.wsi-a{display:block; margin-top:14px; font-size:.8rem; color:#444}
+@media (max-width:760px){ .wsi{grid-template-columns:1fr} }
+footer{padding:30px 16px 60px; text-align:center; color:var(--ash); font-size:.85rem; border-top:1px solid var(--smoke)}
+
+@media (max-width:900px){
+  .suspects{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .files{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .suspects{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .board .rowh{width:110px}
+  table.board{min-width:calc(110px + var(--n,2) * 200px)}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar type" aria-label="Site">
+  <a href="../">← Great Economic Thinkers</a>
+  <span style="display:flex;gap:8px;flex-wrap:wrap"><a href="../who-said-it/">Who said it?</a><a href="#files">The case files</a></span>
+</nav>
+
+<header class="hero">
+  <div class="blinds" aria-hidden="true"></div>
+  <div class="stamp type">Cross-examination</div>
+  <h1>The Line-Up<em>Who said what about what we make, how we make it, and who gets it?</em></h1>
+  <p class="lede">Pick suspects from every case file and put them side by side. When two of them give the same answer, the board lights up.</p>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="pickH">
+    <div class="eyebrow type">Step one</div>
+    <h2 id="pickH">Pick your <em>suspects</em></h2>
+    <p class="hint">Click up to four. Or choose a ready-made line-up below.</p>
+    <div class="lineup"><div class="suspects" id="suspects" role="group" aria-label="Thinkers"></div></div>
+    <div class="controls">
+      <div class="group" role="group" aria-label="Ready-made line-ups"><span class="lbl type">Line-ups:</span><span id="presets"></span></div>
+      <div class="group"><span class="count type" id="count"></span><button class="chip" type="button" id="clearAll">Clear</button></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="boardH" style="padding-top:10px">
+    <div class="eyebrow type">Step two</div>
+    <h2 id="boardH">Compare their <em>stories</em></h2>
+    <div class="controls" style="margin-top:6px">
+      <div class="group" role="group" aria-label="Show question"><span class="lbl type">Show:</span><span id="filters"></span></div>
+    </div>
+    <div class="board-wrap" id="boardWrap"></div>
+  </section>
+
+  <section aria-labelledby="wsiH" style="padding-top:20px">
+    <div class="wsi">
+      <div>
+        <div class="eyebrow type">Test your memory</div>
+        <h2 id="wsiH">Who <em>said</em> it?</h2>
+        <p class="hint">Think you know these suspects now? A quotation is found at the scene. Pick the thinker who said it. Ten exhibits, four suspects each.</p>
+        <a class="wsi-btn type" href="../who-said-it/">Examine the evidence →</a>
+      </div>
+      <a class="wsi-card" href="../who-said-it/" aria-label="Play Who Said It">
+        <span class="wsi-tag type">Exhibit A</span>
+        <span class="wsi-q">“The Market is the best Judge of value.”</span>
+        <span class="wsi-a type">— ??? · 1690</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="files" aria-labelledby="filesH">
+    <div class="eyebrow type">The full evidence</div>
+    <h2 id="filesH">Open the <em>case files</em></h2>
+    <p class="hint">Each answer above is a one-line summary. The files have the full story, the interactive exhibits, and the games.</p>
+    <div class="files">
+      <a class="file" href="../before-smith/"><span class="no type">Case No. 001</span><h3>Before Adam Smith</h3><p>Barbon, the Tudor Crown, Hobbes, North, Mandeville, Quesnay.</p><span class="go">Open the file →</span></a>
+      <a class="file" href="../smith/"><span class="no type">Case No. 002</span><h3>Adam Smith</h3><p>Four stages, labor and value, the invisible hand.</p><span class="go">Open the file →</span></a>
+      <a class="file" href="../malthus/"><span class="no type">Case No. 003</span><h3>Thomas Robert Malthus</h3><p>Population, rent, and gluts.</p><span class="go">Open the file →</span></a>
+      <a class="file" href="../ricardo/"><span class="no type">Case No. 004</span><h3>David Ricardo</h3><p>Rent, labor value, and comparative advantage.</p><span class="go">Open the file →</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="type" style="font-size:.75rem">Great Economic Thinkers and their Ideas</div>
+  <p>Summaries are abridged from the case files, which follow E.K. Hunt &amp; Mark Lautzenheiser, <i>History of Economic Thought: A Critical Perspective</i> (2011).</p>
+</footer>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+
+  /* ---------- silhouettes (grayscale mugshots) ---------- */
+  const HATS = {
+    tricorn:`<path d="M20 34 Q55 8 90 34 Q55 26 20 34Z" fill="#111"/>`,
+    crown:`<path d="M34 30 L37 12 L46 22 L55 8 L64 22 L73 12 L76 30 Z" fill="#cfcfcf" stroke="#111" stroke-width="3"/>`,
+    wig:`<path d="M28 58 Q20 22 55 22 Q90 22 82 58 Q90 72 78 76 L78 50 Q55 36 32 50 L32 76 Q20 72 28 58Z" fill="#d9d9d9" stroke="#111" stroke-width="3"/>`,
+    tall:`<rect x="36" y="2" width="38" height="28" fill="#111"/><rect x="26" y="28" width="58" height="7" fill="#111"/>`,
+    cap:`<path d="M30 36 Q55 10 80 36 Z" fill="#8a8a8a" stroke="#111" stroke-width="3"/>`,
+    beret:`<ellipse cx="55" cy="30" rx="27" ry="10" fill="#555" stroke="#111" stroke-width="3"/>`,
+    parson:`<ellipse cx="55" cy="34" rx="36" ry="6" fill="#111"/><path d="M38 34 Q38 14 55 14 Q72 14 72 34Z" fill="#111"/>`,
+    bald:`<path d="M31 46 Q30 30 40 28 M79 46 Q80 30 70 28" stroke="#555" stroke-width="5" fill="none"/><path d="M40 82 Q55 88 70 82" stroke="#111" stroke-width="5" fill="none"/>`,
+    smith:`<path d="M30 56 Q24 24 55 22 Q86 24 80 56 L80 44 Q55 30 30 44 Z" fill="#e2e2e2" stroke="#111" stroke-width="3"/><circle cx="84" cy="62" r="6" fill="#e2e2e2" stroke="#111" stroke-width="2"/><circle cx="26" cy="62" r="6" fill="#e2e2e2" stroke="#111" stroke-width="2"/>`
+  };
+  const face = (hat, collar) => `<svg viewBox="0 0 110 130" aria-hidden="true">
+    <path d="M14 130 Q14 92 55 86 Q96 92 96 130 Z" fill="#2b2b2b" stroke="#000" stroke-width="2"/>
+    ${collar ? `<path d="M45 88 L55 104 L65 88 Z" fill="#eee"/>` : ""}
+    <rect x="47" y="72" width="16" height="18" fill="#9a9a9a"/>
+    <ellipse cx="55" cy="54" rx="24" ry="28" fill="#a8a8a8" stroke="#000" stroke-width="2"/>
+    <ellipse cx="46" cy="54" rx="3" ry="2" fill="#222"/><ellipse cx="64" cy="54" rx="3" ry="2" fill="#222"/>
+    <path d="M47 68 Q55 71 63 68" stroke="#333" stroke-width="2" fill="none"/>
+    ${hat}
+  </svg>`;
+
+  /* ---------- the suspects (abridged from the case files) ---------- */
+  const P = [
+    {id:"barbon", n:"Nicholas Barbon", s:"Barbon", yr:"1690 · merchant", file:"../before-smith/", c:"001", hat:HATS.tricorn,
+     what:["Whatever buyers want. Value comes from usefulness.", "the market"],
+     how:["Buy cheap, hold, sell dear. Profit lives in the price gap.", "trade"],
+     share:["Merchants take their cut through exchange.", "merchants"],
+     value:["Market price, set by use and scarcity.", "exchange"],
+     serves:["Merchant capital and its monopolies.", "merchants"]},
+    {id:"crown", n:"The Tudor Crown", s:"Tudor Crown", yr:"1530s–1603 · the state", file:"../before-smith/", c:"001", hat:HATS.crown,
+     what:["Exports and new industries, to end unemployment.", "exports"],
+     how:["Regulate it all: standards, apprenticeships, monopoly patents.", "regulation"],
+     share:["Poor relief from a compulsory rate, but wages capped by law.", "the poor & employers"],
+     value:["Market price; the state keeps order.", "exchange"],
+     serves:["The monarchy, and employers on the bench.", "employers"]},
+    {id:"hobbes", n:"Thomas Hobbes", s:"Hobbes", yr:"1651 · philosopher", file:"../before-smith/", c:"001", hat:HATS.wig,
+     what:["Whatever keeps each person going.", "self-interest"],
+     how:["Expect self-interest in every act, even pity.", "self-interest"],
+     share:["Not his focus, but he made selfishness look natural.", "self-interest"],
+     value:["Not his question.", "n/a"],
+     serves:["Rising capitalists, by making their motives universal.", "capitalists"]},
+    {id:"north", n:"Sir Dudley North", s:"North", yr:"1691 · free trader", file:"../before-smith/", c:"001", hat:HATS.tall,
+     what:["Whatever free competition calls forth.", "the market"],
+     how:["Scrap privileges; let self-interest compete.", "free markets"],
+     share:["No special favors. Lobbyists dress private gain as public good.", "free markets"],
+     value:["The market, left alone.", "exchange"],
+     serves:["Capitalists boxed in by old privileges.", "capitalists"]},
+    {id:"mandeville", n:"Bernard Mandeville", s:"Mandeville", yr:"1714 · satirist", file:"../before-smith/", c:"001", hat:HATS.cap,
+     what:["Luxuries. Vanity and greed keep the hive busy.", "luxury"],
+     how:["Divide the work; trade is labor swapped for labor.", "division of labor"],
+     share:["Private vices bring public benefits.", "self-interest"],
+     value:["Labor.", "labor"],
+     serves:["Capitalists, by turning vices into virtues.", "capitalists"]},
+    {id:"quesnay", n:"François Quesnay", s:"Quesnay", yr:"1758 · Physiocrat", file:"../before-smith/", c:"001", hat:HATS.beret,
+     what:["Crops. Only farming yields a surplus.", "farming"],
+     how:["Big capitalist farms and free trade; abolish guilds.", "free markets"],
+     share:["The surplus goes to landlords as rent. Tax only land.", "landlords"],
+     value:["Nature, through the soil.", "nature"],
+     serves:["Capitalist reform, yet he never touched landlords' rent.", "landlords"]},
+    {id:"smith", n:"Adam Smith", s:"Smith", yr:"1776 · Scotland", file:"../smith/", c:"002", hat:HATS.smith,
+     what:["Whatever the stage allows; in commerce, goods chased by 'nature's deception.'", "manufactures"],
+     how:["By labor. Tools are stored-up labor; free producers work hardest.", "labor"],
+     share:["Rent, wages, profit. Masters usually win the wage bargain.", "three classes"],
+     value:["Labor.", "labor"],
+     serves:["Both sides: he saw class conflict, yet trusted an invisible hand.", "harmony & conflict"]},
+    {id:"malthus", n:"Thomas Robert Malthus", s:"Malthus", yr:"1798–1834 · parson", file:"../malthus/", c:"003", hat:HATS.parson, collar:true,
+     what:["Food first, and enough luxury spending to prevent gluts.", "farming"],
+     how:["Three owners (labor, capital, land) each paid for their input.", "three classes"],
+     share:["Poverty is natural; high rents benefit everyone.", "landlords"],
+     value:["Supply and demand (the exchange view).", "exchange"],
+     serves:["The landlords.", "landlords"]},
+    {id:"ricardo", n:"David Ricardo", s:"Ricardo", yr:"1817 · stockbroker", file:"../ricardo/", c:"004", hat:HATS.bald,
+     what:["Cheap food via free trade; specialize where you're relatively best.", "free trade"],
+     how:["By labor alone. Nature works free; machines are past labor.", "labor"],
+     share:["Wages, profit, rent in conflict; rising rents squeeze profits.", "three classes"],
+     value:["Labor embodied.", "labor"],
+     serves:["The capitalists, against the landlords.", "capitalists"]}
+  ];
+  const ROWS = [
+    {k:"what", n:"What?", d:"will we make", tab:"what"},
+    {k:"how", n:"How?", d:"will we make it", tab:"how"},
+    {k:"share", n:"Share?", d:"who gets it", tab:"share"},
+    {k:"value", n:"Value", d:"comes from", tab:"verdict"},
+    {k:"serves", n:"Whose side?", d:"per Hunt & Lautzenheiser", tab:"verdict"}
+  ];
+  const PRESETS = [
+    ["Smith vs. Malthus", ["smith","malthus"]],
+    ["Ricardo vs. Malthus", ["ricardo","malthus"]],
+    ["The merchant age", ["barbon","crown","north"]],
+    ["Selfishness as virtue", ["hobbes","mandeville","smith"]],
+    ["Friends of the land", ["quesnay","malthus"]],
+    ["Labor creates value", ["mandeville","smith","ricardo"]]
+  ];
+  const FILTERS = [["all","All"],["what","What"],["how","How"],["share","Share"],["value","Value"],["serves","Whose side"]];
+
+  let sel = ["smith","malthus"], filter = "all";
+  const byId = id => P.find(p => p.id === id);
+
+  /* ---------- line-up ---------- */
+  $("#suspects").innerHTML = P.map((p, i) => `<button class="sus" type="button" data-id="${p.id}" aria-pressed="false">
+      <span class="no">No. ${String(i + 1).padStart(3, "0")}</span>${face(p.hat, p.collar)}<span class="booked">BOOKED</span>
+      <span class="plate"><b>${p.s}</b>${p.yr}</span></button>`).join("");
+  $$(".sus").forEach(b => b.addEventListener("click", () => toggle(b.dataset.id)));
+  $("#presets").innerHTML = PRESETS.map((p, i) => `<button class="chip" type="button" data-p="${i}">${p[0]}</button>`).join(" ");
+  $$("[data-p]").forEach(b => b.addEventListener("click", () => { sel = PRESETS[+b.dataset.p][1].slice(); draw(); }));
+  $("#filters").innerHTML = FILTERS.map(f => `<button class="chip" type="button" data-f="${f[0]}" aria-pressed="${f[0] === filter}">${f[1]}</button>`).join(" ");
+  $$("[data-f]").forEach(b => b.addEventListener("click", () => { filter = b.dataset.f; draw(); }));
+  $("#clearAll").addEventListener("click", () => { sel = []; draw(); });
+
+  function toggle(id){
+    if (sel.includes(id)) sel = sel.filter(x => x !== id);
+    else { if (sel.length >= 4) sel.shift(); sel.push(id); }
+    draw();
+  }
+
+  /* ---------- board ---------- */
+  function draw(){
+    $$(".sus").forEach(b => b.setAttribute("aria-pressed", sel.includes(b.dataset.id)));
+    $$("[data-f]").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === filter));
+    $("#count").textContent = `${sel.length} of 4 booked`;
+    const wrap = $("#boardWrap");
+    if (!sel.length){ wrap.innerHTML = `<div class="empty">The interrogation room is empty. Pick a suspect from the line-up.</div>`; return; }
+    const people = sel.map(byId);
+    let h = `<table class="board" style="--n:${people.length}"><thead><tr><th class="rowh" scope="col">Question</th>${people.map(p => `<th scope="col"><div class="who">${face(p.hat, p.collar)}<div><div class="nm">${p.n}</div><div class="yr">${p.yr} · Case ${p.c}</div></div><button class="x" type="button" data-rm="${p.id}" aria-label="Remove ${p.n}">✕</button></div></th>`).join("")}</tr></thead><tbody>`;
+    ROWS.forEach(r => {
+      const tags = people.map(p => p[r.k][1]);
+      const counts = {}; tags.forEach(t => { if (t !== "n/a") counts[t] = (counts[t] || 0) + 1; });
+      const hidden = filter !== "all" && filter !== r.k;
+      h += `<tr class="${hidden ? "dim" : ""}"><th class="rowh" scope="row"><b>${r.n}</b>${r.d}</th>${people.map(p => {
+        const [text, tag] = p[r.k], match = counts[tag] > 1;
+        const mates = match ? people.filter(o => o !== p && o[r.k][1] === tag).map(o => o.s) : [];
+        return `<td><div class="cell ${match ? "match" : ""}"><p>${text}</p><span class="tag">${tag}</span>
+          ${match ? `<div class="agree" style="color:#000">● Same answer as ${mates.join(" & ")}</div>` : ""}
+          <a class="more" href="${p.file}#${r.tab}">More in Case ${p.c} →</a></div></td>`;
+      }).join("")}</tr>`;
+    });
+    h += `</tbody></table>`;
+    wrap.innerHTML = h;
+    $$("[data-rm]").forEach(b => b.addEventListener("click", () => toggle(b.dataset.rm)));
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invisible Hand · Great Economic Thinkers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Crimson+Pro:ital,wght@0,500;1,400;1,500&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --ink:#0C1222; --ink2:#111A2E; --panel:#182340; --panel2:#1F2C4E; --line:#2B3A60; --line2:#3A4C7A;
+  --brass:#E0B45A; --brass2:#B8863A; --brass-dim:#6B5528;
+  --text:#EDE7D6; --muted:#98A3BE; --faint:#5E6A8A;
+  --parch:#F1E4C3; --parch2:#E3D2A6; --parch-ink:#3B2E1A; --parch-muted:#7A6A4A;
+  --you:#4FD1C5; --r1:#F27A7A; --r2:#B48CF7;
+  --good:#6FD08C; --warn:#F2B04A; --bad:#F06A6A;
+  --forest:#2E9E6B; --steppe:#C99A3A; --field:#E8C15A; --hill:#B8613C; --coast:#3A8FD9; --fair:#8C7CC0;
+  --display:"Cinzel",Georgia,"Times New Roman",serif;
+  --serif:"Crimson Pro",Georgia,"Times New Roman",serif;
+  --ui:"Nunito Sans","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--ink);color:var(--text);font-family:var(--ui);font-size:14px;line-height:1.45}
+body{margin:0;background:
+  radial-gradient(1200px 600px at 20% -10%, #1B2A4F 0%, transparent 60%),
+  radial-gradient(900px 500px at 110% 20%, #2A1E4A 0%, transparent 55%),
+  var(--ink);}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,.hex:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.app{max-width:1440px;margin:0 auto;padding-block:12px 28px;padding-inline:16px;display:grid;gap:12px}
+
+/* ---- header ---- */
+.top{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:10px 14px;background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--line);border-radius:10px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand h1{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.06em;margin:0;color:var(--brass);text-shadow:0 0 18px rgba(224,180,90,.35)}
+.brand small{display:block;font-family:var(--serif);font-style:italic;font-size:13px;color:var(--muted);letter-spacing:0}
+.sigil{width:36px;height:36px;flex:none}
+.back,.home-float{display:inline-flex;align-items:center;height:34px;padding:0 12px;flex:none;border-radius:8px;border:1px solid var(--line2);background:var(--ink2);color:var(--text);text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap;transition:border-color .15s,color .15s}
+.back:hover,.back:focus-visible,.home-float:hover,.home-float:focus-visible{border-color:var(--brass);color:var(--brass);outline:none}
+/* shown only while a full-screen dialog (e.g. choose your champion) covers the header */
+.home-float{position:fixed;left:16px;bottom:16px;z-index:70;display:none;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.overlay:not([hidden]) ~ .home-float{display:inline-flex}
+.race{display:grid;gap:5px;min-width:0}
+.race-row{display:grid;grid-template-columns:96px 1fr 30px;gap:8px;align-items:center;font-size:12px}
+.race-row .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.race-bar{height:8px;background:var(--ink);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.race-bar i{display:block;height:100%;border-radius:99px;transition:width .5s ease}
+.race-row b{font-variant-numeric:tabular-nums;text-align:right}
+.clock{text-align:right}
+.clock .ph{font-family:var(--display);font-weight:700;letter-spacing:.14em;font-size:11px;color:var(--brass)}
+.clock .tn{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.clock .tn span{color:var(--muted);font-size:13px;font-weight:600}
+
+/* ---- main ---- */
+.main{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,440px);gap:12px;align-items:start}
+.board-wrap{position:relative;background:linear-gradient(180deg,#0F1830,#0B1122);border:1px solid var(--line);border-radius:12px;padding:8px;overflow:hidden}
+.board-wrap::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 60% at 50% 50%, rgba(224,180,90,.06), transparent 70%);pointer-events:none}
+svg.board{width:100%;height:auto;display:block;max-width:100%}
+.hex{cursor:default}
+.hex.eligible{cursor:pointer}
+.hex.eligible .rim{stroke:var(--brass);stroke-width:3;stroke-dasharray:6 5;animation:march 1.6s linear infinite}
+.hex.selected .rim{stroke:#fff;stroke-width:3.5;stroke-dasharray:none}
+.hex.objective .glow{animation:pulse 1.8s ease-in-out infinite}
+@keyframes march{to{stroke-dashoffset:-22}}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.7}}
+.hex text{pointer-events:none;user-select:none}
+.dice{position:absolute;right:14px;top:12px;display:flex;gap:6px;align-items:center;z-index:2}
+.die{width:36px;height:36px;border-radius:8px;background:radial-gradient(120% 100% at 30% 20%,#FBF3DC,var(--parch) 60%,var(--parch2));color:var(--parch-ink);display:grid;place-items:center;box-shadow:0 3px 0 var(--parch2),0 6px 14px rgba(0,0,0,.4)}
+.die .pips{display:grid;grid-template-columns:repeat(3,1fr);width:26px;height:26px;gap:2px}
+.die .pips i{border-radius:50%;background:transparent}
+.die .pips i.on{background:#3B2E1A;box-shadow:inset 0 1px 1px rgba(0,0,0,.5)}
+.die.tumble{animation:tumble .09s linear infinite}
+.die.tumble:nth-child(2){animation-direction:reverse;animation-duration:.11s}
+@keyframes tumble{0%{transform:rotate(-14deg) translateY(-3px) scale(1.05)}50%{transform:rotate(9deg) translateY(2px) scale(.95)}100%{transform:rotate(-14deg) translateY(-3px) scale(1.05)}}
+.die.settle{animation:settle .55s cubic-bezier(.2,1.4,.4,1)}
+.die.settle:nth-child(2){animation-delay:.08s}
+@keyframes settle{0%{transform:rotate(-30deg) scale(1.35) translateY(-14px)}60%{transform:rotate(6deg) scale(.92) translateY(2px)}100%{transform:none}}
+.dice .sum{font-family:var(--display);font-weight:800;color:var(--brass);font-size:22px;margin-left:4px;min-width:26px;text-align:center}
+.dice .sum.reveal{animation:sumpop .5s cubic-bezier(.2,1.4,.4,1)}
+.dice .sum.seven{color:var(--bad);text-shadow:0 0 14px rgba(240,106,106,.6)}
+@keyframes sumpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.4)}100%{transform:none;opacity:1}}
+.hex.hit .face{animation:hexhit 1.1s ease-out}
+@keyframes hexhit{0%{filter:brightness(1)}20%{filter:brightness(1.9) saturate(1.3)}100%{filter:brightness(1)}}
+.hex.hit .ring{animation:ringout 1s ease-out forwards}
+@keyframes ringout{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.25)}}
+.hex .float{opacity:0;font-weight:800;font-family:var(--ui);paint-order:stroke;stroke:#0B1122;stroke-width:3px}
+.hex.hit .float{animation:floatup 1.5s ease-out .15s forwards}
+@keyframes floatup{0%{opacity:0;transform:translateY(6px)}15%{opacity:1}100%{opacity:0;transform:translateY(-34px)}}
+.hex .ring,.hex .float,.hex .marker{transform-box:fill-box;transform-origin:center}
+.hex .marker.pop{animation:popin .55s cubic-bezier(.2,1.6,.4,1)}
+@keyframes popin{0%{transform:scale(0) rotate(-30deg)}100%{transform:none}}
+.hex .own{stroke-dasharray:300;stroke-dashoffset:0}
+.hex .own.draw{animation:draw .8s ease-out}
+@keyframes draw{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+.motes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+svg.board{position:relative;z-index:1}
+.legend{position:absolute;left:14px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px 10px;font-size:11px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---- panel ---- */
+.panel{display:grid;gap:10px}
+.card{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.society{border-color:var(--line2);position:relative;overflow:hidden}
+.society::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,var(--pc,#4FD1C5) 0%,transparent 70%);opacity:.14;pointer-events:none}
+.soc-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.soc-name{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.04em}
+.soc-champ{font-size:12px;color:var(--muted)}
+.stage-badge{display:inline-flex;flex-direction:column;align-items:flex-end;text-align:right}
+.stage-badge .st{font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:12px;padding:4px 10px;border-radius:6px;color:var(--ink);background:var(--sc,#2E9E6B)}
+.stage-badge .ss{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--muted);margin-top:3px}
+.xp{height:5px;border-radius:99px;background:rgba(0,0,0,.35);border:1px solid var(--line);overflow:hidden;margin-top:6px;width:180px;max-width:100%}
+.xp i{display:block;height:100%;background:linear-gradient(90deg,var(--brass2),#F3D48A);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.xpl{font-size:10px;letter-spacing:.08em;color:var(--muted);margin-top:3px;font-variant-numeric:tabular-nums}
+.quests{display:grid;gap:4px;margin-top:10px}
+.quest{font-size:12px;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,.25);border-left:3px solid var(--brass);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.quest.minor{opacity:.65;border-left-color:var(--line2)}
+.quest .qk{font-family:var(--display);font-size:9px;letter-spacing:.16em;color:var(--brass);font-weight:800}
+.quest .qg{color:var(--muted)}
+.quest .qr{margin-left:auto;font-size:11px;color:var(--good);font-weight:700;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.stat{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:8px;padding:6px 8px;display:grid;gap:1px}
+.stat .k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:11px;color:var(--muted);font-weight:600}
+.res{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+.res .r{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.res .r .ic{font-size:16px;line-height:1}
+.res .r .n{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums;display:inline-block}
+.res .r .n.up{animation:bumpup .7s cubic-bezier(.2,1.4,.4,1)}
+.res .r .n.down{animation:bumpdown .7s ease}
+@keyframes bumpup{0%{transform:scale(1)}30%{transform:scale(1.5);color:var(--good)}100%{transform:none}}
+@keyframes bumpdown{0%{transform:translateX(0)}25%{transform:translateX(-3px);color:var(--bad)}50%{transform:translateX(3px);color:var(--bad)}100%{transform:none}}
+.stat .v.up{animation:bumpup .7s cubic-bezier(.2,1.4,.4,1);display:inline-block}
+.stat .v.down{animation:bumpdown .7s ease;display:inline-block}
+.res .r .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;display:block;line-height:1}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.flag{font-size:11px;padding:3px 8px;border-radius:99px;border:1px solid var(--line2);color:var(--muted);background:rgba(0,0,0,.2)}
+.flag.on{color:var(--brass);border-color:var(--brass-dim)}
+
+.stepper{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.step{padding:8px 6px;text-align:center;border-radius:8px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:var(--faint)}
+.step .q{font-family:var(--display);font-weight:800;letter-spacing:.14em;font-size:11px}
+.step .d{font-size:11px;margin-top:2px}
+.step.active{border-color:var(--brass);color:var(--text);background:linear-gradient(180deg,rgba(224,180,90,.16),rgba(224,180,90,.04));box-shadow:0 0 0 1px rgba(224,180,90,.25) inset}
+.step.done{color:var(--muted);border-color:var(--line2)}
+
+.action.swap{animation:swapin .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes swapin{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.action .opts .opt{animation:rise .35s ease both;animation-delay:calc(var(--i,0)*60ms)}
+.thinking{display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle}
+.thinking i{width:6px;height:6px;border-radius:50%;background:var(--brass);animation:blink 1s infinite}
+.thinking i:nth-child(2){animation-delay:.2s}.thinking i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.step.active .q{animation:stepglow 1.8s ease-in-out infinite}
+@keyframes stepglow{0%,100%{text-shadow:0 0 0 rgba(224,180,90,0)}50%{text-shadow:0 0 12px rgba(224,180,90,.7)}}
+.action h3{font-family:var(--display);font-weight:700;letter-spacing:.06em;font-size:15px;margin:0 0 4px;color:var(--brass)}
+.action .lead{font-family:var(--serif);font-style:italic;color:var(--muted);margin:0 0 10px;font-size:14px}
+.yield{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:99px;background:rgba(0,0,0,.28);border:1px solid var(--line);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.chip.dim{opacity:.55;font-weight:600}
+.opts{display:grid;gap:6px}
+.opt{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel2),var(--panel));transition:transform .08s,border-color .15s}
+.opt:hover:not(:disabled){border-color:var(--brass);transform:translateY(-1px)}
+.opt:disabled{opacity:.45;cursor:not-allowed}
+.opt .t{font-weight:800}
+.opt .s{font-size:12px;color:var(--muted)}
+.opt .amt{font-weight:800;font-variant-numeric:tabular-nums;color:var(--brass);white-space:nowrap}
+.opt .amt small{color:var(--muted);font-weight:600}
+.opt.danger:hover:not(:disabled){border-color:var(--bad)}
+.opt.save{border-color:var(--brass-dim);background:linear-gradient(180deg,rgba(224,180,90,.14),var(--panel))}
+.opt .tag{display:inline-block;font-family:var(--display);font-size:9px;letter-spacing:.14em;font-weight:800;color:#1A1406;background:linear-gradient(180deg,#F0C76B,#C9964A);padding:2px 6px;border-radius:4px;margin-right:6px;vertical-align:1px}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+.btn{padding:8px 12px;border-radius:9px;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));font-weight:700;font-size:13px;transition:border-color .15s,transform .08s}
+.btn:hover:not(:disabled){border-color:var(--brass);transform:translateY(-1px)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn.primary{background:linear-gradient(180deg,#F0C76B,#C9964A);color:#1A1406;border-color:#F3D48A;font-family:var(--display);letter-spacing:.06em;font-weight:800}
+.btn.primary:hover:not(:disabled){filter:brightness(1.06)}
+.btn.ghost{background:transparent}
+.btn .cost{color:var(--muted);font-weight:600;font-size:12px;margin-left:4px}
+.btn.primary .cost{color:#4A3712}
+.hexinfo{display:grid;gap:8px;padding:10px;border-radius:10px;background:rgba(0,0,0,.25);border:1px dashed var(--line2);margin-bottom:10px}
+.hexinfo .hn{font-weight:800;display:flex;align-items:center;gap:8px}
+.hexinfo .hn i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.hexinfo .hs{font-size:12px;color:var(--muted)}
+.sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px}
+.ability{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;border:1px solid var(--line2);background:rgba(0,0,0,.2)}
+.ability .ico{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:18px;background:radial-gradient(circle at 30% 30%,#2A3A6A,#131B30);border:1px solid var(--line2);color:var(--brass);position:relative;overflow:hidden}
+.ability .ico .cd{position:absolute;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;font-size:16px;color:#fff}
+.ability .an{font-weight:800}
+.ability .ad{font-size:12px;color:var(--muted)}
+.trade{display:grid;grid-template-columns:1fr auto 1fr auto;gap:6px;align-items:center}
+select{font:inherit;background:var(--ink);color:var(--text);border:1px solid var(--line2);border-radius:8px;padding:7px 8px}
+.share-opt .split{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;font-size:12px}
+.share-opt .split div{background:rgba(0,0,0,.25);border-radius:6px;padding:4px 8px}
+.share-opt .split b{font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:99px;background:var(--ink);overflow:hidden;display:flex;margin-top:6px}
+.bar i{display:block;height:100%;transform-origin:left;animation:grow .7s cubic-bezier(.2,.8,.2,1) both}
+.bar i+i{animation-delay:.25s}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.note.warn{color:var(--warn)}
+/* cost readouts */
+.cc{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;padding:2px 6px;border-radius:6px;background:rgba(0,0,0,.3);border:1px solid var(--line);margin-left:4px;vertical-align:middle;line-height:1.2}
+.cc.ok{color:var(--good);border-color:rgba(111,208,140,.4)}
+.cc.no{color:var(--bad);border-color:rgba(240,106,106,.45)}
+.btn.primary .cc{background:rgba(0,0,0,.18);border-color:rgba(0,0,0,.25)}
+.btn.primary .cc.ok{color:#1F5A2E}.btn.primary .cc.no{color:#8A1F1F}
+.need{font-size:12px;color:var(--muted);line-height:1.45}
+.need b{color:var(--text)}
+.need .src{color:var(--brass)}
+.nextbuild{margin-top:10px;padding:8px 10px;border-radius:8px;background:rgba(224,180,90,.07);border:1px dashed var(--brass-dim);font-size:12px}
+.nextbuild .k{font-family:var(--display);font-size:10px;letter-spacing:.14em;color:var(--brass);display:block;margin-bottom:2px}
+.nextbuild .done{color:var(--good);font-weight:800}
+/* reference card */
+.ref h4{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.ref h4 button{background:none;border:none;color:var(--muted);font-size:11px;letter-spacing:.08em;padding:0}
+.ref table{width:100%;border-collapse:collapse;font-size:12px}
+.ref th{text-align:left;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:4px 6px;border-bottom:1px solid var(--line)}
+.ref td{padding:6px 6px;border-bottom:1px solid rgba(43,58,96,.5);vertical-align:top}
+.ref tr:last-child td{border-bottom:none}
+.ref td:first-child{font-weight:800;white-space:nowrap}
+.ref .cost{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ref .how{color:var(--muted)}
+.ref .how b{color:var(--text);font-weight:700}
+.ref .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.ref .tbl{overflow-x:auto}
+.ref .sub{margin-top:10px}
+.ref[data-open="0"] .body{display:none}
+
+/* ---- bottom ---- */
+.bottom{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:12px;align-items:start}
+.card h4{font-family:var(--display);font-weight:700;letter-spacing:.1em;font-size:12px;margin:0 0 8px;color:var(--brass)}
+.rivals{display:grid;gap:8px}
+.rival{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.22);border:1px solid var(--line);border-left:4px solid var(--rc,#F27A7A)}
+.rival.shake{animation:shake .6s ease}
+@keyframes shake{0%,100%{transform:none}15%{transform:translateX(-6px) rotate(-1deg)}30%{transform:translateX(5px)}45%{transform:translateX(-4px) rotate(1deg)}60%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+.rival.thinking-card{box-shadow:0 0 0 1px var(--rc) inset;animation:cardglow 1.2s ease-in-out infinite}
+@keyframes cardglow{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 16px -2px var(--rc)}}
+.rival .rn{font-weight:800}
+.rival .rs{font-size:11px;color:var(--muted)}
+.rival .rv{font-family:var(--display);font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
+.rival .rres{font-size:11px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.stpill{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;padding:2px 7px;border-radius:5px;color:var(--ink);background:var(--sc,#2E9E6B);display:inline-block}
+
+.chair{background:linear-gradient(180deg,#221A10,#171209);border-color:#4A3A1E}
+.chair h4{display:flex;justify-content:space-between;align-items:baseline}
+.chair h4 span{font-family:var(--serif);font-style:italic;letter-spacing:0;text-transform:none;font-weight:400;color:var(--parch-muted);font-size:12px}
+.ledger{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.rule{aspect-ratio:3/4;max-width:100%;border-radius:6px;padding:8px;position:relative;text-align:left;border:1px solid #5A4826;background:
+  repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 2px,transparent 2px 6px),linear-gradient(160deg,#3A2E1A,#241C10);color:var(--parch-muted);display:grid;align-content:space-between;transition:transform .12s}
+.rule .rn{font-family:var(--display);font-size:10px;letter-spacing:.12em;color:#8A7248}
+.rule .rq{font-family:var(--display);font-size:28px;font-weight:800;text-align:center;color:#6A5630}
+.rule .rt{font-family:var(--serif);font-style:italic;font-size:12px;color:#9A8258}
+.rule.revealed{background:
+  radial-gradient(120% 80% at 50% 0%,#FBF3DC 0%,var(--parch) 60%,var(--parch2) 100%);color:var(--parch-ink);border-color:#C9B27E;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
+.rule.revealed:hover{transform:translateY(-2px) rotate(-.5deg)}
+.rule.revealed .rn{color:#8A6A2E}
+.rule.revealed .rt{font-style:normal;font-family:var(--display);font-weight:700;font-size:12px;color:var(--parch-ink);line-height:1.25}
+.rule.revealed .re{font-size:11px;color:var(--parch-muted);line-height:1.3}
+.rule.fresh{animation:flip .6s ease}
+.rule.hinted{border-color:#8A7248;box-shadow:0 0 18px -4px rgba(224,180,90,.45)}
+.rule.hinted .rh{font-family:var(--serif);font-style:italic;font-size:12.5px;line-height:1.3;color:#D9C48E;text-align:center;align-self:center}
+.rule.hinted .rt{color:#C9A85A}
+.event .ev-card{display:grid;gap:12px}
+.event .ev-k{font-family:var(--display);font-size:11px;letter-spacing:.18em;color:var(--muted)}
+.event h2{margin:0}
+.event .ev-text{font-family:var(--serif);font-size:19px;line-height:1.45;color:var(--text);margin:0;max-width:60ch;border-left:3px solid var(--brass);padding-left:14px}
+.event .ev-choices{display:grid;gap:8px;margin-top:6px}
+.event .ev-choices .opt{animation:rise .35s ease both}
+.event .ev-choices .opt:nth-child(2){animation-delay:.1s}
+.perks .champ .body{min-height:96px}
+@keyframes flip{0%{transform:rotateY(90deg)}100%{transform:none}}
+
+.feed{max-height:290px;overflow:auto;display:grid;gap:4px;align-content:start;padding-right:4px}
+.ev{font-size:12px;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,.22);border-left:3px solid var(--line2);line-height:1.35}
+.ev.new{animation:slidein .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*90ms)}
+@keyframes slidein{from{opacity:0;transform:translateX(-14px);background:rgba(224,180,90,.18)}to{opacity:1;transform:none}}
+.ev.kill{border-left-color:var(--bad)}
+.ev.good{border-left-color:var(--good)}
+.ev.chair{border-left-color:var(--brass);background:rgba(224,180,90,.07)}
+.ev.stage{border-left-color:#fff;background:rgba(255,255,255,.06)}
+.ev .t{color:var(--faint);font-variant-numeric:tabular-nums;margin-right:6px;font-size:11px}
+.ev b.p{font-weight:800}
+
+/* ---- overlays ---- */
+.overlay{position:fixed;inset:0;background:rgba(6,9,18,.82);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50;overflow:auto}
+.overlay[hidden]{display:none}
+.modal{width:min(920px,100%);background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--line2);border-radius:16px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:rise .35s ease}
+@keyframes rise{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.modal h2{font-family:var(--display);font-weight:800;letter-spacing:.08em;margin:0 0 4px;color:var(--brass);font-size:26px;text-wrap:balance}
+.modal .lead{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:16px;margin:0 0 16px;max-width:65ch}
+.champs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.champ{text-align:left;padding:0;border-radius:14px;border:1px solid var(--line2);background:var(--ink);overflow:hidden;display:grid;transition:transform .12s,border-color .15s,box-shadow .2s;animation:champin .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*110ms)}
+@keyframes champin{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+.champ:hover{transform:translateY(-4px);border-color:var(--brass);box-shadow:0 14px 30px -10px rgba(224,180,90,.35)}
+.champ:hover .splash span{transform:scale(1.12);text-shadow:0 0 30px rgba(255,255,255,.7)}
+.champ .splash span{transition:transform .25s,text-shadow .25s}
+.champ .splash{height:120px;position:relative;display:grid;place-items:center;font-family:var(--display);font-size:54px;font-weight:800;color:rgba(255,255,255,.9);text-shadow:0 6px 30px rgba(0,0,0,.6)}
+.champ .splash::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--ink) 100%)}
+.champ .splash span{position:relative;z-index:1}
+.champ .body{padding:10px 12px 12px;display:grid;gap:6px}
+.champ .cn{font-family:var(--display);font-weight:800;letter-spacing:.06em;font-size:15px}
+.champ .cr{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);font-weight:800}
+.champ .cp{font-size:12px;color:var(--muted)}
+.champ .cp b{color:var(--text)}
+.champ .cp .kw{color:var(--brass);font-weight:800;letter-spacing:.06em;font-size:10px;text-transform:uppercase;margin-right:4px}
+
+.rulecard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:stretch;perspective:1200px}
+.penalty{background:radial-gradient(120% 80% at 50% 0%,#FBF3DC 0%,var(--parch) 60%,var(--parch2) 100%);color:var(--parch-ink);border-radius:10px;padding:18px;border:1px solid #C9B27E;box-shadow:0 10px 30px rgba(0,0,0,.4);display:grid;align-content:start;gap:10px;transform:rotate(-1.2deg);animation:flipin .8s cubic-bezier(.2,.8,.2,1) both;transform-style:preserve-3d}
+@keyframes flipin{0%{transform:rotateY(-100deg) rotate(-1.2deg);opacity:0}40%{opacity:1}100%{transform:rotateY(0) rotate(-1.2deg);opacity:1}}
+.rulecard .ex>*{animation:rise .45s ease both}
+.rulecard .ex>*:nth-child(2){animation-delay:.45s}.rulecard .ex>*:nth-child(3){animation-delay:.55s}.rulecard .ex>*:nth-child(4){animation-delay:.65s}.rulecard .ex>*:nth-child(5){animation-delay:.75s}.rulecard .ex>*:nth-child(6){animation-delay:.85s}
+.penalty .pn{font-family:var(--display);font-size:11px;letter-spacing:.16em;color:#8A6A2E}
+.penalty .pt{font-family:var(--display);font-weight:800;font-size:22px;line-height:1.15;text-wrap:balance}
+.penalty .pq{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.4;color:#4A3A22}
+.penalty .pq::before{content:"“"}.penalty .pq::after{content:"”"}
+.penalty .pa{font-size:11px;letter-spacing:.06em;color:var(--parch-muted)}
+.penalty .stamp{align-self:end;justify-self:end;border:2px solid #B33A2E;color:#B33A2E;font-family:var(--display);font-weight:800;letter-spacing:.14em;font-size:12px;padding:4px 8px;transform:rotate(-8deg);opacity:.85;animation:stamp .45s cubic-bezier(.2,1.6,.4,1) .85s both}
+@keyframes stamp{0%{transform:rotate(-20deg) scale(2.4);opacity:0}70%{transform:rotate(-6deg) scale(.92);opacity:.9}100%{transform:rotate(-8deg) scale(1);opacity:.85}}
+.rulecard .ex{display:grid;gap:12px;align-content:center}
+.rulecard .ex h3{margin:0;font-family:var(--display);font-size:13px;letter-spacing:.14em;color:var(--brass)}
+.rulecard .ex p{margin:0;max-width:60ch}
+.rulecard .ex .fx{padding:12px;border-radius:10px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
+.stagebanner{text-align:center;display:grid;gap:10px;justify-items:center;padding:12px 0;position:relative;overflow:hidden;border-radius:12px}
+.stagebanner::before{content:"";position:absolute;inset:-60%;background:conic-gradient(from 0deg,transparent 0 20deg,color-mix(in srgb,var(--sc,#E8C15A) 18%,transparent) 25deg 30deg,transparent 35deg 60deg,color-mix(in srgb,var(--sc,#E8C15A) 14%,transparent) 65deg 70deg,transparent 75deg 120deg,color-mix(in srgb,var(--sc,#E8C15A) 18%,transparent) 125deg 130deg,transparent 135deg 200deg,color-mix(in srgb,var(--sc,#E8C15A) 14%,transparent) 205deg 210deg,transparent 215deg 280deg,color-mix(in srgb,var(--sc,#E8C15A) 18%,transparent) 285deg 290deg,transparent 295deg 360deg);pointer-events:none;opacity:0;animation:rays 24s linear infinite,fadein 1.2s ease .3s forwards}
+@keyframes rays{to{transform:rotate(360deg)}}
+@keyframes fadein{to{opacity:1}}
+.stagebanner>*{position:relative}
+.stagebanner .k{font-family:var(--display);letter-spacing:.2em;font-size:12px;color:var(--muted);animation:rise .5s ease both}
+.stagebanner .big{font-family:var(--display);font-weight:800;font-size:clamp(34px,7vw,64px);letter-spacing:.1em;line-height:1;color:var(--sc,#E8C15A);text-shadow:0 0 40px color-mix(in srgb,var(--sc,#E8C15A) 60%,transparent)}
+.stagebanner .big span{display:inline-block;animation:letter .6s cubic-bezier(.2,.9,.2,1) both}
+@keyframes letter{0%{opacity:0;transform:translateY(34px) scale(1.6);filter:blur(6px)}100%{opacity:1;transform:none;filter:blur(0)}}
+.stagebanner .q{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--text);max-width:52ch;animation:rise .6s ease .7s both}
+.stagebanner .n{font-size:13px;color:var(--muted);max-width:58ch;animation:rise .6s ease .95s both}
+.stagebanner .foot{animation:rise .6s ease 1.2s both}
+.standings{display:grid;gap:8px;margin:12px 0}
+.stand{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid var(--line);border-left:5px solid var(--rc)}
+.stand .pos{font-family:var(--display);font-weight:800;font-size:20px;color:var(--brass)}
+.stand .vp{font-family:var(--display);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
+.modal .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;flex-wrap:wrap}
+.hint{width:min(560px,100%)}
+.hint .whisper{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--parch);padding:14px 16px;border-left:3px solid var(--brass);background:rgba(224,180,90,.08);border-radius:0 10px 10px 0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--parch);color:var(--parch-ink);padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:60;animation:rise .25s ease}
+.toast[hidden]{display:none}
+
+/* previous / next case tabs */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.cn{display:flex; flex-direction:column; gap:3px; text-decoration:none; color:var(--text); padding:12px 16px; border-radius:12px; border:1px solid var(--line2); background:linear-gradient(180deg,var(--panel2),var(--panel)); transition:border-color .15s, transform .12s}
+.cn.next{text-align:right}
+.cn:hover{border-color:var(--brass); transform:translateY(-2px)}
+.cn .d{font-family:var(--display); font-weight:800; font-size:10px; letter-spacing:.16em; color:var(--muted)}
+.cn .t{font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:.04em; color:var(--brass)}
+@media (max-width:560px){ .casenav{grid-template-columns:1fr} .cn.next{text-align:left} }
+@media (max-width:1080px){
+  .bottom{grid-template-columns:1fr 1fr}
+  .chair{grid-column:1/-1}
+}
+@media (max-width:900px){
+  .main{grid-template-columns:1fr}
+  .top{grid-template-columns:1fr auto}
+  .race{grid-column:1/-1}
+  .champs{grid-template-columns:repeat(2,1fr)}
+  .rulecard{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .bottom{grid-template-columns:1fr}
+  .stats,.res{grid-template-columns:repeat(3,1fr)}
+  .ledger{grid-template-columns:repeat(2,1fr)}
+  .champs{grid-template-columns:1fr}
+  .stepper .d{display:none}
+  .dice{transform:scale(.85);right:6px;top:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand">
+      <a class="back" href="../" title="Back to Adam Smith's ideas">← Ideas</a>
+      <a class="back" href="../../" title="Back to Great Economic Thinkers">⌂ Home</a>
+      <svg class="sigil" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3D48A"/><stop offset="1" stop-color="#B8863A"/></linearGradient></defs><polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" fill="none" stroke="url(#sg)" stroke-width="2"/><path d="M13 26c3-9 8-12 14-14-2 5-5 8-8 9 2 1 4 1 6 0-3 4-8 6-12 5z" fill="url(#sg)"/></svg>
+      <div><h1>INVISIBLE HAND</h1><small>four stages · three questions · eight unspoken rules</small></div>
+    </div>
+    <div class="race" id="race"></div>
+    <div class="clock" id="clock"></div>
+  </header>
+
+  <div class="main">
+    <section class="board-wrap">
+      <svg class="board" id="board" viewBox="0 0 640 560" role="img" aria-label="Hex map of the territory"></svg>
+      <div class="dice" id="dice"></div>
+      <div class="legend">
+        <span><i style="background:var(--forest)"></i>Forest · game</span>
+        <span><i style="background:var(--steppe)"></i>Steppe · cattle</span>
+        <span><i style="background:var(--field)"></i>Field · grain</span>
+        <span><i style="background:var(--hill)"></i>Hill · goods</span>
+        <span><i style="background:var(--coast)"></i>Coast · coin</span>
+        <span><i style="background:var(--fair)"></i>The Fair</span>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="card society" id="society"></div>
+      <div class="stepper" id="stepper"></div>
+      <div class="card action" id="action"></div>
+      <section class="card ref" id="ref" data-open="1">
+        <h4 onclick="toggleRef()">BUILDING &amp; MATERIALS <button type="button" id="refToggle">HIDE</button></h4>
+        <div class="body">
+          <div class="tbl"><table>
+            <tr><th>Build</th><th>Costs</th><th>Where &amp; what it does</th></tr>
+            <tr><td>Fence a holding</td><td class="cost">3 food<br><span class="how">any 🦌 🌾 🐄</span></td><td class="how">On an unclaimed hex touching your camp or a holding. Yields <b>×1</b> when the dice hit its number. Your first one summons a government.</td></tr>
+            <tr><td>Settle an estate</td><td class="cost">3 🌾 · 2 🐄</td><td class="how">On a holding you own. Yields <b>×2</b>. Your first estate makes you <b>Agricultural</b>.</td></tr>
+            <tr><td>Raise a city</td><td class="cost">4 ⚙️ · 3 🪙</td><td class="how">On an estate. Yields <b>×3</b>. A city <b>plus a market</b> (coast or the Fair) makes you <b>Commercial</b>.</td></tr>
+            <tr><td>Buy a luxury</td><td class="cost">2 ⚙️ · 1 🪙</td><td class="how">Agriculture or later. +1 point; estates and cities yield +1 each (up to 3).</td></tr>
+            <tr><td>Keep a retainer</td><td class="cost">2 food</td><td class="how">Pasturage or later. Retainers raid and defend; every 3 is a point.</td></tr>
+            <tr><td>Bank trade</td><td class="cost">3 : 1</td><td class="how">Swap 3 of anything for 1 of anything (the Factor trades 2 : 1).</td></tr>
+          </table></div>
+          <div class="sub">Where materials come from</div>
+          <div class="tbl"><table>
+            <tr><th>Material</th><th>Land</th><th>Labour &amp; other ways</th></tr>
+            <tr><td>🦌 Game</td><td><span class="sw" style="background:var(--forest)"></span>Forest</td><td class="how"><b>Forage the commons</b> — always available. While hunting, unowned forests feed everyone.</td></tr>
+            <tr><td>🐄 Cattle</td><td><span class="sw" style="background:var(--steppe)"></span>Steppe</td><td class="how"><b>Tend the herds</b> — needs any holding (steppe holdings add +1 each). The wild herd (season 3) gives +3.</td></tr>
+            <tr><td>🌾 Grain</td><td><span class="sw" style="background:var(--field)"></span>Field</td><td class="how"><b>Till the fields</b> — needs any holding (fields and estates add +1 each).</td></tr>
+            <tr><td>⚙️ Goods</td><td><span class="sw" style="background:var(--hill)"></span>Hill</td><td class="how"><b>Work the forge</b> — needs a hill holding, an estate, or a city.</td></tr>
+            <tr><td>🪙 Coin</td><td><span class="sw" style="background:var(--coast)"></span>Coast · <span class="sw" style="background:var(--fair)"></span>Fair</td><td class="how"><b>Turn a penny</b> — needs a coast, the Fair, or a city. The Fair pays 2 every season. <b>Coin substitutes for any missing material, 1 : 1.</b></td></tr>
+          </table></div>
+          <p class="note">Food is 🦌 game, 🌾 grain or 🐄 cattle — any mix. Each holding on the rolled number yields its land's material; extra population raises your labour yield. <b>To stockpile for a build, pick the SAVE option in the sharing phase</b> — you keep the whole season's produce, at the cost of growth (and some unrest once you have a government).</p>
+          <div class="sub">Scoring</div>
+          <p class="note" style="margin-top:0"><b>Stage ×3</b> · holdings 1 each (up to 6) · estate +1 · city +2 · luxury +1 · every 3 retainers +1 · every rule learned +1 · every 2 champion levels +1. <b>Reach 30 points by season 24 and you win outright.</b> If the seasons run out first, the richest society wins. Rivals cannot end the game early.</p>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="bottom">
+    <section class="card"><h4>RIVAL SOCIETIES</h4><div class="rivals" id="rivals"></div></section>
+    <section class="card chair"><h4>THE CHAIR'S LEDGER <span>rules are learned by breaking them</span></h4><div class="ledger" id="ledger"></div></section>
+    <section class="card"><h4>THE SEASONS</h4><div class="feed" id="feed"></div></section>
+  </div>
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn" href="../../before-smith/"><span class="d">◀ PREVIOUS CASE</span><span class="t">Case 001 · Before Adam Smith</span></a>
+    <a class="cn next" href="../../malthus/"><span class="d">NEXT CASE ▶</span><span class="t">Case 003 · Malthus</span></a>
+  </nav>
+</div>
+
+<div class="overlay" id="overlay" hidden></div>
+<div class="toast" id="toast" hidden></div>
+<a class="home-float" href="../">← Smith's ideas</a>
+
+<script>
+/* ================= DATA ================= */
+const TERRAIN={
+  forest:{name:'Forest',res:'game',color:'#2E9E6B',light:'#5FC994',ico:'🌲'},
+  steppe:{name:'Steppe',res:'cattle',color:'#C99A3A',light:'#E9C36A',ico:'🐄'},
+  field:{name:'Field',res:'grain',color:'#E8C15A',light:'#FBE08E',ico:'🌾'},
+  hill:{name:'Hill',res:'goods',color:'#B8613C',light:'#E08A62',ico:'⚒️'},
+  coast:{name:'Coast',res:'coin',color:'#3A8FD9',light:'#6FB6F5',ico:'⚓'},
+  fair:{name:'The Great Fair',res:'coin',color:'#8C7CC0',light:'#B8A9E6',ico:'🎪'},
+};
+const RES={game:{n:'Game',i:'🦌'},cattle:{n:'Cattle',i:'🐄'},grain:{n:'Grain',i:'🌾'},goods:{n:'Goods',i:'⚙️'},coin:{n:'Coin',i:'🪙'}};
+const RKEYS=Object.keys(RES);
+const FOOD=['game','grain','cattle'];
+const STAGES=[
+  {n:'HUNTING',sub:'Neither sovereign nor commonwealth',color:'#2E9E6B',note:'Nothing can be accumulated, so no one can be lorded over. Poverty enforces equality.'},
+  {n:'PASTURAGE',sub:'The first property that can be accumulated',color:'#C99A3A',note:'Herds can be hoarded. Where there is property, a sovereign follows.'},
+  {n:'AGRICULTURE',sub:'Every landlord a sort of petty prince',color:'#E8C15A',note:'Land is engrossed by a few. Surplus that cannot be sold is spent on retainers who must obey.'},
+  {n:'COMMERCE',sub:'Rent, wages, and profit',color:'#3A8FD9',note:'Producers win rights and freedom — and a new master class wins the bargaining table.'},
+];
+const RULES={
+  sovereign:{n:1,title:'The Sovereign',hint:'Something stirs when the first thing is fenced.',
+    effect:'Civil government is instituted over your society. On every roll of 7 the Magistrate holds an assize and collects 1 resource per 2 holdings.',
+    quote:'The acquisition of valuable and extensive property, therefore, necessarily requires the establishment of civil government. Where there is no property… civil government is not so necessary.',src:'Wealth of Nations, V.i.b'},
+  rich:{n:2,title:'Defence of the Rich',hint:'The Magistrate takes an interest in who is raiding whom.',
+    effect:'Raiding a society that holds as much property as you, or more, fails outright: the Magistrate intervenes, you lose 2 resources and a retainer. Raiding the poorer is merely a matter of strength.',
+    quote:'Civil government, so far as it is instituted for the security of property, is in reality instituted for the defence of the rich against the poor, or of those who have some property against those who have none at all.',src:'Wealth of Nations, V.i.b'},
+  hospitality:{n:3,title:'Rustic Hospitality',hint:'A full granary with no market is a strange kind of wealth.',
+    effect:'While agricultural and without a market, any food above 6 at season\'s end is not stored — it is eaten by retainers (1 retainer per 2 food), who obey because they are fed.',
+    quote:'If this surplus is sufficient to maintain a hundred or a thousand men, he can make use of it in no other way than by maintaining a hundred or a thousand men.',src:'Wealth of Nations, III.iv'},
+  deception:{n:4,title:"Nature's Deception",hint:'Baubles do more than you would think.',
+    effect:'Luxuries bring no happiness. But each one (up to 3) makes every estate and city yield +1 on a hit — and dismisses one retainer as an unnecessary dependent. This is how enclosure begins.',
+    quote:'It is this deception which rouses and keeps in continual motion the industry of mankind. It is this which first prompted them to cultivate the ground, to build houses, to found cities.',src:'Theory of Moral Sentiments, IV.i'},
+  industry:{n:5,title:'No Property, No Industry',hint:'Producers who may own nothing have noticed.',
+    effect:'Three seasons in Agriculture or beyond without extending property rights to producers, and your gross yield falls by 2 every season until you do.',
+    quote:'A person who can acquire no property, can have no other interest but to eat as much, and to labour as little as possible.',src:'Wealth of Nations, III.ii'},
+  combos:{n:6,title:'Combinations',hint:'The law has opinions about who may combine.',
+    effect:'Letting the workmen combine fails: the Magistrate punishes the ring-leaders (−1 population) and the masters\' share stands. Masters combining is "never heard of" — it simply works.',
+    quote:'We have no acts of parliament against combining to lower the price of work; but many against combining to raise it. In all such disputes the masters can hold out much longer.',src:'Wealth of Nations, I.viii'},
+  orders:{n:7,title:'The Three Orders',hint:'A city with a harbour changes who sits at the table.',
+    effect:'In a commercial society the whole produce divides into rent, wages and profit. The split is now contested every season — and the masters bring the longer purse, public opinion, and the Magistrate.',
+    quote:'These are the three great, original and constituent orders of every civilized country.',src:'Wealth of Nations, I.xi'},
+  hand:{n:8,title:'The Invisible Hand',hint:'Watch what your buildings make of you.',
+    effect:'Stages are never chosen. They arrive as consequences of what you built while chasing something else — herds, a granary, a bauble at the fair.',
+    quote:'He is led by an invisible hand to promote an end which was no part of his intention.',src:'Wealth of Nations, IV.ii'},
+};
+const CHAMPS=[
+  {id:'chieftain',name:'The Chieftain',role:'Warlord',glyph:'Ⅰ',bg:'linear-gradient(160deg,#7A2D2D,#2A0F14)',
+   passive:'Retainers count double in raids, and failed raids cost you nothing.',active:'War-Band',cd:3,adesc:'Gain 2 retainers at once.'},
+  {id:'steward',name:'The Steward',role:'Improver',glyph:'Ⅱ',bg:'linear-gradient(160deg,#7A6A22,#2B2510)',
+   passive:'Estates and cities yield +1 on every dice hit.',active:'Improvement',cd:4,adesc:'Every holding you own produces right now, as if the dice had struck it.'},
+  {id:'factor',name:'The Factor',role:'Trader',glyph:'Ⅲ',bg:'linear-gradient(160deg,#1F5A8A,#0C1E33)',
+   passive:'Bank trades at 2 : 1 instead of 3 : 1.',active:'Turn a Penny',cd:3,adesc:'Convert your 2 most plentiful resources into 3 coin.'},
+  {id:'philosopher',name:'The Moral Philosopher',role:'Seer',glyph:'Ⅳ',bg:'linear-gradient(160deg,#4A3A7A,#141026)',
+   passive:'The Chair clears its throat before you break a rule you have not yet learned.',active:'Providence',cd:4,adesc:'Re-roll this season\'s dice for everyone.'},
+];
+const XP_LEVELS=[0,5,12,21,32,45,60];
+const ESTATE_COST={grain:3,cattle:2}, CITY_COST={goods:4,coin:3};
+const PERKS=[
+  {id:'purse',name:'The Longer Purse',desc:'+1 coin at the start of every season.'},
+  {id:'arm',name:'Strong Arm',desc:'+1 retainer now; successful raids carry off 1 more.'},
+  {id:'frugal',name:'Frugal Fences',desc:'Fencing a holding costs 2 food instead of 3.'},
+  {id:'industrious',name:'Industrious People',desc:'+1 labour on every focus, every season.'},
+  {id:'herdsman',name:'Born Herdsman',desc:'Tend the herds yields +2.'},
+  {id:'greenthumb',name:'Green Thumb',desc:'Till the fields yields +2.'},
+  {id:'forge',name:'Master of the Forge',desc:'Work the forge yields +2.'},
+  {id:'tongue',name:'Silver Tongue',desc:'Unrest only riots at 4, not 3.'},
+  {id:'learned',name:'Learned',desc:'The Chair murmurs every unspoken rule\'s hint at once.'},
+  {id:'steadfast',name:'Steadfast',desc:'Upkeep costs 1 less food each season.'},
+];
+const has=(p,id)=>!!(p.perks&&p.perks.includes(id));
+const QUESTS=[
+  {id:'fence',name:'The First Fence',goal:'Fence a holding',check:p=>owned(p).length>=1,xp:2,reward:p=>{p.res.game+=1},rtext:'+1 game'},
+  {id:'herd',name:'Tame the Herd',goal:'Hold 3 cattle, or fence a steppe',check:p=>p.res.cattle>=3||owned(p).some(h=>h.terrain==='steppe'),xp:2,reward:p=>{p.res.cattle+=1},rtext:'+1 cattle'},
+  {id:'granary',name:'Engross the Land',goal:'Settle an estate',check:p=>estates(p)>=1,xp:3,reward:p=>{p.res.grain+=1},rtext:'+1 grain'},
+  {id:'prince',name:'A Petty Prince',goal:'Keep 2 retainers at once',check:p=>p.retainers>=2,xp:3,reward:p=>{p.res.coin+=1},rtext:'+1 coin'},
+  {id:'market',name:'Find a Market',goal:'Hold a coast hex or the Fair',check:p=>hasMarket(p),xp:3,reward:p=>{p.res.coin+=2},rtext:'+2 coin'},
+  {id:'vanity',name:'Childish Vanity',goal:'Buy a luxury',check:p=>p.lux>=1,xp:3,reward:p=>{p.res.goods+=1},rtext:'+1 goods'},
+  {id:'city',name:'Found a City',goal:'Raise a city',check:p=>cities(p)>=1,xp:5,reward:p=>{p.res.goods+=1;p.res.coin+=1},rtext:'+1 goods, +1 coin'},
+  {id:'scholar',name:'Read the Ledger',goal:'Learn 5 of the Chair\'s rules',check:p=>p.revealed.length>=5,xp:5,reward:p=>{p.res.coin+=2;p.res.goods+=2},rtext:'+2 coin, +2 goods'},
+];
+const EVENTS=[
+  {id:'trader',title:'A Wandering Trader',text:'A pedlar from the coast, all patter and pockets, offers coin for whatever you have most of.',cond:p=>total(p.res)>=3,choices:[{l:'Trade 2 for 2 coin',d:'−2 of your most plentiful, +2 coin',fx:p=>{takeLargest(p,2);p.res.coin+=2}},{l:'Send him on',d:'Nothing changes',fx:()=>{}}]},
+  {id:'murrain',title:'Murrain in the Herds',text:'A sickness moves through the cattle. The herdsmen look to you.',cond:p=>p.res.cattle>=2,choices:[{l:'Pay a cunning-man',d:'−1 coin; the herd is saved',req:p=>p.res.coin>=1,fx:p=>{p.res.coin--}},{l:'Let it run',d:'−2 cattle',fx:p=>{p.res.cattle=Math.max(0,p.res.cattle-2)}}]},
+  {id:'harvest',title:'A Fat Harvest',text:'The fields give beyond all expectation this year.',cond:p=>owned(p).some(h=>h.terrain==='field')||estates(p)>0,choices:[{l:'Store it',d:'+2 grain',fx:p=>{p.res.grain+=2}},{l:'Feast the people',d:'+3 growth',fx:p=>{p.growth+=3}}]},
+  {id:'runaways',title:'Runaway Tenants',text:'Two households slip away by night toward the towns — where, it is said, a man may keep what he makes.',cond:p=>p.stage>=2&&!p.rights,choices:[{l:'Extend property rights',d:'Rights extended (permanent)',fx:p=>doRights(p)},{l:'Let them go',d:'−1 population',fx:p=>{p.pop=Math.max(1,p.pop-1)}}]},
+  {id:'bribe',title:'The Magistrate Calls',text:'The Magistrate admires your holdings at length, and remarks that a gift would be remembered at the next assize.',cond:p=>p.gov&&p.res.coin>=1,choices:[{l:'Give 1 coin',d:'−1 coin; the next assize passes you by',fx:p=>{p.res.coin--;p.assizeFree=true}},{l:'Refuse',d:'Nothing changes — for now',fx:()=>{}}]},
+  {id:'strangers',title:'Strangers at the Border',text:'A family of hunters, thin and quiet, asks to join your people.',cond:p=>p.pop<popCap(p),choices:[{l:'Welcome them',d:'+1 population',fx:p=>{p.pop++}},{l:'Turn them away',d:'They leave a gift of game (+1)',fx:p=>{p.res.game+=1}}]},
+  {id:'pamphlet',title:'A Pamphlet Circulates',text:'Someone has printed a tract on the rights of workmen. It is being read aloud in the yards.',cond:p=>p.stage>=3||p.unrest>=1,choices:[{l:'Buy up the copies',d:'−1 coin, −1 unrest',req:p=>p.res.coin>=1,fx:p=>{p.res.coin--;p.unrest=Math.max(0,p.unrest-1)}},{l:'Let it circulate',d:'+1 unrest',fx:p=>{p.unrest++}}]},
+  {id:'lean',title:'A Lean Season',text:'The forests are quiet and the streams run low.',cond:p=>p.stage===0,choices:[{l:'Range farther',d:'+2 game, −1 growth',fx:p=>{p.res.game+=2;p.growth=Math.max(0,p.growth-1)}},{l:'Tighten belts',d:'Nothing changes',fx:()=>{}}]},
+  {id:'fairday',title:'Fair Day',text:'Merchants lay out ribbons, mirrors and clocks. Your people stare.',cond:p=>hasMarket(p)&&p.stage>=2,choices:[{l:'Buy a trinket',d:'−1 coin, +1 luxury',req:p=>p.res.coin>=1,fx:p=>{p.res.coin--;p.lux++;reveal(p,'deception','You bought a trinket at the fair.')}},{l:'Walk on',d:'Nothing changes',fx:()=>{}}]},
+  {id:'feud',title:'A Feud Among Herdsmen',text:'Two of your herdsmen dispute a calf. Each has kin. Each has a knife.',cond:p=>p.stage>=1&&p.res.cattle>=1,choices:[{l:'Judge it yourself',d:'+1 retainer (the loser\'s kin now serve you)',fx:p=>{p.retainers++}},{l:'Let them settle it',d:'−1 cattle',fx:p=>{p.res.cattle=Math.max(0,p.res.cattle-1)}}]},
+];
+const NUMSET=[2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12];
+const TERRSET=['forest','forest','forest','forest','steppe','steppe','steppe','steppe','field','field','field','field','hill','hill','hill','coast','coast','coast'];
+const DIRS=[[1,0],[1,-1],[0,-1],[-1,0],[-1,1],[0,1]];
+const VP_WIN=30, MAX_TURN=24;
+
+/* ================= STATE ================= */
+let S=null; // game state (serializable)
+const modals=[]; let modalOpen=false;
+
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const rnd=Math.random;
+
+function newGame(champId){
+  const seed=Math.floor(Math.random()*1e9);
+  const r=rng(seed);
+  const terr=shuffle(TERRSET,r), nums=shuffle(NUMSET,r);
+  const hexes=[];let k=0;
+  for(let q=-2;q<=2;q++)for(let rr=-2;rr<=2;rr++){
+    if(Math.abs(q+rr)>2)continue;
+    const center=(q===0&&rr===0);
+    hexes.push({id:hexes.length,q,r:rr,terrain:center?'fair':terr[k],num:center?0:nums[k],owner:null,level:0,camp:null,objective:null,locked:center});
+    if(!center)k++;
+  }
+  const camps=[[2,-2],[0,2],[-2,0]];
+  const mk=(id,name,color,human,champ)=>({id,name,color,human,champ,res:{game:2,cattle:0,grain:0,goods:0,coin:0},pop:3,retainers:champ==='chieftain'?1:0,lux:0,rights:false,rightsOff:0,gov:false,stage:0,revealed:[],cd:0,vp:0,unrest:0,growth:0,dice:{},focusG:{},focus:null,raided:false,share:null,industryPen:false,abilityUsed:false,xp:0,level:1,perks:[],quests:[],lastEvent:null,assizeFree:false});
+  const aiChamps=shuffle(CHAMPS.filter(c=>c.id!==champId),r);
+  const players=[mk(0,'Your Society','#4FD1C5',true,champId),mk(1,'The Scarlet Clans','#F27A7A',false,aiChamps[0].id),mk(2,'The Violet Compact','#B48CF7',false,aiChamps[1].id)];
+  camps.forEach(([q,rr],i)=>{hexAtIn(hexes,q,rr).camp=i});
+  S={seed,turn:0,phase:'what',dice:[0,0],hexes,players,log:[],sel:null,over:false,winner:null,tradeGive:'game',tradeGet:'grain'};
+  log('The territory lies open. Three societies hunt the same forests, owning nothing.','stage');
+  startRound();
+}
+function hexAtIn(hexes,q,r){return hexes.find(h=>h.q===q&&h.r===r)}
+const hexAt=(q,r)=>hexAtIn(S.hexes,q,r);
+const neighbors=h=>DIRS.map(([dq,dr])=>hexAt(h.q+dq,h.r+dr)).filter(Boolean);
+const owned=p=>S.hexes.filter(h=>h.owner===p.id);
+const estates=p=>owned(p).filter(h=>h.level>=2).length;
+const cities=p=>owned(p).filter(h=>h.level>=3).length;
+const hasMarket=p=>owned(p).some(h=>h.terrain==='coast'||h.terrain==='fair');
+const champOf=p=>CHAMPS.find(c=>c.id===p.champ);
+const foodTotal=p=>FOOD.reduce((a,k)=>a+p.res[k],0);
+const total=b=>Object.values(b).reduce((a,v)=>a+v,0);
+const popCap=p=>4+owned(p).reduce((a,h)=>a+h.level,0);
+const labor=p=>Math.floor(Math.max(0,p.pop-3)/2)+(has(p,'industrious')?1:0);
+const eff=p=>Math.min(p.lux,3);
+const pname=p=>`<b class="p" style="color:${p.color}">${p.name}</b>`;
+const claimCost=p=>({food:has(p,'frugal')?2:3});
+const unrestCap=p=>has(p,'tongue')?4:3;
+const upkeepOf=p=>Math.max(0,Math.floor(p.pop/4)-(has(p,'steadfast')?1:0));
+function computeStage(p){const hx=owned(p);if(!hx.length)return 0;if(cities(p)&&hasMarket(p))return 3;if(estates(p))return 2;return 1}
+function calcVP(p){return Math.min(6,owned(p).length)+estates(p)+cities(p)*2+p.stage*3+p.lux+Math.floor(p.retainers/3)+p.revealed.length+Math.floor((p.level||1)/2)}
+function addXP(p,n,why){
+  if(!p.human||!n)return;p.xp+=n;
+  const nl=XP_LEVELS.filter(t=>p.xp>=t).length;
+  while(p.level<nl){p.level++;log(`${pname(p)} reaches <b>level ${p.level}</b>. Choose a perk.`,'good');pushModal({type:'perk',level:p.level})}
+}
+function checkQuests(p){
+  if(!p.human)return;
+  for(const q of QUESTS){if(p.quests.includes(q.id))continue;if(q.check(p)){p.quests.push(q.id);q.reward(p);log(`Quest complete — <b>${q.name}</b>: ${q.rtext}, +${q.xp} XP.`,'good');addXP(p,q.xp)}}
+}
+function log(html,cls=''){S.logId=(S.logId||0)+1;S.log.unshift({id:S.logId,t:S.turn,html,cls});if(S.log.length>60)S.log.length=60}
+/* transient animation cues (never saved) */
+const FX={justBuilt:null,shake:null,diceAnimating:false,feedSeen:0,prevRes:null,prevPhase:null,rolledTurn:0};
+const reducedMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function addTo(b,k,n){b[k]=(b[k]||0)+n}
+function takeLargest(p,n){let taken={};for(let i=0;i<n;i++){const k=RKEYS.reduce((a,b)=>p.res[b]>p.res[a]?b:a);if(p.res[k]<=0)break;p.res[k]--;addTo(taken,k,1)}return taken}
+function fmtB(b){return RKEYS.filter(k=>b[k]).map(k=>`${b[k]} ${RES[k].i}`).join(' ')||'nothing'}
+/* pay a cost; coin substitutes anything. cost: {food:n, grain:n, cattle:n, goods:n, coin:n} */
+function canPay(p,cost){let coin=p.res.coin-(cost.coin||0);if(coin<0)return false;let need=0;
+  for(const k of ['grain','cattle','goods','game'])if(cost[k]){need+=Math.max(0,cost[k]-p.res[k])}
+  if(cost.food){let f=foodTotal(p)-(cost.grain||0)-(cost.cattle||0)-(cost.game||0);need+=Math.max(0,cost.food-Math.max(0,f))}
+  return coin>=need}
+function pay(p,cost){p.res.coin-=(cost.coin||0);
+  for(const k of ['grain','cattle','goods','game'])if(cost[k]){const t=Math.min(p.res[k],cost[k]);p.res[k]-=t;p.res.coin-=(cost[k]-t)}
+  if(cost.food){let need=cost.food;for(const k of ['game','grain','cattle']){const t=Math.min(p.res[k],need);p.res[k]-=t;need-=t}p.res.coin-=need}}
+
+/* ================= COST DISPLAY ================= */
+const SOURCE={
+  game:'forest hexes, or <b>Forage the commons</b>',
+  cattle:'steppe hexes, or <b>Tend the herds</b> (needs any holding; steppe adds more)',
+  grain:'field hexes, or <b>Till the fields</b> (needs any holding; fields and estates add more)',
+  goods:'hill hexes, or <b>Work the forge</b> (needs a hill, an estate, or a city)',
+  coin:'coast hexes, the Fair, or <b>Turn a penny</b> (needs a coast, the Fair, or a city)',
+  food:'any forest, field or steppe hex, or <b>Forage the commons</b>',
+};
+const BUILDS={
+  claim:{name:'Fence a holding',cost:{food:3}},
+  estate:{name:'Settle an estate',cost:ESTATE_COST},
+  city:{name:'Raise a city',cost:CITY_COST},
+  lux:{name:'Buy a luxury',cost:{goods:2,coin:1}},
+  retain:{name:'Keep a retainer',cost:{food:2}},
+};
+/* what is short after coin substitution: {grain:2, ...} */
+function shortages(p,cost){
+  const out={};let coin=p.res.coin-(cost.coin||0);if(coin<0){out.coin=-coin;coin=0}
+  const spent={};
+  for(const k of ['grain','cattle','goods','game'])if(cost[k]){const t=Math.min(p.res[k],cost[k]);spent[k]=t;const gap=cost[k]-t;if(gap){const c=Math.min(coin,gap);coin-=c;if(gap-c)out[k]=gap-c}}
+  if(cost.food){let f=FOOD.reduce((a,k)=>a+p.res[k]-(spent[k]||0),0);const gap=Math.max(0,cost.food-f);if(gap){const c=Math.min(coin,gap);coin-=c;if(gap-c)out.food=gap-c}}
+  return out;
+}
+function costChips(p,cost){
+  const sh=shortages(p,cost);const parts=[];
+  for(const k in cost){const have=k==='food'?foodTotal(p):p.res[k];const ok=!sh[k];const ico=k==='food'?'🍖':RES[k].i;parts.push(`<span class="cc ${ok?'ok':'no'}">${ico} ${Math.min(have,cost[k])}/${cost[k]}</span>`)}
+  return parts.join('');
+}
+function shortageText(p,cost){
+  const sh=shortages(p,cost);const ks=Object.keys(sh);if(!ks.length)return '';
+  return ks.map(k=>`<b>${sh[k]} more ${k==='food'?'food':RES[k].n.toLowerCase()}</b> <span class="src">← ${SOURCE[k]}</span>`).join('; ')+'. Or trade 3 : 1 at the bank; coin fills any gap.';
+}
+function nextBuild(p){
+  const hx=owned(p);
+  if(!hx.length)return{key:'claim',why:'Fence your first holding to leave the hunting stage.'};
+  if(hx.some(h=>h.level===2)&&(p.stage>=2||estates(p)))return{key:'city',why:'A city on an estate — with a market — reaches Commerce.'};
+  if(hx.some(h=>h.level===1)&&!estates(p))return{key:'estate',why:'An estate on a holding reaches Agriculture.'};
+  if(hx.some(h=>h.level===1))return{key:'estate',why:'Another estate doubles that holding\'s yield.'};
+  return{key:'claim',why:'Fence more land for more dice hits.'};
+}
+
+/* ================= RULES (Mao) ================= */
+function reveal(p,key,ctx){
+  if(p.revealed.includes(key))return false;
+  p.revealed.push(key);
+  const R=RULES[key];
+  log(`The Chair, to ${pname(p)}: <i>penalty.</i> Rule ${R.n} — <b>${R.title}</b> — is now on the table.`,'chair');addXP(p,2);
+  if(p.human)pushModal({type:'rule',key,ctx});
+  return true;
+}
+const knows=(p,key)=>p.revealed.includes(key);
+
+/* ================= ROUND FLOW ================= */
+function startRound(){
+  S.turn++;
+  for(const p of S.players){p.dice={};p.focusG={};p.focus=null;p.raided=false;p.share=null;p.abilityUsed=false;if(p.cd>0)p.cd--}
+  if(S.turn===3){const cand=S.hexes.filter(h=>h.terrain==='steppe'&&!h.owner);if(cand.length){const h=cand[Math.floor(rnd()*cand.length)];h.objective='herd';log('A <b>wild herd</b> wanders onto the steppe. Whoever fences it first gains 3 cattle.','stage')}}
+  if(S.turn===6){const c=hexAt(0,0);c.locked=false;c.objective='fair';log('<b>The Great Fair</b> opens at the heart of the territory. Its holder gains a market and 2 coin every season.','stage')}
+  for(const p of S.players)if(has(p,'purse'))p.res.coin++;
+  rollDice();
+  S.phase='what';S.sel=null;
+  render();
+  animateRoll();
+  // a season event for the player, some seasons
+  const p=me();
+  if(S.turn>=2&&rnd()<0.42){
+    const pool=EVENTS.filter(e=>e.cond(p)&&e.id!==p.lastEvent);
+    if(pool.length){const ev=pool[Math.floor(rnd()*pool.length)];p.lastEvent=ev.id;setTimeout(()=>pushModal({type:'event',id:ev.id}),reducedMotion?0:1300)}
+  }
+}
+function eventChoice(i){
+  const m=window.__modal;if(!m||m.type!=='event')return;const ev=EVENTS.find(e=>e.id===m.id);const c=ev.choices[i];const p=me();
+  if(c.req&&!c.req(p))return;
+  c.fx(p);log(`<b>${ev.title}</b> — ${c.l}: ${c.d}.`);closeModal();render();
+}
+function rollDice(){
+  const a=1+Math.floor(rnd()*6),b=1+Math.floor(rnd()*6);S.dice=[a,b];
+  for(const p of S.players)p.dice={};
+  produce(a+b);
+}
+function produce(n){
+  if(n===7){
+    log(`<b>Seven.</b> The Magistrate holds an assize. Governments collect their due; nothing is produced.`,'chair');
+    for(const p of S.players){if(!p.gov)continue;if(p.assizeFree){p.assizeFree=false;log(`${pname(p)}'s gift is remembered; the assize passes them by.`);continue}const tax=Math.ceil(owned(p).length/2);const t=takeLargest(p,tax);if(total(t))log(`${pname(p)} pays the assize: ${fmtB(t)}.`)}
+  }else{
+    for(const h of S.hexes){
+      if(h.num!==n)continue;
+      if(h.owner!==null){const p=S.players[h.owner];let y=h.level;if(h.level>=2){y+=eff(p);if(p.champ==='steward')y+=1}addTo(p.dice,TERRAIN[h.terrain].res,y)}
+      else if(h.terrain==='forest'){for(const p of S.players)if(p.stage===0)addTo(p.dice,'game',1)}
+    }
+  }
+  const fair=hexAt(0,0);if(fair.owner!==null)addTo(S.players[fair.owner].dice,'coin',2);
+}
+const FOCUS=[
+  {id:'forage',name:'Forage the commons',res:'game',why:'Always possible.',ok:()=>true,amt:p=>3+labor(p)},
+  {id:'herd',name:'Tend the herds',res:'cattle',why:'Needs a holding or 2 cattle.',ok:p=>owned(p).length>0||p.res.cattle>=2,amt:p=>2+Math.floor(p.res.cattle/3)+owned(p).filter(h=>h.terrain==='steppe').length+labor(p)+(has(p,'herdsman')?2:0)},
+  {id:'till',name:'Till the fields',res:'grain',why:'Needs a holding (you clear the land).',ok:p=>owned(p).length>0,amt:p=>2+estates(p)+owned(p).filter(h=>h.terrain==='field').length+labor(p)+(has(p,'greenthumb')?2:0)},
+  {id:'craft',name:'Work the forge',res:'goods',why:'Needs a hill holding, an estate, or a city.',ok:p=>owned(p).some(h=>h.terrain==='hill')||estates(p)>0||cities(p)>0,amt:p=>2+owned(p).filter(h=>h.terrain==='hill').length+cities(p)+labor(p)+(has(p,'forge')?2:0)},
+  {id:'trade',name:'Turn a penny',res:'coin',why:'Needs a coast, the Fair, or a city.',ok:p=>hasMarket(p)||cities(p)>0,amt:p=>2+owned(p).filter(h=>h.terrain==='coast').length+cities(p)+labor(p)},
+];
+function chooseFocus(p,f){p.focus=f.id;p.focusG={};addTo(p.focusG,f.res,f.amt(p))}
+function grossOf(p){const g={};for(const k of RKEYS){const v=(p.dice[k]||0)+(p.focusG[k]||0);if(v)g[k]=v}
+  if(p.rights){const t=total(g);const bonus=Math.ceil(t*0.5);const k=p.focus?FOCUS.find(f=>f.id===p.focus).res:'game';if(bonus)addTo(g,k,bonus)}
+  if(p.industryPen){let n=2;while(n>0){const k=RKEYS.filter(k=>g[k]>0).sort((a,b)=>g[b]-g[a])[0];if(!k)break;g[k]--;if(!g[k])delete g[k];n--}}
+  return g}
+function shareOptions(p){
+  const rd=p.rights?0.15:0;
+  switch(p.stage){
+    case 0:return[
+      {id:'hoard',t:'Smoke and store the catch',s:'Keep nearly all of it. Nothing is left over for the clan to grow on.',ruler:0.85,nogrow:true,save:true},
+      {id:'common',t:'The common share',s:'No sovereign, no commonwealth. Everyone eats alike.',ruler:0.5}];
+    case 1:return[
+      {id:'hoard',t:'Accumulate the stock',s:'Keep everything. The herdsmen grumble.',ruler:1-rd,unrest:1,save:true},
+      {id:'herdlord',t:'Herd-owners take their due',s:'Those with cattle set the terms for those without.',ruler:0.7-rd},
+      {id:'feast',t:'Feast the clan',s:'Spread the meat; the clan grows faster.',ruler:0.5-rd,bonus:2}];
+    case 2:return[
+      {id:'hoard',t:'Fill the granary',s:`Keep everything. The tenants grumble.${hasMarket(p)?'':' Food above 6 will feed retainers instead.'}`,ruler:1-rd,unrest:1,save:true},
+      {id:'lord',t:"The lord's portion",s:'Tenants keep a fifth. The rest is yours to spend — if you can.',ruler:0.8-rd},
+      {id:'tithe',t:'Loosen the tithe',s:'Leave more with the cultivators; the manor fills.',ruler:0.65-rd,bonus:1}];
+    default:return[
+      {id:'hoard',t:'Retain the profits',s:'Keep everything. Stock accumulates in particular hands; the workmen grumble.',ruler:1-rd,unrest:1,save:true},
+      {id:'masters',t:'Masters combine',s:'Quiet, constant, never heard of. Unrest grows.',ruler:0.75-rd,unrest:1},
+      {id:'fair',t:'Pay the going wage',s:'The customary contract. Neither side is happy.',ruler:0.6-rd},
+      {id:'workmen',t:'Let the workmen combine',s:'They are desperate, and abundantly heard of.',ruler:0.5-rd,danger:true}];
+  }
+}
+function splitBundle(g,ruler){const r={},w={};for(const k in g){const a=Math.round(g[k]*ruler);r[k]=a;w[k]=g[k]-a}return{r,w}}
+function applyShare(p,opt){
+  const g=grossOf(p);let ruler=opt.ruler;let extra='';
+  if(opt.id==='workmen'){
+    const first=!knows(p,'combos');
+    reveal(p,'combos',`You let the workmen combine. The masters called for the civil magistrate.`);
+    p.pop=Math.max(1,p.pop-1);ruler=0.75-(p.rights?0.15:0);
+    extra=` The ring-leaders are punished (−1 population); the masters' share stands.`;
+    if(!first)log(`${pname(p)} lets the workmen combine again. Same ending.`, 'kill');
+  }
+  if(opt.unrest){p.unrest+=opt.unrest;if(p.unrest>=unrestCap(p)){p.unrest=0;p.pop=Math.max(1,p.pop-1);extra+=' Riot: a worker household leaves (−1 population).';}}
+  const {r,w}=splitBundle(g,ruler);
+  for(const k in r)p.res[k]+=r[k];
+  const wt=opt.nogrow?0:total(w)+(opt.bonus||0);p.growth+=wt;let grew=0;
+  while(p.growth>=3&&p.pop<popCap(p)){p.growth-=3;p.pop++;grew++}
+  if(p.pop>=popCap(p))p.growth=Math.min(p.growth,2);
+  p.share=opt.id;
+  log(`${pname(p)} · <i>${opt.t}</i>: treasury +${total(r)}${opt.save?' <b>(saved)</b>':''}, producers ${wt}${grew?` → <b>+${grew} population</b>`:''}.${extra}`, opt.id==='workmen'?'kill':'');
+}
+
+function endRound(){
+  for(const p of S.players){
+    // upkeep
+    const need=upkeepOf(p);let left=need;
+    for(const k of ['game','grain','cattle']){const t=Math.min(p.res[k],left);p.res[k]-=t;left-=t}
+    if(left>0){p.pop=Math.max(1,p.pop-1);log(`${pname(p)} cannot feed everyone. Famine: −1 population.`,'kill')}
+    // hospitality
+    if(p.stage===2&&!hasMarket(p)&&foodTotal(p)>6){const excess=foodTotal(p)-6;const ret=Math.floor(excess/2);if(ret>0){let n=ret*2;for(const k of ['grain','game','cattle']){const t=Math.min(p.res[k],n);p.res[k]-=t;n-=t}p.retainers+=ret;reveal(p,'hospitality',`Your granary held ${6+excess} food and there was nowhere to sell it.`);log(`${pname(p)}'s surplus feeds ${ret} new retainer${ret>1?'s':''} — there is nothing else to do with it.`)}}
+    // industry penalty
+    if(p.stage>=2&&!p.rights){p.rightsOff++;if(p.rightsOff>=3&&!p.industryPen){p.industryPen=true;reveal(p,'industry',`Three seasons of lordship, and your producers still may own nothing.`);log(`${pname(p)}'s producers eat as much and labour as little as possible. Yield −2 each season.`,'kill')}}else{p.rightsOff=0;p.industryPen=false}
+    // stage
+    const ns=computeStage(p);
+    if(ns!==p.stage){const old=p.stage;p.stage=ns;log(`${pname(p)} has become <b>${STAGES[ns].n}</b>. Nobody decided this.`,'stage');
+      if(p.human){pushModal({type:'stage',stage:ns,old});}
+      reveal(p,'hand',`Your society changed stage. You never chose to.`);
+      if(ns===3)reveal(p,'orders','Your society is now commercial.');
+    }
+    checkQuests(p);
+    p.vp=calcVP(p);
+  }
+  const leader=S.players.slice().sort((a,b)=>b.vp-a.vp)[0];
+  // reaching the goal is the win; only at the last season does "richest wins" decide
+  if(me().vp>=VP_WIN){S.over=true;S.winner=0;log(`<b>${me().name}</b> reaches ${VP_WIN} points. The wealth of your nation is made.`,'stage');render();pushModal({type:'end'});return}
+  if(S.turn>=MAX_TURN){S.over=true;S.winner=leader.id;log(`<b>${leader.name}</b> is the wealthiest of nations.`,'stage');render();pushModal({type:'end'});return}
+  startRound();
+}
+
+/* ================= ACTIONS (HOW) ================= */
+function claimable(p,h){return h.owner===null&&!h.locked&&canPay(p,claimCost(p))&&(h.camp===p.id||neighbors(h).some(n=>n.owner===p.id||n.camp===p.id))}
+function estatable(p,h){return h.owner===p.id&&h.level===1&&canPay(p,ESTATE_COST)}
+function cityable(p,h){return h.owner===p.id&&h.level===2&&canPay(p,CITY_COST)}
+function doClaim(p,h){
+  pay(p,claimCost(p));h.owner=p.id;h.level=1;FX.justBuilt=h.id;addXP(p,1);
+  let msg=`${pname(p)} fences the ${TERRAIN[h.terrain].name.toLowerCase()} <b>#${h.num||'✦'}</b>.`;
+  if(h.objective==='herd'){p.res.cattle+=3;h.objective=null;msg+=' The wild herd is theirs: <b>+3 cattle</b>.'}
+  if(h.objective==='fair'){h.objective=null;msg+=' <b>The Great Fair</b> is theirs — a market, and 2 coin every season.'}
+  log(msg,'good');
+  if(!p.gov){p.gov=true;reveal(p,'sovereign','You fenced your first holding.')}
+}
+function doEstate(p,h){pay(p,ESTATE_COST);h.level=2;FX.justBuilt=h.id;addXP(p,2);log(`${pname(p)} settles an <b>estate</b> on ${TERRAIN[h.terrain].name.toLowerCase()} #${h.num}. The land is engrossed.`,'good')}
+function doCity(p,h){pay(p,CITY_COST);h.level=3;FX.justBuilt=h.id;addXP(p,4);log(`${pname(p)} raises a <b>city</b> on ${TERRAIN[h.terrain].name.toLowerCase()} #${h.num}.`,'good')}
+function canLux(p){return p.stage>=2&&(canPay(p,{goods:2,coin:1}))}
+function doLux(p){pay(p,{goods:2,coin:1});p.lux++;addXP(p,1);const dismissed=p.retainers>0?1:0;p.retainers-=dismissed;
+  reveal(p,'deception','You bought a bauble at the fair.');
+  log(`${pname(p)} buys a <b>luxury</b> (${p.lux}). Estates yield +${eff(p)}${dismissed?'; an unnecessary tenant is dismissed':''}.`)}
+function canRetain(p){return p.stage>=1&&canPay(p,{food:2})}
+function doRetain(p){pay(p,{food:2});p.retainers++;log(`${pname(p)} keeps another retainer at table (${p.retainers}).`)}
+function doRights(p){p.rights=true;p.rightsOff=0;p.industryPen=false;log(`${pname(p)} extends <b>property rights</b> to its producers. They keep more — and make half again as much.`,'good')}
+function tradeRatio(p){return p.champ==='factor'?2:3}
+function canRaid(p){return p.retainers>=1&&!p.raided}
+function raidTargets(p){return S.players.filter(q=>q.id!==p.id&&total(q.res)>0)}
+function doRaid(p,q){
+  p.raided=true;FX.shake=q.id;
+  const richer=owned(q).length>=owned(p).length;
+  if(richer){
+    const first=!knows(p,'rich');
+    reveal(p,'rich',`You raided ${q.name}, who holds ${owned(q).length} holdings to your ${owned(p).length}.`);
+    if(p.champ!=='chieftain'){takeLargest(p,2);p.retainers=Math.max(0,p.retainers-1)}
+    log(`${pname(p)} raids ${pname(q)} — the Magistrate intervenes on behalf of property.${p.champ==='chieftain'?' The Chieftain shrugs it off.':' −2 resources, −1 retainer.'}`,'kill');return}
+  const pow=p.retainers*(p.champ==='chieftain'?2:1),def=q.retainers*(q.champ==='chieftain'?2:1);
+  if(pow>def){const n=Math.min(3+(has(p,'arm')?1:0),total(q.res));const t=takeLargest(q,n);for(const k in t)p.res[k]+=t[k];addXP(p,1);log(`${pname(p)} raids ${pname(q)} and carries off ${fmtB(t)}.`,'kill')}
+  else{if(p.champ!=='chieftain')p.retainers=Math.max(0,p.retainers-1);log(`${pname(p)}'s raid on ${pname(q)} is repelled by their retainers.`,'kill')}
+}
+function canAbility(p){return p.cd===0&&!p.abilityUsed}
+function doAbility(p){
+  const c=champOf(p);p.cd=c.cd;p.abilityUsed=true;
+  if(c.id==='chieftain'){p.retainers+=2;log(`${pname(p)} calls the <b>War-Band</b>: +2 retainers.`)}
+  if(c.id==='steward'){for(const h of owned(p)){let y=h.level;if(h.level>=2)y+=eff(p)+1;addTo(p.dice,TERRAIN[h.terrain].res,y)}log(`${pname(p)} orders <b>Improvements</b>: every holding produces.`)}
+  if(c.id==='factor'){const t=takeLargest(p,2);p.res.coin+=3;log(`${pname(p)} <b>turns a penny</b>: ${fmtB(t)} → 3 coin.`)}
+  if(c.id==='philosopher'){log(`${pname(p)} invokes <b>Providence</b>. The dice fall again.`,'chair');rollDice();setTimeout(animateRoll,0)}
+}
+
+/* ================= AI ================= */
+function aiRound(p){
+  // WHAT
+  const avail=FOCUS.filter(f=>f.ok(p));
+  let target=null;
+  if(owned(p).some(h=>h.level===2)&&p.stage>=2)target=CITY_COST;
+  else if(owned(p).some(h=>h.level===1))target=ESTATE_COST;
+  else target=claimCost(p);
+  let pick=avail[0];
+  if(target.food){pick=avail.find(f=>FOOD.includes(f.res))||avail[0]}
+  else{const lack=Object.keys(target).filter(k=>k!=='food').sort((a,b)=>(target[b]-p.res[b])-(target[a]-p.res[a]))[0];pick=avail.find(f=>f.res===lack)||avail.find(f=>f.res==='coin')||avail[Math.floor(rnd()*avail.length)]}
+  chooseFocus(p,pick);
+  // rubber-band: the further ahead of the player, the lazier the rival; far behind, it works harder
+  const gap=calcVP(p)-calcVP(me());
+  if(gap<-4)addTo(p.focusG,pick.res,2);
+  const maxActions=gap>4?1:gap>1?2:gap<-3?5:3;
+  const restrained=gap>1;
+  // ahead: the rival sits on its wealth until you catch up
+  if(gap>6||(gap>3&&rnd()<0.6)){log(`${pname(p)} idles through the season, content with what it has.`);const o=shareOptions(p);applyShare(p,o[o.length-1].danger?o[o.length-2]:o[o.length-1]);return}
+  // ability
+  if(canAbility(p)&&rnd()<(restrained?0.4:0.8)&&p.champ!=='philosopher')doAbility(p);
+  // HOW
+  const prob=n=>6-Math.abs(n-7);
+  for(let i=0;i<maxActions;i++){
+    let h;
+    if((h=owned(p).find(h=>cityable(p,h)))){doCity(p,h);continue}
+    if((h=owned(p).filter(h=>estatable(p,h)).sort((a,b)=>prob(b.num)-prob(a.num))[0])){doEstate(p,h);continue}
+    const cl=S.hexes.filter(h=>claimable(p,h));
+    if(cl.length){const have=new Set(owned(p).map(h=>h.terrain));
+      const score=h=>(h.objective?5:0)+(h.terrain==='fair'?4:0)+(have.has(h.terrain)?0:2)+(h.num?prob(h.num):3)+(h.terrain==='coast'&&!hasMarket(p)?2:0);
+      h=cl.sort((a,b)=>score(b)-score(a))[0];doClaim(p,h);continue}
+    if(p.stage>=2&&!p.rights&&rnd()<0.5){doRights(p);continue}
+    if(!restrained&&canLux(p)&&p.lux<3&&rnd()<0.6){doLux(p);continue}
+    if(p.champ==='chieftain'&&canRaid(p)){const t=raidTargets(p).filter(q=>owned(q).length<owned(p).length).sort((a,b)=>total(b.res)-total(a.res))[0];if(t){doRaid(p,t);continue}}
+    if(canRetain(p)&&p.retainers<2&&foodTotal(p)>5&&rnd()<0.4){doRetain(p);continue}
+    // trade toward target
+    const ratio=tradeRatio(p);const lackK=Object.keys(target).filter(k=>k!=='food'&&p.res[k]<target[k])[0];
+    const giveK=RKEYS.filter(k=>k!==lackK&&p.res[k]>=ratio+2).sort((a,b)=>p.res[b]-p.res[a])[0];
+    if(lackK&&giveK){p.res[giveK]-=ratio;p.res[lackK]++;continue}
+    break;
+  }
+  // SHARE
+  const opts=shareOptions(p);let o=opts[1]||opts[0];
+  if(p.stage===1&&p.pop<popCap(p)-1)o=opts[2];
+  if(p.stage===2&&p.pop<4)o=opts[2];
+  if(p.stage===3&&p.unrest>=2)o=opts[2];
+  // hoard when a build is within reach and the people can bear it
+  const short=total(shortages(p,target));
+  if(!restrained&&short>0&&short<=3&&p.unrest<2&&p.pop>=4&&rnd()<0.65)o=opts[0];
+  if(restrained)o=opts[opts.length-1].danger?opts[opts.length-2]:opts[opts.length-1]; // generous share, slower build
+  applyShare(p,o);
+}
+
+/* ================= HUMAN FLOW ================= */
+const me=()=>S.players[0];
+function humanFocus(fid){const f=FOCUS.find(f=>f.id===fid);chooseFocus(me(),f);S.phase='how';S.sel=null;render()}
+function humanToShare(){S.phase='share';S.sel=null;render()}
+function humanShare(oid){
+  const p=me();const opt=shareOptions(p).find(o=>o.id===oid);
+  const go=()=>{applyShare(p,opt);S.phase='ai';render();
+    const ais=S.players.filter(q=>!q.human);const step=reducedMotion?0:650;
+    ais.forEach((q,i)=>setTimeout(()=>{aiRound(q);render()},step*(i+1)));
+    setTimeout(endRound,step*(ais.length+1)+100)};
+  if(opt.id==='workmen'&&p.champ==='philosopher'&&!knows(p,'combos')){whisper(RULES.combos.hint,go);return}
+  go();
+}
+function whisper(text,go){pushModal({type:'hint',text,go})}
+function guarded(p,ruleKey,go){if(p.champ==='philosopher'&&!knows(p,ruleKey)){whisper(RULES[ruleKey].hint,go)}else go()}
+function onHexClick(id){
+  if(S.phase!=='how'||S.over)return;
+  const h=S.hexes[id],p=me();
+  S.sel=(S.sel===id)?null:id;render();
+}
+function hexAction(kind){
+  const p=me(),h=S.hexes[S.sel];if(!h)return;
+  if(kind==='claim'&&claimable(p,h)){const go=()=>{doClaim(p,h);S.sel=null;render()};if(!p.gov)guarded(p,'sovereign',go);else go()}
+  if(kind==='estate'&&estatable(p,h)){doEstate(p,h);render()}
+  if(kind==='city'&&cityable(p,h)){doCity(p,h);render()}
+}
+function act(kind,arg){
+  const p=me();
+  if(kind==='lux'&&canLux(p))guarded(p,'deception',()=>{doLux(p);render()});
+  if(kind==='retain'&&canRetain(p)){doRetain(p);render()}
+  if(kind==='rights'&&!p.rights&&p.stage>=2){doRights(p);render()}
+  if(kind==='ability'&&canAbility(p)){doAbility(p);render()}
+  if(kind==='raid'){const q=S.players[arg];if(!canRaid(p))return;const go=()=>{doRaid(p,q);render()};if(owned(q).length>=owned(p).length)guarded(p,'rich',go);else go()}
+  if(kind==='trade'){const r=tradeRatio(p);if(S.tradeGive!==S.tradeGet&&p.res[S.tradeGive]>=r){p.res[S.tradeGive]-=r;p.res[S.tradeGet]++;log(`${pname(p)} trades ${r} ${RES[S.tradeGive].i} for 1 ${RES[S.tradeGet].i} at the bank.`);render()}}
+}
+
+/* ================= MODALS ================= */
+function pushModal(m){modals.push(m);if(!modalOpen)nextModal()}
+function nextModal(){const m=modals.shift();const ov=document.getElementById('overlay');if(!m){modalOpen=false;ov.hidden=true;ov.innerHTML='';return}modalOpen=true;ov.hidden=false;ov.innerHTML=renderModal(m);ov.dataset.type=m.type;window.__modal=m}
+function closeModal(){nextModal()}
+function renderModal(m){
+  if(m.type==='champ'){const saved=loadLocal();
+    return `<div class="modal"><h2>CHOOSE YOUR CHAMPION</h2><p class="lead">Every society begins in the forest, owning nothing. Your champion shapes how you climb — not where you end up. Nobody chooses that.</p>
+    ${saved?`<div class="row" style="margin-bottom:14px;align-items:center;gap:10px"><button class="btn primary" onclick="resumeGame()">RESUME · SEASON ${saved.turn}</button><span class="note" style="margin:0">Your last game is saved on this device (${CHAMPS.find(c=>c.id===saved.players[0].champ).name}, ${STAGES[saved.players[0].stage].n.toLowerCase()}, ${saved.players[0].vp} points). Choosing a champion below starts fresh.</span></div>`:''}
+    <div class="champs">${CHAMPS.map((c,i)=>`<button class="champ" style="--i:${i}" onclick="pickChamp('${c.id}')"><div class="splash" style="background:${c.bg}"><span>${c.glyph}</span></div><div class="body"><div class="cr">${c.role}</div><div class="cn">${c.name}</div><div class="cp"><span class="kw">Passive</span>${c.passive}</div><div class="cp"><span class="kw">${c.active} · ${c.cd}-season cooldown</span><b>${c.adesc}</b></div></div></button>`).join('')}</div>
+    <p class="note" style="margin-top:14px">How it plays: each season the dice hit a number and every holding on that number yields. Then you answer the three questions — <b>what</b> to make, <b>how</b> to make it, <b>how to share</b> it. The ladder: <b>fence a holding</b> (3 food) → <b>settle an estate</b> on it (3 🌾 + 2 🐄) → <b>raise a city</b> on that (4 ⚙️ + 3 🪙). Each land makes one material when the season's fortune lands on its number; your labour focus makes more; coin fills any gap. Reach ${VP_WIN} points within ${MAX_TURN} seasons to win outright; if time runs out, the richest society wins. Your champion levels up and learns perks; quests follow Smith's arc and pay out; events ask you to choose. Eight rules are hidden — each one you break is a point of wisdom, and the Chair murmurs a clue every season.</p></div>`;
+  }
+  if(m.type==='rule'){const R=RULES[m.key];
+    return `<div class="modal"><div class="rulecard"><div class="penalty"><div class="pn">THE CHAIR · RULE ${R.n} OF 8</div><div class="pt">${R.title}</div><div class="pq">${R.quote}</div><div class="pa">— Adam Smith, ${R.src}</div><div class="stamp">PENALTY</div></div>
+    <div class="ex"><h3>WHAT YOU DID</h3><p>${m.ctx||''}</p><h3>WHAT IS NOW TRUE</h3><div class="fx">${R.effect}</div><p class="note">+1 wisdom. The Chair does not repeat itself; the card stays face-up in the ledger.</p><div class="foot"><button class="btn primary" onclick="closeModal()">SO NOTED</button></div></div></div></div>`;
+  }
+  if(m.type==='stage'){const st=STAGES[m.stage];
+    return `<div class="modal"><div class="stagebanner" style="--sc:${st.color}"><div class="k">YOUR SOCIETY HAS BECOME</div><div class="big">${st.n.split('').map((ch,i)=>`<span style="animation-delay:${120+i*55}ms">${ch}</span>`).join('')}</div><div class="q">${st.sub}</div><div class="n">${st.note} You did not choose this — it followed from what you built.</div>
+    <div class="foot"><button class="btn primary" onclick="closeModal()">CONTINUE</button></div></div></div>`;
+  }
+  if(m.type==='perk'){const p=me();const pool=PERKS.filter(k=>!p.perks.includes(k.id));const pick=shuffle(pool,rnd).slice(0,3);m.offer=pick.map(k=>k.id);
+    return `<div class="modal"><h2>LEVEL ${m.level}</h2><p class="lead">Your people have learned something. Choose what.</p>
+    <div class="champs perks">${pick.map((k,i)=>`<button class="champ" style="--i:${i}" onclick="pickPerk('${k.id}')"><div class="splash" style="background:linear-gradient(160deg,#4A3A16,#1A1406);height:80px"><span style="font-size:34px">✦</span></div><div class="body"><div class="cr">PERK</div><div class="cn">${k.name}</div><div class="cp">${k.desc}</div></div></button>`).join('')}</div></div>`;
+  }
+  if(m.type==='event'){const ev=EVENTS.find(e=>e.id===m.id);const p=me();
+    return `<div class="modal event"><div class="ev-card"><div class="ev-k">SEASON ${S.turn} · AN EVENT</div><h2>${ev.title}</h2><p class="ev-text">${ev.text}</p>
+    <div class="ev-choices">${ev.choices.map((c,i)=>{const ok=!c.req||c.req(p);return`<button class="opt" ${ok?'':'disabled'} onclick="eventChoice(${i})"><div><div class="t">${c.l}</div><div class="s">${c.d}${ok?'':' — you cannot afford this'}</div></div><div class="amt">›</div></button>`}).join('')}</div></div></div>`;
+  }
+  if(m.type==='hint'){
+    return `<div class="modal hint"><h2>THE CHAIR CLEARS ITS THROAT</h2><p class="lead">A Moral Philosopher's privilege: a warning before the penalty.</p><div class="whisper">${m.text}</div><div class="foot"><button class="btn" onclick="hintGo(false)">Hold</button><button class="btn primary" onclick="hintGo(true)">DO IT ANYWAY</button></div></div>`;
+  }
+  if(m.type==='end'){const ps=S.players.slice().sort((a,b)=>(b.id===S.winner)-(a.id===S.winner)||b.vp-a.vp);const w=S.players[S.winner];
+    return `<div class="modal"><h2>${w.human?'THE WEALTH OF YOUR NATION':'THE INVISIBLE HAND PREFERRED ANOTHER'}</h2><p class="lead">${w.human?(me().vp>=VP_WIN?`You reached ${VP_WIN} points in ${S.turn} seasons. You never chose a stage, and yet here you are.`:'The seasons ran out, and yours was the richest society standing.'):`After ${MAX_TURN} seasons, ${w.name} ends the game ${STAGES[w.stage].n.toLowerCase()} and richest. Your society reached ${STAGES[me().stage].n.toLowerCase()} with ${me().vp} points — ${VP_WIN} would have won outright.`}</p>
+    <div class="standings">${ps.map((p,i)=>`<div class="stand" style="--rc:${p.color}"><div class="pos">${i+1}</div><div><div style="font-weight:800">${p.name} <span style="color:var(--muted);font-weight:600">· ${champOf(p).name}</span></div><div style="font-size:12px;color:var(--muted)">${STAGES[p.stage].n}${p.human?` · Lv ${p.level}`:''} · ${owned(p).length} holdings · ${estates(p)} estates · ${cities(p)} cities · ${p.lux} luxuries · ${p.revealed.length}/8 rules learned${p.human?` · ${p.quests.length}/${QUESTS.length} quests`:''}</div></div><div class="vp">${p.vp}</div></div>`).join('')}</div>
+    <div class="foot"><button class="btn primary" onclick="restart()">PLAY AGAIN</button></div></div>`;
+  }
+  return '';
+}
+function hintGo(yes){const m=window.__modal;closeModal();if(yes&&m&&m.go)m.go()}
+function pickPerk(id){const p=me();if(p.perks.includes(id))return;p.perks.push(id);const k=PERKS.find(k=>k.id===id);
+  if(id==='arm')p.retainers++;
+  log(`${pname(p)} takes the perk <b>${k.name}</b>: ${k.desc}`,'good');closeModal();render();toast(`${k.name} learned.`)}
+function pickChamp(id){newGame(id);closeModal();toast(`${CHAMPS.find(c=>c.id===id).name} takes the field.`)}
+function restart(){closeModal();S=null;try{localStorage.removeItem(SAVE_KEY)}catch(e){}renderEmpty();pushModal({type:'champ'})}
+let toastT;function toast(t){const el=document.getElementById('toast');el.textContent=t;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2200)}
+
+/* ================= RENDER ================= */
+function renderEmpty(){document.getElementById('board').innerHTML='';document.getElementById('society').innerHTML='';document.getElementById('action').innerHTML='';document.getElementById('race').innerHTML='';document.getElementById('clock').innerHTML='';document.getElementById('rivals').innerHTML='';document.getElementById('ledger').innerHTML='';document.getElementById('feed').innerHTML='';document.getElementById('stepper').innerHTML='';document.getElementById('dice').innerHTML=''}
+const SAVE_KEY='invisible-hand-save';
+function saveLocal(){try{if(S&&!S.over)localStorage.setItem(SAVE_KEY,JSON.stringify(S));else localStorage.removeItem(SAVE_KEY)}catch(e){}}
+function loadLocal(){try{const s=localStorage.getItem(SAVE_KEY);if(!s)return null;const d=JSON.parse(s);return d&&d.players&&d.hexes&&!d.over?d:null}catch(e){return null}}
+function migrate(d){for(const p of d.players){p.xp=p.xp||0;p.level=p.level||1;p.perks=p.perks||[];p.quests=p.quests||[];p.lastEvent=p.lastEvent||null;p.assizeFree=!!p.assizeFree}return d}
+function resumeGame(){const d=loadLocal();if(!d)return;S=migrate(d);if(S.phase==='ai')S.phase='share';FX.feedSeen=S.logId||0;closeModal();render();toast(`Season ${S.turn} resumes.`)}
+function render(){if(!S)return;renderTop();renderBoard();renderSociety();renderStepper();renderAction();renderRivals();renderLedger();renderFeed();try{window.claude?.hot?.snapshot?.(()=>S)}catch(e){}saveLocal()}
+function renderTop(){
+  const race=document.getElementById('race');
+  race.innerHTML=S.players.map(p=>`<div class="race-row"><span class="nm" style="color:${p.color}">${p.human?'You':p.name.replace('The ','')}</span><div class="race-bar"><i style="width:${Math.min(100,p.vp/VP_WIN*100)}%;background:${p.color}"></i></div><b>${p.vp}</b></div>`).join('');
+  const ph=S.turn<=6?'EARLY GAME':S.turn<=13?'MID GAME':'LATE GAME';
+  document.getElementById('clock').innerHTML=`<div class="ph">${ph}</div><div class="tn">${S.turn}<span> / ${MAX_TURN} seasons</span></div><div style="font-size:10px;color:var(--faint);letter-spacing:.08em">AUTOSAVED ON THIS DEVICE</div>`;
+  if(!FX.diceAnimating)renderDice(false);
+}
+const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+function dieFace(n,cls=''){return`<div class="die ${cls}"><div class="pips">${[...Array(9)].map((_,i)=>`<i class="${PIPS[n].includes(i)?'on':''}"></i>`).join('')}</div></div>`}
+function renderDice(settle){const sum=S.dice[0]+S.dice[1];document.getElementById('dice').innerHTML=dieFace(S.dice[0],settle?'settle':'')+dieFace(S.dice[1],settle?'settle':'')+`<div class="sum ${settle?'reveal':''} ${sum===7?'seven':''}">${sum}</div>`}
+function animateRoll(){
+  if(reducedMotion){renderDice(false);hitHexes();return}
+  const d=document.getElementById('dice');FX.diceAnimating=true;let t=0;
+  const iv=setInterval(()=>{t++;const a=1+Math.floor(rnd()*6),b=1+Math.floor(rnd()*6);
+    d.innerHTML=dieFace(a,'tumble')+dieFace(b,'tumble')+`<div class="sum" style="opacity:.35">?</div>`;
+    if(t>=9){clearInterval(iv);FX.diceAnimating=false;renderDice(true);setTimeout(hitHexes,250)}},85);
+}
+function hexYield(h){if(h.owner===null)return h.terrain==='forest'?1:0;const p=S.players[h.owner];let y=h.level;if(h.level>=2){y+=eff(p);if(p.champ==='steward')y++}return y}
+function hitHexes(){
+  const sum=S.dice[0]+S.dice[1];if(sum===7){document.querySelectorAll('.hex[data-gov="1"]').forEach(g=>g.classList.add('hit'));return}
+  document.querySelectorAll(`.hex[data-num="${sum}"]`).forEach(g=>g.classList.add('hit'));
+}
+function hexPts(cx,cy,s){let pts=[];for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);pts.push(`${(cx+s*Math.cos(a)).toFixed(1)},${(cy+s*Math.sin(a)).toFixed(1)}`)}return pts.join(' ')}
+function renderBoard(){
+  const svg=document.getElementById('board');const W=640,H=560,s=54,cx0=W/2,cy0=H/2-6;
+  const p=me();const eligible=S.phase==='how'&&!S.over;
+  let defs=`<defs>${Object.entries(TERRAIN).map(([k,t])=>`<radialGradient id="g-${k}" cx="45%" cy="40%" r="75%"><stop offset="0" stop-color="${t.light}"/><stop offset="1" stop-color="${t.color}"/></radialGradient>`).join('')}
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".45"/></filter>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter></defs>`;
+  let out='';
+  for(const h of S.hexes){
+    const cx=cx0+s*Math.sqrt(3)*(h.q+h.r/2),cy=cy0+s*1.5*h.r;
+    const t=TERRAIN[h.terrain];const pts=hexPts(cx,cy,s-3);
+    const isEl=eligible&&(claimable(p,h)||estatable(p,h)||cityable(p,h));
+    const cls=['hex',isEl?'eligible':'',S.sel===h.id?'selected':'',h.objective?'objective':''].join(' ');
+    const ownerC=h.owner!==null?S.players[h.owner].color:null;
+    const built=FX.justBuilt===h.id;const y=hexYield(h);const owner=h.owner!==null?S.players[h.owner]:null;
+    let g=`<g class="${cls}" data-num="${h.num}" data-gov="${owner&&owner.gov?1:0}" tabindex="${isEl?0:-1}" onclick="onHexClick(${h.id})" onkeydown="if(event.key==='Enter')onHexClick(${h.id})">`;
+    if(h.objective)g+=`<polygon class="glow" points="${hexPts(cx,cy,s+4)}" fill="${h.objective==='fair'?'#B8A9E6':'#F2B04A'}" filter="url(#glow)" opacity=".5"/>`;
+    g+=`<polygon class="face" points="${pts}" fill="${h.locked?'#2A2540':`url(#g-${h.terrain})`}" stroke="#0B1122" stroke-width="3" filter="url(#sh)"/>`;
+    g+=`<polygon class="ring" points="${hexPts(cx,cy,s-2)}" fill="none" stroke="${ownerC||'#F1E4C3'}" stroke-width="3" opacity="0"/>`;
+    if(ownerC)g+=`<polygon class="own ${built&&h.level===1?'draw':''}" points="${hexPts(cx,cy,s-9)}" fill="none" stroke="${ownerC}" stroke-width="4" opacity=".95"/>`;
+    g+=`<polygon class="rim" points="${hexPts(cx,cy,s-5)}" fill="none" stroke="transparent"/>`;
+    if(y>0&&!h.locked){const lbl=S.dice[0]+S.dice[1]===7?'ASSIZE':`+${y} ${RES[t.res].i}`;g+=`<text class="float" x="${cx}" y="${cy-30}" text-anchor="middle" font-size="15" fill="${ownerC||'#F1E4C3'}">${lbl}</text>`}
+    // terrain icon
+    g+=`<text x="${cx}" y="${cy-20}" text-anchor="middle" font-size="${h.terrain==='fair'?22:18}" opacity="${h.locked?.35:1}">${h.locked?'🔒':t.ico}</text>`;
+    // number token
+    if(h.num){const hot=h.num===6||h.num===8;const pips='•'.repeat(6-Math.abs(h.num-7));
+      g+=`<circle cx="${cx}" cy="${cy+8}" r="15" fill="#F1E4C3" stroke="#B8863A" stroke-width="1.5"/><text x="${cx}" y="${cy+12}" text-anchor="middle" font-family="Cinzel,serif" font-weight="800" font-size="14" fill="${hot?'#B33A2E':'#3B2E1A'}">${h.num}</text><text x="${cx}" y="${cy+22}" text-anchor="middle" font-size="7" fill="${hot?'#B33A2E':'#3B2E1A'}" letter-spacing="-1">${pips}</text>`}
+    else if(!h.locked){g+=`<text x="${cx}" y="${cy+14}" text-anchor="middle" font-family="Cinzel,serif" font-weight="800" font-size="9" fill="#F1E4C3" letter-spacing="1.5">${h.owner!==null?'MARKET':'THE FAIR'}</text>`}
+    else{g+=`<text x="${cx}" y="${cy+14}" text-anchor="middle" font-family="Cinzel,serif" font-weight="700" font-size="8" fill="#8C7CC0" letter-spacing="1">OPENS S6</text>`}
+    // camp
+    if(h.camp!==null){const c=S.players[h.camp].color;g+=`<path d="M${cx-30} ${cy+38} l8 -14 l8 14 z" fill="${c}" stroke="#0B1122" stroke-width="1"/>`}
+    // level marker
+    if(h.owner!==null){const c=ownerC;const bx=cx+18,by=cy+36;g+=`<g class="marker ${built?'pop':''}">`;
+      if(h.level===1)g+=`<circle cx="${bx+4}" cy="${by-4}" r="5" fill="${c}" stroke="#0B1122" stroke-width="1.5"/>`;
+      if(h.level===2)g+=`<path d="M${bx-4} ${by} v-8 l8 -7 l8 7 v8 z" fill="${c}" stroke="#0B1122" stroke-width="1.5"/>`;
+      if(h.level===3)g+=`<path d="M${bx-6} ${by} v-10 h3 v-4 h3 v4 h4 v-4 h3 v4 h3 v10 z" fill="${c}" stroke="#0B1122" stroke-width="1.5"/><circle cx="${bx+5}" cy="${by-16}" r="2.5" fill="#F1E4C3"/>`;
+      g+='</g>';
+    }
+    g+='</g>';out+=g;
+  }
+  svg.innerHTML=defs+out;FX.justBuilt=null;
+}
+/* ambient gold motes over the board */
+(function motes(){
+  if(reducedMotion)return;
+  const wrap=document.querySelector('.board-wrap');const cv=document.createElement('canvas');cv.className='motes';wrap.prepend(cv);
+  const ctx=cv.getContext('2d');let W=0,H=0,pts=[];
+  function size(){W=cv.width=wrap.clientWidth;H=cv.height=wrap.clientHeight;if(!pts.length)pts=[...Array(38)].map(()=>({x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*1.6,v:.12+Math.random()*.25,d:Math.random()*Math.PI*2,a:.2+Math.random()*.5}))}
+  size();window.addEventListener('resize',size);
+  (function tick(){ctx.clearRect(0,0,W,H);for(const p of pts){p.y-=p.v;p.d+=.01;p.x+=Math.sin(p.d)*.25;if(p.y<-4){p.y=H+4;p.x=Math.random()*W}
+    const tw=p.a*(.6+.4*Math.sin(p.d*3));ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(224,180,90,${tw})`;ctx.fill()}
+    requestAnimationFrame(tick)})();
+})();
+function renderSociety(){
+  const p=me();const c=champOf(p);const st=STAGES[p.stage];
+  const el=document.getElementById('society');el.style.setProperty('--pc',p.color);
+  const prev=FX.prevRes||{};const cur={...p.res,pop:p.pop,retainers:p.retainers,lux:p.lux,vp:p.vp};
+  const dir=k=>prev[k]===undefined||prev[k]===cur[k]?'':cur[k]>prev[k]?'up':'down';FX.prevRes=cur;
+  const lvl=p.level||1,xp=p.xp||0,lo=XP_LEVELS[lvl-1],hi=XP_LEVELS[lvl]??null;const pct=hi?Math.min(100,(xp-lo)/(hi-lo)*100):100;
+  const active=QUESTS.filter(q=>!p.quests.includes(q.id)).slice(0,2);
+  el.innerHTML=`<div class="soc-head"><div><div class="soc-name" style="color:${p.color}">${p.name}</div><div class="soc-champ"><b style="color:var(--brass)">Lv ${lvl}</b> ${c.name} · ${c.role}${p.perks.length?` · <span title="${p.perks.map(id=>PERKS.find(k=>k.id===id).name).join(', ')}">${p.perks.length} perk${p.perks.length>1?'s':''}</span>`:''}</div>
+  <div class="xp"><i style="width:${pct}%"></i></div><div class="xpl">${hi?`${xp} / ${hi} XP`:`${xp} XP · max level`}</div></div>
+  <div class="stage-badge" style="--sc:${st.color}"><span class="st">${st.n}</span><span class="ss">${st.sub}</span></div></div>
+  ${active.length?`<div class="quests">${active.map((q,i)=>`<div class="quest ${i?'minor':''}"><span class="qk">QUEST</span><b>${q.name}</b> <span class="qg">— ${q.goal}</span><span class="qr">${q.rtext} · +${q.xp} XP</span></div>`).join('')}</div>`:''}
+  <div class="stats">
+    <div class="stat"><span class="k">Population</span><span class="v ${dir('pop')}">${p.pop}<small> / ${popCap(p)}</small></span></div>
+    <div class="stat"><span class="k">Retainers</span><span class="v ${dir('retainers')}">${p.retainers}</span></div>
+    <div class="stat"><span class="k">Luxuries</span><span class="v ${dir('lux')}">${p.lux}</span></div>
+    <div class="stat"><span class="k">Points</span><span class="v ${dir('vp')}" style="color:var(--brass)">${p.vp}<small> / ${VP_WIN}</small></span></div>
+  </div>
+  <div class="res">${RKEYS.map(k=>`<div class="r"><span class="ic">${RES[k].i}</span><div><span class="n ${dir(k)}">${p.res[k]}</span><span class="l">${RES[k].n}</span></div></div>`).join('')}</div>
+  <div class="flags">
+    <span class="flag ${p.gov?'on':''}">${p.gov?'⚖ Government instituted':'No sovereign'}</span>
+    <span class="flag ${p.rights?'on':''}">${p.rights?'Property rights extended':'Producers own nothing'}</span>
+    <span class="flag ${hasMarket(p)?'on':''}">${hasMarket(p)?'Market access':'No market'}</span>
+    ${p.unrest?`<span class="flag" style="color:var(--warn);border-color:var(--warn)">Unrest ${p.unrest}/3</span>`:''}
+    ${p.industryPen?`<span class="flag" style="color:var(--bad);border-color:var(--bad)">Yield −2 · idle producers</span>`:''}
+    ${p.cd?`<span class="flag">${c.active} in ${p.cd}</span>`:''}
+  </div>
+  ${(()=>{const nb=nextBuild(p);const B={...BUILDS[nb.key],cost:nb.key==='claim'?claimCost(p):BUILDS[nb.key].cost};const sh=shortageText(p,B.cost);
+    return`<div class="nextbuild"><span class="k">MATERIALS · ${B.name.toUpperCase()}</span><div>${costChips(p,B.cost)} <span style="color:var(--muted)">${nb.why}</span></div>${sh?`<div class="need" style="margin-top:4px">Need ${sh}</div>`:`<div class="done" style="margin-top:4px">You can afford it — pick a glowing hex in the HOW phase.</div>`}</div>`})()}`;
+}
+function toggleRef(){const r=document.getElementById('ref');const open=r.dataset.open==='1';r.dataset.open=open?'0':'1';document.getElementById('refToggle').textContent=open?'SHOW':'HIDE'}
+function renderStepper(){
+  const steps=[['WHAT','will we make?'],['HOW','will we make it?'],['SHARE','how will we share it?']];const idx={what:0,how:1,share:2,ai:3}[S.phase];
+  document.getElementById('stepper').innerHTML=steps.map((s,i)=>`<div class="step ${i===idx?'active':i<idx?'done':''}"><div class="q">${s[0]}</div><div class="d">${s[1]}</div></div>`).join('');
+}
+function renderAction(){
+  const p=me();const el=document.getElementById('action');
+  if(FX.prevPhase!==S.phase){el.classList.remove('swap');void el.offsetWidth;el.classList.add('swap');FX.prevPhase=S.phase}
+  if(S.over){el.innerHTML=`<h3>THE GAME IS OVER</h3><p class="lead">${S.players[S.winner].name} is the wealthiest of nations.</p><button class="btn primary" onclick="pushModal({type:'end'})">SEE THE STANDINGS</button>`;return}
+  const diceChips=RKEYS.filter(k=>p.dice[k]).map(k=>`<span class="chip">${RES[k].i} +${p.dice[k]}</span>`).join('')||`<span class="chip dim">the dice gave you nothing</span>`;
+  if(S.phase==='what'){
+    el.innerHTML=`<h3>SEASON ${S.turn} · WHAT WILL WE MAKE?</h3><p class="lead">The dice show ${S.dice[0]+S.dice[1]}. ${S.dice[0]+S.dice[1]===7?'The Magistrate sits in assize.':'Nature yields to whoever holds the land.'} Now choose where your people's labour goes.</p>
+    <div class="yield">${diceChips}</div>
+    <div class="opts">${FOCUS.map((f,i)=>{const ok=f.ok(p);const uses={game:'food · fences holdings',cattle:'food · estates need 2',grain:'food · estates need 3',goods:'cities need 4 · luxuries need 2',coin:'cities need 3 · fills any gap 1 : 1'}[f.res];
+      return`<button class="opt" style="--i:${i}" ${ok?'':'disabled'} onclick="humanFocus('${f.id}')"><div><div class="t">${f.name}</div><div class="s">${ok?`${RES[f.res].i} ${RES[f.res].n} — ${uses}${labor(p)?` · +${labor(p)} from surplus labour`:''}`:f.why}</div></div><div class="amt">${ok?`+${f.amt(p)} ${RES[f.res].i}`:'—'}</div></button>`}).join('')}</div>`;
+    return;
+  }
+  if(S.phase==='how'){
+    const h=S.sel!==null?S.hexes[S.sel]:null;const c=champOf(p);const r=tradeRatio(p);
+    let hexBlock='';
+    if(h){const t=TERRAIN[h.terrain];const who=h.owner!==null?S.players[h.owner]:null;
+      const status=h.locked?'Opens in season 6.':who?`${who.human?'Your':who.name+"'s"} ${['','holding','estate','city'][h.level]}`:h.camp!==null?`${S.players[h.camp].human?'Your':S.players[h.camp].name+"'s"} camp · unclaimed commons`:'Unclaimed commons';
+      hexBlock=`<div class="hexinfo"><div class="hn"><i style="background:${t.color}"></i>${t.name}${h.num?` #${h.num}`:''} <span class="hs">· yields ${RES[t.res].i} ${RES[t.res].n}</span></div><div class="hs">${status}${h.objective==='herd'?' · <b style="color:var(--warn)">wild herd here</b>':''}${h.objective==='fair'?' · <b style="color:var(--fair)">the Fair is open</b>':''}</div>
+      ${(()=>{
+        let k=null;if(h.owner===null&&!h.locked)k='claim';else if(h.owner===p.id&&h.level===1)k='estate';else if(h.owner===p.id&&h.level===2)k='city';
+        if(!k)return h.owner===p.id?`<div class="need">A city is the highest improvement.</div>`:'';
+        const B={...BUILDS[k],cost:k==='claim'?claimCost(p):BUILDS[k].cost};const can={claim:claimable,estate:estatable,city:cityable}[k](p,h);const sh=shortageText(p,B.cost);
+        const adj=k==='claim'&&!(h.camp===p.id||neighbors(h).some(n=>n.owner===p.id||n.camp===p.id));
+        return`<div class="row"><button class="btn primary" ${can?'':'disabled'} onclick="hexAction('${k}')">${B.name.toUpperCase()} ${costChips(p,B.cost)}</button></div>
+        ${adj?`<div class="need">Must touch your camp or one of your holdings.</div>`:sh?`<div class="need">Need ${sh}</div>`:`<div class="need" style="color:var(--good)">Ready to build.</div>`}`})()}</div>`}
+    else hexBlock=`<div class="hexinfo"><div class="hs">Click a glowing hex to fence it or build on it. Holdings yield ×1, estates ×2, cities ×3 when the dice hit their number. Costs are listed in <b>Building &amp; Materials</b> below.</div></div>`;
+    const targets=raidTargets(p);
+    el.innerHTML=`<h3>HOW WILL WE MAKE IT?</h3><p class="lead">Labour set to <b>${FOCUS.find(f=>f.id===p.focus).name.toLowerCase()}</b>. Spend, build, bargain — then move to the sharing.</p>
+    ${hexBlock}
+    <div class="sub">Champion</div>
+    <div class="ability"><div class="ico">${c.glyph}${p.cd||p.abilityUsed?`<span class="cd">${p.cd||'✓'}</span>`:''}</div><div><div class="an">${c.active}</div><div class="ad">${c.adesc}</div></div><button class="btn" ${canAbility(p)?'':'disabled'} onclick="act('ability')">USE</button></div>
+    <div class="sub">Society</div>
+    <div class="row">
+      <button class="btn" ${canLux(p)?'':'disabled'} onclick="act('lux')" title="${p.stage<2?'Needs an agricultural society':''}">Buy a luxury ${costChips(p,BUILDS.lux.cost)}</button>
+      <button class="btn" ${canRetain(p)?'':'disabled'} onclick="act('retain')" title="${p.stage<2?'Needs an agricultural society':''}">Keep a retainer ${costChips(p,BUILDS.retain.cost)}</button>
+      <button class="btn" ${p.stage>=2&&!p.rights?'':'disabled'} onclick="act('rights')">${p.rights?'Rights extended':'Extend property rights'}<span class="cost">${p.rights?'':'permanent · yield ×1.5 · smaller share'}</span></button>
+    </div>
+    ${p.stage<2?`<div class="need" style="margin-top:6px">${p.stage<1?'Retainers unlock in <b>Pasturage</b> (fence a holding); luxuries':'Luxuries'} unlock once you are <b>Agricultural</b> (settle an estate).</div>`:''}
+    ${targets.length?`<div class="sub">Raid <span style="color:var(--faint)">· needs retainers · once a season</span></div><div class="row">${targets.map(q=>`<button class="btn" ${canRaid(p)?'':'disabled'} onclick="act('raid',${q.id})" style="border-color:${q.color}55">Raid ${q.name}<span class="cost">${q.retainers} retainers · ${owned(q).length} holdings</span></button>`).join('')}</div>`:''}
+    <div class="sub">Barter · ${r} : 1</div>
+    <div class="trade"><select id="tgive" onchange="S.tradeGive=this.value;render()">${RKEYS.map(k=>`<option value="${k}" ${S.tradeGive===k?'selected':''}>${RES[k].i} ${RES[k].n} (${p.res[k]})</option>`).join('')}</select><span>→</span><select id="tget" onchange="S.tradeGet=this.value;render()">${RKEYS.map(k=>`<option value="${k}" ${S.tradeGet===k?'selected':''}>${RES[k].i} ${RES[k].n}</option>`).join('')}</select><button class="btn" onclick="act('trade')" ${p.res[S.tradeGive]>=r&&S.tradeGive!==S.tradeGet?'':'disabled'}>Trade</button></div>
+    <div class="foot" style="display:flex;justify-content:flex-end;margin-top:14px"><button class="btn primary" onclick="humanToShare()">TO THE SHARING →</button></div>`;
+    return;
+  }
+  if(S.phase==='share'){
+    const g=grossOf(p);const T=total(g);const opts=shareOptions(p);
+    const chips=RKEYS.filter(k=>g[k]).map(k=>`<span class="chip">${RES[k].i} ${g[k]}</span>`).join('')||`<span class="chip dim">nothing to divide</span>`;
+    el.innerHTML=`<h3>HOW WILL WE SHARE IT?</h3><p class="lead">This season's produce: <b>${T}</b>. ${['With no property there is nothing to enforce a split — the clan eats alike.','Whoever owns the herds sets the terms.','The lord takes; the tenants keep what they are allowed.','Rent, wages and profit — and the masters hold the longer purse.'][p.stage]}${p.rights?' Property rights add half again.':''}${p.industryPen?' Idle producers cost you 2.':''}</p>
+    <div class="yield">${chips}</div>
+    <div class="opts">${opts.map((o,i)=>{const {r,w}=splitBundle(g,o.ruler);const rt=total(r),wt=total(w)+(o.bonus||0);
+      return`<button class="opt share-opt ${o.danger?'danger':''} ${o.save?'save':''}" style="--i:${i}" onclick="humanShare('${o.id}')"><div><div class="t">${o.save?'<span class="tag">SAVE</span>':''}${o.t}</div><div class="s">${o.s}</div>
+      <div class="split"><div>Treasury <b>${o.id==='workmen'&&knows(p,'combos')?'—':rt}</b> <span style="color:var(--muted)">(${Math.round(o.ruler*100)}%)</span></div><div>Producers <b>${o.id==='workmen'&&knows(p,'combos')?'—':wt}</b> <span style="color:var(--muted)">${o.nogrow?'· no growth':`→ growth${o.bonus?` +${o.bonus}`:''}`}</span></div></div>
+      <div class="bar"><i style="width:${o.ruler*100}%;background:var(--brass)"></i><i style="flex:1;background:${p.color}"></i></div>${o.id==='workmen'&&knows(p,'combos')?'<div class="note warn">You know how this ends.</div>':''}</div>
+      <div class="amt">${o.unrest?`<small>unrest +1${p.unrest+1>=3?' · riot!':''}</small>`:o.bonus?`<small>+${o.bonus} growth</small>`:o.nogrow?'<small>no growth</small>':''}</div></button>`}).join('')}</div>
+    <p class="note"><b>Save</b> keeps the produce in your treasury for building. <b>Share</b> turns the producers' portion into growth: every 3 → +1 population (cap ${popCap(p)}), and surplus labour raises next season's yield. Unrest at 3 costs a household. Upkeep this season: ${Math.floor(p.pop/3)} food.</p>`;
+    return;
+  }
+  el.innerHTML=`<h3>THE RIVALS MOVE<span class="thinking"><i></i><i></i><i></i></span></h3><p class="lead">The Scarlet Clans and the Violet Compact answer their own three questions — watch the seasons feed.</p>`;
+}
+function renderRivals(){
+  document.getElementById('rivals').innerHTML=S.players.filter(p=>!p.human).map(p=>{const st=STAGES[p.stage];const c=champOf(p);
+    const shake=FX.shake===p.id?'shake':'';const think=S.phase==='ai'&&!p.share?'thinking-card':'';
+    return`<div class="rival ${shake} ${think}" style="--rc:${p.color}"><div><span class="stpill" style="--sc:${st.color}">${st.n}</span></div><div><div class="rn" style="color:${p.color}">${p.name}</div><div class="rs">${c.name} · pop ${p.pop} · ${p.retainers} retainers · ${owned(p).length} holdings / ${estates(p)} est. / ${cities(p)} cities${p.lux?` · ${p.lux} lux`:''}${p.rights?' · rights':''}</div><div class="rres">${RKEYS.map(k=>`<span>${RES[k].i}${p.res[k]}</span>`).join('')}</div></div><div class="rv">${p.vp}</div></div>`}).join('');FX.shake=null;
+}
+let lastRevealed=0;
+function renderLedger(){
+  const p=me();const keys=Object.keys(RULES).sort((a,b)=>RULES[a].n-RULES[b].n);
+  const fresh=p.revealed.length>lastRevealed;lastRevealed=p.revealed.length;
+  const unrev=keys.filter(k=>!knows(p,k));
+  const murmur=has(p,'learned')?unrev:(unrev.length?[unrev[S.turn%unrev.length]]:[]);
+  document.getElementById('ledger').innerHTML=keys.map(k=>{const R=RULES[k];const rev=knows(p,k);const hinted=murmur.includes(k);
+    return rev?`<button class="rule revealed ${fresh&&p.revealed[p.revealed.length-1]===k?'fresh':''}" onclick="pushModal({type:'rule',key:'${k}',ctx:'Re-reading the ledger.'})"><div class="rn">RULE ${R.n}</div><div class="rt">${R.title}</div><div class="re">${R.effect.split('.')[0]}.</div></button>`
+    :`<div class="rule ${hinted?'hinted':''}"><div class="rn">RULE ${R.n}</div>${hinted?`<div class="rh">${R.hint}</div>`:`<div class="rq">?</div>`}<div class="rt">${hinted?'the Chair murmurs…':'unspoken'}</div></div>`}).join('');
+}
+function renderFeed(){
+  let n=0;
+  document.getElementById('feed').innerHTML=S.log.map(e=>{const isNew=(e.id||0)>FX.feedSeen;const cls=isNew?`new`:'';const st=isNew?`style="--i:${n++}"`:'';return`<div class="ev ${e.cls} ${cls}" ${st}><span class="t">S${e.t}</span>${e.html}</div>`}).join('');
+  FX.feedSeen=Math.max(FX.feedSeen,...S.log.map(e=>e.id||0));
+}
+
+/* ================= BOOT ================= */
+function start(data){
+  if(data&&data.players&&data.hexes){S=migrate(data);render();if(S.over)pushModal({type:'end'})}
+  else{renderEmpty();pushModal({type:'champ'})}
+}
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>

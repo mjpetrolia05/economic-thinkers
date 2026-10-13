@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Malthus Trail · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000; --panel:#04051a; --maze:#2a3bd4; --maze-glow:rgba(42,59,212,.55);
+  --red:#ff3b4e; --blue:#3d7bff; --yellow:#ffd21f; --cream:#fff4d6; --gray:#9aa0c0; --dim:#8a8fb8; --dark:#0d1033;
+  --pixel:"Press Start 2P","Courier New",monospace;
+  --term:"VT323","Courier New",monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0; background:var(--bg)}
+body{color:var(--cream); font-family:var(--term); font-size:21px; line-height:1.15; min-height:100vh}
+body::before{ /* CRT scanlines + vignette */
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:100;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),
+             radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.55) 100%);
+}
+button{font:inherit; color:inherit; cursor:pointer; background:none; border:0; padding:0}
+button:disabled{cursor:not-allowed}
+button:focus-visible,a:focus-visible{outline:3px solid var(--yellow); outline-offset:2px}
+.px{font-family:var(--pixel)}
+svg.sp{image-rendering:pixelated; display:block}
+
+.app{max-width:1280px; margin:0 auto; padding:12px 16px 40px; display:grid; gap:12px}
+
+/* ---------- header ---------- */
+.top{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px}
+.logo{display:flex; align-items:center; gap:12px}
+.logo h1{margin:0; font-family:var(--pixel); font-size:clamp(14px,2.6vw,24px); color:var(--yellow); text-shadow:3px 3px 0 var(--red); letter-spacing:.04em}
+.logo small{display:block; font-family:var(--term); font-size:18px; color:var(--dim); margin-top:4px}
+.navs{display:flex; gap:8px; flex-wrap:wrap}
+.lnk{font-family:var(--pixel); font-size:9px; color:var(--cream); text-decoration:none; padding:9px 10px; border:2px solid var(--maze); border-radius:6px; background:var(--panel)}
+.lnk:hover{border-color:var(--yellow); color:var(--yellow)}
+
+/* ---------- maze frames ---------- */
+.maze{background:var(--panel); border:4px double var(--maze); border-radius:14px; box-shadow:0 0 14px var(--maze-glow), inset 0 0 12px rgba(42,59,212,.3)}
+h3{font-family:var(--pixel); font-size:10px; color:var(--yellow); margin:0 0 10px; letter-spacing:.06em; line-height:1.5}
+
+/* ---------- HUD ---------- */
+.hud{display:grid; grid-template-columns:repeat(5,1fr); gap:0; padding:10px 6px}
+.hud .h{padding:0 10px; border-right:2px dotted var(--maze)}
+.hud .h:last-child{border-right:0}
+.hud .l{font-family:var(--pixel); font-size:8px; color:var(--dim); letter-spacing:.08em}
+.hud .v{font-family:var(--pixel); font-size:15px; margin-top:6px; white-space:nowrap}
+.hud .v small{font-size:9px; color:var(--dim)}
+.bar{height:10px; border:2px solid var(--cream); margin-top:6px; position:relative; background:#000}
+.bar i{position:absolute; inset:0 auto 0 0; background:var(--red); transition:width .5s steps(8)}
+
+/* ---------- phase pills ---------- */
+.phases{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+.ph{font-family:var(--pixel); font-size:9px; text-align:center; padding:10px 6px; border:3px solid var(--c); color:var(--c); background:#000; line-height:1.6}
+.ph b{display:block; font-size:12px; font-weight:400}
+.ph.on{background:var(--c); color:#000; box-shadow:0 0 16px var(--c)}
+.ph.on.y{color:#000}
+
+/* ---------- main layout ---------- */
+.main{display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:12px; align-items:start}
+.stage{padding:14px; min-height:560px; min-width:0}
+.side{display:grid; gap:12px}
+.side .maze{padding:12px}
+.narr{display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; padding:8px 10px; border:2px dashed var(--maze); border-radius:8px}
+.narr .who{font-family:var(--pixel); font-size:8px; color:var(--yellow); margin-bottom:4px}
+.narr p{margin:0; color:var(--cream); font-size:19px}
+
+/* ---------- pixel buttons ---------- */
+.pbtn{
+  --bc:var(--yellow); --tc:#000;
+  font-family:var(--pixel); font-size:10px; letter-spacing:.04em; line-height:1.4;
+  background:var(--bc); color:var(--tc); padding:12px 14px;
+  clip-path:polygon(0 4px,4px 4px,4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px));
+  transition:transform .06s, filter .1s;
+}
+.pbtn:hover:not(:disabled){filter:brightness(1.15); transform:translateY(-2px)}
+.pbtn:active:not(:disabled){transform:translateY(2px)}
+.pbtn:disabled{opacity:.35}
+.pbtn.red{--bc:var(--red); --tc:#fff}
+.pbtn.blue{--bc:var(--blue); --tc:#fff}
+.pbtn.ghost{--bc:#1a1f55; --tc:var(--cream)}
+.pbtn.sm{font-size:8px; padding:8px 9px}
+.btnrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+.blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- WHAT: trail ---------- */
+.scene{border:3px solid var(--maze); border-radius:8px; overflow:hidden; background:#000}
+.scene svg{width:100%; height:auto; display:block}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
+.box{border:2px solid var(--maze); border-radius:8px; padding:12px; background:#02031a}
+.evyr{font-family:var(--pixel); font-size:12px; color:var(--red); margin-bottom:8px}
+.box p{margin:0 0 8px; font-size:20px}
+.result{color:var(--yellow)}
+.slider{margin:14px 0 6px}
+.slider .ends{display:flex; justify-content:space-between; font-family:var(--pixel); font-size:8px; margin-bottom:8px}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:14px; background:linear-gradient(90deg,var(--red) var(--p,60%),var(--blue) var(--p,60%)); border:2px solid var(--cream); outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:26px; background:var(--yellow); border:3px solid #000; box-shadow:0 0 0 2px var(--yellow); cursor:pointer}
+input[type=range]::-moz-range-thumb{width:14px; height:22px; background:var(--yellow); border:3px solid #000; border-radius:0; cursor:pointer}
+.proj{display:grid; grid-template-columns:auto 1fr auto; gap:4px 10px; align-items:center; font-size:19px; margin-top:8px}
+.proj .k{font-family:var(--pixel); font-size:8px}
+.mbar{height:10px; background:#111; border:1px solid #333; position:relative}
+.mbar i{position:absolute; left:0; top:0; bottom:0}
+.mbar b{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--cream)}
+.ok{color:#7dff8a} .bad{color:var(--red)}
+.report{display:grid; gap:6px; font-size:20px}
+.report div{display:flex; justify-content:space-between; gap:12px; border-bottom:1px dotted #2a2f6a; padding-bottom:4px}
+
+/* ---------- cards ---------- */
+.cards{display:flex; flex-wrap:wrap; gap:8px}
+.cardp{width:62px; height:84px; border:3px solid var(--c); background:#000; display:grid; justify-items:center; align-content:center; gap:6px; position:relative; transition:transform .1s}
+.cardp .nm{font-family:var(--pixel); font-size:7px; color:var(--c)}
+.cardp .ct{position:absolute; top:-10px; right:-10px; font-family:var(--pixel); font-size:9px; background:var(--c); color:#000; min-width:22px; height:22px; display:grid; place-items:center; border:2px solid #000}
+button.cardp:hover:not(:disabled){transform:translateY(-4px); box-shadow:0 4px 0 var(--c)}
+.deck{--c:var(--gray); background:repeating-linear-gradient(45deg,#101540 0 4px,#070a2a 4px 8px)}
+
+/* ---------- HOW: map ---------- */
+.howgrid{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:12px}
+.mapwrap{border:3px solid var(--maze); border-radius:8px; background:#000; overflow:hidden}
+svg.map{width:100%; height:auto; display:block}
+svg.map text{font-family:var(--term); font-size:3.6px; fill:var(--cream); paint-order:stroke; stroke:#000; stroke-width:.8px; pointer-events:none}
+svg.map .rt{cursor:pointer}
+svg.map .rt:hover .seg{filter:brightness(1.35)}
+svg.map .rt.sel .seg{stroke:#fff; stroke-width:.7}
+.legend{display:flex; flex-wrap:wrap; gap:6px 12px; font-size:17px; margin-top:8px}
+.legend i{display:inline-block; width:12px; height:12px; margin-right:5px; vertical-align:-1px; border:1px solid #000}
+.rinfo{min-height:120px}
+.rinfo .rn{font-family:var(--pixel); font-size:10px; color:var(--yellow); margin-bottom:6px; line-height:1.5}
+
+/* ---------- SHARE: council ---------- */
+.motion{border:3px solid var(--yellow); padding:12px; background:#0a0900; margin-bottom:12px}
+.motion .mt{font-family:var(--pixel); font-size:13px; color:var(--yellow); margin-bottom:6px; line-height:1.4}
+.motion .fx{color:var(--dim); font-size:18px; margin-top:4px}
+.council{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px}
+.seat{border:2px solid var(--maze); border-radius:8px; padding:10px; background:#02031a; display:grid; gap:6px; align-content:start; position:relative}
+.seat.exposed{border-color:var(--red); box-shadow:0 0 12px rgba(255,59,78,.5)}
+.seat .hd{display:flex; gap:8px; align-items:center}
+.seat .nm{font-family:var(--pixel); font-size:9px; line-height:1.4}
+.seat .cl{font-size:17px; color:var(--dim)}
+.seat .known{font-family:var(--pixel); font-size:8px; padding:3px 5px; display:inline-block}
+.seat .say{font-size:18px; color:var(--cream); background:#0b0e33; padding:6px 8px; border-radius:6px; position:relative}
+.seat .say::before{content:""; position:absolute; top:-6px; left:14px; border:6px solid transparent; border-top:0; border-bottom-color:#0b0e33}
+.vote{position:absolute; top:8px; right:8px; font-family:var(--pixel); font-size:9px; padding:4px 6px; border:2px solid currentColor}
+.vote.aye{color:#7dff8a} .vote.nay{color:var(--red)} .vote.q{color:var(--dim)}
+.seat .acts{display:flex; gap:6px; flex-wrap:wrap}
+.verdict-banner{font-family:var(--pixel); font-size:14px; text-align:center; padding:12px; margin-top:12px; border:3px solid; line-height:1.5}
+
+/* ---------- NIGHT ---------- */
+.night{background:radial-gradient(ellipse at 50% 0%,#0b0f3d 0%,#000 70%); border-radius:8px; padding:14px; min-height:520px}
+.checks{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:10px 0}
+.check{font-family:var(--pixel); font-size:9px; color:var(--c); border:3px solid var(--c); padding:8px 10px; box-shadow:0 0 12px var(--c)}
+.dots{display:grid; grid-template-columns:repeat(10,1fr); gap:10px 6px; max-width:520px; margin:14px auto; padding:14px; border:4px double var(--maze); border-radius:10px}
+.dots i{justify-self:center; transition:opacity .4s, filter .4s, transform .4s}
+.dots i.eaten{opacity:.22; filter:grayscale(1); transform:translateY(4px)}
+.nlog{display:grid; gap:6px; max-width:640px; margin:0 auto; font-size:20px}
+.nlog div{opacity:0; transform:translateX(-10px); transition:opacity .3s, transform .3s}
+.nlog div.in{opacity:1; transform:none}
+
+/* ---------- side ---------- */
+.hand{display:grid; grid-template-columns:repeat(4,1fr); gap:6px}
+.hand .cardp{width:auto; height:72px}
+.tk{display:flex; justify-content:space-between; gap:8px; font-size:19px; padding:4px 0; border-bottom:1px dotted #2a2f6a}
+.tk .tp{font-family:var(--pixel); font-size:9px; color:var(--yellow)}
+.tk.done{color:#7dff8a}
+.chart svg{width:100%; height:auto; display:block; background:#000; border:2px solid var(--maze)}
+.log{display:grid; gap:4px; font-size:17px; max-height:190px; overflow:auto; color:var(--dim)}
+.log div:first-child{color:var(--cream)}
+
+/* ---------- overlay ---------- */
+.overlay{position:fixed; inset:0; background:rgba(0,0,0,.88); display:grid; place-items:center; padding:16px; z-index:50; overflow:auto}
+.overlay[hidden]{display:none}
+.modal{width:min(900px,100%); padding:22px; text-align:center}
+.modal h2{font-family:var(--pixel); font-size:clamp(18px,4vw,34px); color:var(--yellow); text-shadow:4px 4px 0 var(--red); margin:8px 0 12px; line-height:1.3}
+.modal .sub{font-size:22px; color:var(--dim); margin:0 auto 16px; max-width:60ch}
+.cols3{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; text-align:left; margin:16px 0}
+.cols3 .box h3{font-size:9px}
+.cols3 .box p{font-size:18px; margin:0}
+.tickets{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:14px 0}
+.ticket{border:3px dashed var(--yellow); padding:14px 10px; text-align:center; background:#0a0900; transition:transform .1s}
+.ticket[aria-pressed="true"]{border-style:solid; background:#2a2200; box-shadow:0 0 14px rgba(255,210,31,.5); transform:translateY(-3px)}
+.ticket .tn{font-family:var(--pixel); font-size:9px; color:var(--yellow); line-height:1.5}
+.ticket .tr{font-size:22px; margin:6px 0}
+.ticket .tp{font-family:var(--pixel); font-size:12px}
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0}
+.stats div{border:2px solid var(--maze); padding:8px}
+.stats .v{font-family:var(--pixel); font-size:14px; color:var(--yellow)}
+.stats .l{font-size:16px; color:var(--dim)}
+.why{font-size:20px; text-align:left; max-width:70ch; margin:0 auto; color:var(--cream)}
+
+/* previous / next case tabs */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.cn{display:flex; flex-direction:column; gap:8px; text-decoration:none; color:var(--cream); padding:14px 16px; transition:transform .06s}
+.cn.next{text-align:right}
+.cn:hover{transform:translateY(-2px); border-color:var(--yellow)}
+.cn .d{font-family:var(--pixel); font-size:8px; color:var(--dim)}
+.cn .t{font-family:var(--pixel); font-size:clamp(9px,1.4vw,12px); color:var(--yellow); line-height:1.5}
+.cn.off{opacity:.45; pointer-events:none}
+@media (max-width:560px){ .casenav{grid-template-columns:1fr} .cn.next{text-align:left} }
+@media (max-width:1040px){
+  .main{grid-template-columns:1fr}
+  .side{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .hud{grid-template-columns:repeat(3,1fr); row-gap:10px}
+  .hud .h:nth-child(3){border-right:0}
+  .two,.howgrid{grid-template-columns:1fr}
+  .council{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols3,.tickets{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .side{grid-template-columns:1fr}
+  .dots{grid-template-columns:repeat(8,1fr)}
+  .stage{min-height:0}
+}
+@media (max-width:460px){ .council{grid-template-columns:1fr} .phases .ph{font-size:7px} .ph b{font-size:9px} }
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo">
+      <span id="logoGhost"></span>
+      <div><h1>THE MALTHUS TRAIL</h1><small>1798 – 1846 · what · how · share</small></div>
+    </div>
+    <nav class="navs">
+      <button class="lnk" type="button" data-act="help">? HOW TO PLAY</button>
+      <a class="lnk" href="../">← MALTHUS'S IDEAS</a>
+      <a class="lnk" href="../../">⌂ HOME</a>
+    </nav>
+  </header>
+  <div class="maze hud" id="hud"></div>
+  <div class="phases" id="phases"></div>
+  <div class="main">
+    <section class="maze stage" id="stage" aria-live="polite"></section>
+    <aside class="side" id="side"></aside>
+  </div>
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn maze" href="../../smith/"><span class="d">◀ PREVIOUS CASE</span><span class="t">CASE 002 · ADAM SMITH</span></a>
+    <a class="cn maze next" href="../../ricardo/"><span class="d">NEXT CASE ▶</span><span class="t">CASE 004 · RICARDO</span></a>
+  </nav>
+</div>
+<div class="overlay" id="overlay" hidden></div>
+
+<script>
+/* =====================================================================
+   THE MALTHUS TRAIL
+   One year = three phases, one per economic question:
+     WHAT  – the trail (after The Oregon Trail): events + what to produce
+     HOW   – the rails (after Ticket to Ride): build routes across Britain
+     SHARE – the vestry (after Ultimate Werewolf): vote by day, hidden
+             landlords take rent by night, and the positive checks strike
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const N = v => Math.round(v);
+const C = {red:"#ff3b4e", blue:"#3d7bff", yellow:"#ffd21f", cream:"#fff4d6", gray:"#9aa0c0", maze:"#2a3bd4"};
+const SAVE_KEY = "malthus-trail-v1";
+
+/* ---------- pixel sprites ---------- */
+function spr(rows, pal, px){
+  const h = rows.length, w = rows[0].length; let r = "";
+  rows.forEach((row, y) => [...row].forEach((c, x) => { if (pal[c]) r += `<rect x="${x}" y="${y}" width="1.05" height="1.05" fill="${pal[c]}"/>`; }));
+  return `<svg class="sp" viewBox="0 0 ${w} ${h}" width="${w * px}" height="${h * px}" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
+}
+const PERSON = ["..HHHH..",".HHHHHH.","..FFFF..","..EFFE..","..FFFF..",".CCCCCC.","CCCCCCCC","F.CCCC.F","..CCCC..","..L..L..","..L..L..","..K..K.."];
+const SKINS = ["#f1c7a0","#d9a47a","#b07a55","#8a5a3c"];
+const HATS = ["#8a5a3c","#333","#6b5a10","#9aa0c0","#5a3a2a"];
+const person = (coat, px, i = 0) => spr(PERSON, {H:HATS[i % HATS.length], F:SKINS[i % SKINS.length], E:"#000", C:coat, L:"#2a2a4a", K:"#111"}, px);
+const PARSON = ["...KKKK...","...KKKK...",".KKKKKKKK.","...FFFF...","...FEFE...","...FFFF...","....FF....","..KKWWKK..",".KKKWWKKK.",".KKKKKKKK.",".FKKKKKKF.","..KKKKKK..","..KK..KK..","..KK..KK.."];
+const parson = px => spr(PARSON, {K:"#4a4f9a", F:"#f1c7a0", E:"#000", W:"#fff"}, px);
+const FACE = ["..HHHHHH..",".HHHHHHHH.",".HFFFFFFH.","..FEFFEF..","..FFFFFF..","..FFMMFF..","...FFFF...","..SSSSSS..",".SSSSSSSS.",".SSSSSSSS."];
+const ICON = {
+  r:["...X...","..X.X..","...X...","..X.X..","...X...","...X...","...X..."],
+  b:[".X.X.X.","XXXXXXX",".XX.XX.","XX...XX",".XX.XX.","XXXXXXX",".X.X.X."],
+  y:["..XXX..",".XXXXX.","XXX.XXX","XX.X.XX","XXX.XXX",".XXXXX.","..XXX.."],
+  w:["X......","XX.XXX.","XXXXXXX","XXXXXXX",".X...X.","......."]
+};
+const WAGON = ["....WWWWWWWWWW......","...WWWWWWWWWWWW.....","..WWWWWWWWWWWWWW....","..WWWWWWWWWWWWWW.OO.","..RRRRRRRRRRRRRR.OOO","..RRRRRRRRRRRRRROOOO","...RRRRRRRRRRRR.OOOO","...kk......kk...O..O","..kKKk....kKKk..O..O","...kk......kk......."];
+
+/* ---------- cards ---------- */
+const CARD = {
+  r:{n:"GRAIN", q:"WHAT", c:C.red},
+  b:{n:"LABOR", q:"HOW",  c:C.blue},
+  y:{n:"COIN",  q:"SHARE",c:C.yellow},
+  w:{n:"STEAM", q:"WILD", c:C.cream}
+};
+const cardIcon = (k, px) => spr(ICON[k], {X:CARD[k].c}, px);
+
+/* ---------- map of Britain ---------- */
+const CITY = {
+  glasgow:{n:"Glasgow",x:24,y:16,t:"mill"}, edinburgh:{n:"Edinburgh",x:36,y:13,t:"farm"},
+  carlisle:{n:"Carlisle",x:33,y:31,t:"farm"}, newcastle:{n:"Newcastle",x:50,y:29,t:"port"},
+  york:{n:"York",x:55,y:44,t:"farm"}, leeds:{n:"Leeds",x:46,y:47,t:"mill"},
+  liverpool:{n:"Liverpool",x:31,y:55,t:"port"}, manchester:{n:"Manchester",x:39,y:56,t:"mill"},
+  sheffield:{n:"Sheffield",x:48,y:58,t:"mill"}, lincoln:{n:"Lincoln",x:61,y:58,t:"farm"},
+  birmingham:{n:"Birmingham",x:42,y:70,t:"mill"}, norwich:{n:"Norwich",x:76,y:67,t:"farm"},
+  bristol:{n:"Bristol",x:30,y:82,t:"port"}, london:{n:"London",x:64,y:84,t:"port"},
+  southampton:{n:"Southampton",x:47,y:92,t:"farm"}
+};
+const LABEL = {glasgow:"l", carlisle:"l", liverpool:"l", manchester:"b", sheffield:"b", norwich:"t", southampton:"b"};
+const TYPE = {farm:{c:C.red, n:"Farm town: +food capacity"}, mill:{c:C.blue, n:"Mill town: +goods per worker"}, port:{c:C.yellow, n:"Port: +exports (+imports if free trade)"}};
+const ROUTES = [
+  ["glasgow","edinburgh",1,"gray"],["glasgow","carlisle",3,"blue"],["edinburgh","newcastle",3,"yellow"],
+  ["carlisle","newcastle",2,"red"],["carlisle","liverpool",3,"red"],["newcastle","york",2,"blue"],
+  ["york","leeds",1,"red"],["york","lincoln",2,"yellow"],["leeds","manchester",1,"blue"],
+  ["leeds","sheffield",1,"yellow"],["liverpool","manchester",1,"yellow"],["manchester","sheffield",1,"red"],
+  ["manchester","birmingham",2,"gray"],["sheffield","lincoln",2,"blue"],["sheffield","birmingham",2,"yellow"],
+  ["lincoln","norwich",3,"red"],["liverpool","birmingham",3,"blue"],["birmingham","bristol",2,"red"],
+  ["birmingham","london",3,"gray"],["norwich","london",3,"yellow"],["bristol","london",3,"blue"],
+  ["bristol","southampton",2,"yellow"],["southampton","london",2,"red"],["lincoln","london",4,"gray"]
+].map((r, i) => ({id:i, a:r[0], b:r[1], len:r[2], col:r[3]}));
+const RCOL = {red:C.red, blue:C.blue, yellow:C.yellow, gray:C.gray};
+const RPTS = {1:1, 2:2, 3:4, 4:7};
+const TICKETS = [
+  ["liverpool","leeds",5,"Cotton Road"],["norwich","london",4,"Grain to the Capital"],["lincoln","manchester",6,"Feed the Mills"],
+  ["newcastle","birmingham",8,"Coal & Iron"],["glasgow","liverpool",7,"Scotch Yarn"],["bristol","newcastle",9,"Port to Port"],
+  ["leeds","london",7,"Wool Road"],["southampton","sheffield",6,"Southern Harvest"]
+];
+const BRITAIN = "16,6 26,3 38,4 42,8 38,12 42,16 46,20 52,23 56,30 58,38 61,44 66,50 74,55 82,61 83,70 75,76 71,80 75,86 65,92 55,97 40,97 28,98 14,98 20,92 27,88 23,84 17,80 23,76 19,70 25,66 23,62 27,58 25,52 29,46 27,40 29,36 23,32 19,26 13,22 17,16 11,12";
+
+/* ---------- the trail of years ---------- */
+const YEARS = [1798,1802,1806,1811,1815,1819,1822,1826,1830,1832,1838,1845];
+const EV = {
+  essay:{t:"Parson Malthus publishes his Essay on the Principle of Population. His warning: people multiply geometrically, food only arithmetically. Your parish sets out on the trail."},
+  luddites:{t:"LUDDITES! Masked weavers smash the new stocking frames by night.",
+    ch:[{l:"CALL THE MILITIA", r:"The frames are saved. The hangings are not forgotten.", fx:S => { S.unrest += 10; }},
+        {l:"NEGOTIATE", r:"Fewer frames, calmer streets.", fx:S => { S.millProd = Math.max(.6, S.millProd - .1); S.unrest -= 5; }}]},
+  waterloo:{t:"Waterloo. The wars are over, grain prices tumble, and the landlords want protection. The vestry must debate a CORN LAW."},
+  peterloo:{t:"Sixty thousand gather at St Peter's Field, Manchester. The yeomanry charge with sabres. PETERLOO.", fx:S => { S.unrest += 15; S.flags.plague = (S.flags.plague || 0) + .01; }},
+  reformmeet:{t:"A great reform meeting in Manchester passes off peacefully. The magistrates grumble.", fx:S => { S.unrest -= 3; }},
+  railway:{t:"The Liverpool & Manchester Railway opens. Steam is the future. (+2 STEAM cards)", fx:S => { S.hand.w += 2; }},
+  cholera:{t:"CHOLERA reaches the parish. Malthus once scorned 'specific remedies' for disease. What will you do?",
+    ch:[{l:"CLEAN WATER · 2 COIN", req:S => S.hand.y >= 2, r:"The pumps are cleaned. Few die.", fx:S => { S.hand.y -= 2; S.flags.plague = .01; }},
+        {l:"LET NATURE TAKE ITS COURSE", r:"The positive check does its work.", fx:S => { S.flags.plague = .08; }}]},
+  blight:{t:"BLIGHT. The potato crop rots in the ground. The Hungry Forties begin. (Harvest −25%)", fx:S => { S.flags.foodMult = .75; }},
+  bumper:{t:"A golden summer. The barns groan with grain. (Harvest +15%)", fx:S => { S.flags.foodMult = 1.15; }},
+  wet:{t:"Rain, rain, and more rain. The wheat rots in the fields. (Harvest −15%)", fx:S => { S.flags.foodMult = .85; }},
+  mule:{t:"A new spinning mule lets one mill girl do the work of ten. (Goods per worker +10%)", fx:S => { S.millProd += .1; }},
+  typhus:{t:"Typhus in the cellar dwellings. You have lost several weavers to fever.", fx:S => { S.flags.plague = .04; }},
+  mania:{t:"Railway mania! Speculators hand out shares like sweets. (+1 STEAM card)", fx:S => { S.hand.w += 1; }},
+  panic:{t:"A London bank fails. Merchants stop buying and demand collapses this year.", fx:S => { S.flags.demandMod = -20; }},
+  riots:{t:"Bread riots in the market square. Windows broken, loaves seized. (Unrest +6)", fx:S => { S.unrest += 6; }},
+  ship:{t:"An emigrant ship is bound for America. Families beg for passage.",
+    ch:[{l:"PAY PASSAGE · 2 COIN", req:S => S.hand.y >= 2, r:"Forty families sail west. Fewer mouths, fewer tears.", fx:S => { S.hand.y -= 2; S.pop *= .94; S.unrest -= 5; }},
+        {l:"LET THE SHIP SAIL", r:"The ship sails without them.", fx:null}]},
+  pamphlet:{t:"Godwin's Political Justice is read aloud in the alehouses. Hope spreads. (Unrest −4)", fx:S => { S.unrest -= 4; }}
+};
+const FIXED_EV = {0:"essay", 3:"luddites", 4:"waterloo", 8:"railway", 9:"cholera", 11:"blight"};
+const RANDOM_EV = ["bumper","wet","mule","typhus","mania","panic","riots","ship","pamphlet"];
+
+/* ---------- the vestry: motions & roles ---------- */
+const ROLE = {L:"LANDLORD", C:"MILL OWNER", W:"WEAVER", R:"REFORMER"};
+const ROLECOL = {L:C.red, C:C.blue, W:C.yellow, R:C.cream};
+const MOT = {
+  relief:{t:"POOR RELIEF", d:"Top up wages from the parish rates so no family falls below the price of bread (the Speenhamland system).", fx:"If passed: deaths tonight −50% · unrest −8 · births rise · costs 2 COIN", stakes:"low",
+    pref:{L:-1,C:-1,W:1,R:1}, yes:["No family should starve while the parish has bread.","A few pence on the rates keeps children alive."], no:["Relief only breeds more paupers. Read your Malthus!","Why should the industrious pay for the idle?"],
+    apply:S => { S.flags.deathMult *= .5; S.growthMod += .02; S.unrest -= 8; if (S.hand.y >= 2) S.hand.y -= 2; else { S.unrest += 6; logm("The rates went unpaid. Grumbling in the pews."); } }},
+  cornlaw:{t:"CORN LAW", d:"Ban foreign grain until the home price reaches 80 shillings.", fx:"If passed: rent ×1.6 · no imports · unrest +8", stakes:"high",
+    pref:{L:1,C:-1,W:-1,R:-1}, yes:["English grain for English tables! Keep foreign corn out.","Our farms fed the nation through the war. Protect them."], no:["Dear bread means hungry weavers and higher wages to pay.","Open the ports and bread will be cheap."],
+    apply:S => { S.cornLaw = true; S.freeTrade = false; S.unrest += 8; }},
+  repeal:{t:"REPEAL THE CORN LAWS", d:"Let cheap foreign grain in through the ports.", fx:"If passed: imports flow through your port routes · rent back to normal · unrest −6", stakes:"high",
+    pref:{L:-1,C:1,W:1,R:1}, yes:["Cheap bread, busy mills. Open the ports!","Foreign grain will feed us, and they'll buy our cloth."], no:["Repeal will ruin the countryside.","The land is England's backbone. Don't break it."],
+    apply:S => { S.cornLaw = false; S.freeTrade = true; S.unrest -= 6; }},
+  combo:{t:"COMBINATION ACT", d:"Outlaw workers' unions.", fx:"If passed: wages −5% · goods per worker +5% · unrest +8", stakes:"low",
+    pref:{L:1,C:1,W:-1,R:-1}, yes:["Unions are conspiracies against trade.","Let every man bargain for himself."], no:["The masters combine every day and nobody jails them!","Without a union we're alone against the mill."],
+    apply:S => { S.wage = Math.max(.25, S.wage - .05); S.millProd += .05; S.unrest += 8; }},
+  wages:{t:"RAISE WAGES", d:"Masters pay more, so workers can buy more of what the mills make.", fx:"If passed: wages +6% · more demand for goods · births rise · unrest −6", stakes:"low",
+    pref:{L:-1,C:-1,W:1,R:1}, yes:["Pay more and they'll buy more of our own cloth.","A living wage is simple justice."], no:["Higher wages only mean more children and lower profits.","Raise costs and no one will invest."],
+    apply:S => { S.wage = Math.min(.7, S.wage + .06); S.growthMod += .02; S.unrest -= 6; }},
+  sermon:{t:"MORAL RESTRAINT", d:"Parson Malthus preaches late marriage and chastity to the poor.", fx:"If passed: births −3% · unrest +3", stakes:"low",
+    pref:{L:1,C:1,W:-1,R:-1}, yes:["Let the poor marry late and govern their passions.","Restraint is the only honest remedy."], no:["Tell a hungry man to marry late? Feed him first.","Sermons won't fill a single belly."],
+    apply:S => { S.growthMod -= .03; S.unrest += 3; }},
+  servants:{t:"HIRE MORE SERVANTS", d:"Malthus's cure for gluts: landlords spend their rent on servants and luxuries.", fx:"If passed: demand for goods +15 · landlords' rent +1% each", stakes:"low",
+    pref:{L:1,C:-1,W:1,R:-1}, yes:["A gentleman's household gives work to many.","Someone must buy what the mills make."], no:["Servants produce nothing. It's rent in livery.","Why should the land eat what the workshop makes?"],
+    apply:S => { S.servants += 15; S.rentBonus += .01; }},
+  godwin:{t:"GODWIN'S LOAF", d:"Share the food by need, not by property.", fx:"If passed: deaths tonight −70% · unrest −12 · births +4%", stakes:"high",
+    pref:{L:-1,C:-1,W:1,R:1}, yes:["Bread belongs to whoever is hungriest.","Property is the cause of this misery."], no:["Share everything and nobody will work.","Abolish property and you abolish civilization."],
+    apply:S => { S.flags.deathMult *= .3; S.unrest -= 12; S.growthMod += .04; }},
+  workhouse:{t:"BUILD A WORKHOUSE", d:"Relief only inside the workhouse walls (the New Poor Law of 1834).", fx:"If passed: deaths tonight −30% · unrest +4 · costs 1 COIN", stakes:"low",
+    pref:{L:1,C:1,W:-1,R:-1}, yes:["Relief, yes, but on the parish's terms.","The workhouse will sort the idle from the needy."], no:["A prison for the crime of being poor.","Families split, husbands from wives. Shameful."],
+    apply:S => { S.flags.deathMult *= .7; S.unrest += 4; if (S.hand.y >= 1) S.hand.y -= 1; }}
+};
+const SCHED = {0:"relief", 1:"combo", 2:"sermon", 4:"cornlaw", 5:"wages", 7:"servants", 9:"workhouse", 11:"repeal"};
+const NAMES = ["Squire Ashby","Mrs. Bramble","Mr. Crumpton","Nell Spindle","Tom Carter","Rev. Hale","Lady Pennock","Jem Weaver","Mr. Oddfellow","Sal Loomis"];
+const TELLS = [" …or so my tenants tell me."," …I've said as much at the hunt."," …as any man with acres would agree."," …my steward keeps the accounts, of course."];
+const VOICE = {W:"As a weaver: ", R:"In the name of reason: ", C:"Speaking for the mills: ", L:"As a landlord: "};
+
+/* ---------- state ---------- */
+let S = null;
+let UI = {sel:null, tix:[], nightTimer:null};
+
+function newGame(tickets){
+  const roles = shuffle(["L","L","C","W","W","R"]);
+  const names = shuffle(NAMES.slice()).slice(0, 6);
+  const skins = ["#f1c7a0","#d9a47a","#b07a55","#8a5a3c"], hair = ["#ff3b4e","#3d7bff","#ffd21f","#fff4d6","#8a5a3c","#333"], shirts = [C.red, C.blue, C.yellow, C.gray];
+  S = {
+    round:0, phase:"what", pop:100, stock:0, farmCap:100, millProd:1, exportCap:0, wage:.45, growthMod:0,
+    cornLaw:false, freeTrade:false, servants:0, rentBonus:0, unrest:10, deaths:0, wrong:0, gluts:0,
+    alloc:.6, hand:{r:2, b:2, y:3, w:0}, deck:[], discard:[], market:[], claimed:[], blocked:[],
+    tickets:tickets.map(t => ({a:t[0], b:t[1], pts:t[2], n:t[3], done:false})),
+    council:roles.map((r, i) => ({name:names[i], role:r, claim:r === "L" ? pick(["W","R"]) : r, exposed:false, known:false,
+      skin:pick(skins), hair:pick(hair), shirt:pick(shirts)})),
+    hist:[], log:[], lastRent:10, wellFed:false, usedEv:[], evKey:null, evDone:false, evResult:"",
+    prod:null, foodAvail:0, draws:2, acted:null, motion:null, lastMotion:null, votes:null, voted:null, passed:null,
+    accused:false, night:null, flags:{}, over:null
+  };
+  for (const k of ["r","b","y"]) for (let i = 0; i < 14; i++) S.deck.push(k);
+  for (let i = 0; i < 8; i++) S.deck.push("w");
+  shuffle(S.deck);
+  for (let i = 0; i < 5; i++) S.market.push(S.deck.pop());
+  logm("Your parish sets out on the trail. Pop 100.");
+  startRound();
+}
+function save(){ try { if (S && !S.over) localStorage.setItem(SAVE_KEY, JSON.stringify(S)); else localStorage.removeItem(SAVE_KEY); } catch(e){} }
+function load(){ try { const s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e){ return null; } }
+function logm(m){ if (!S) return; S.log.unshift(`${YEARS[Math.min(S.round, 11)] || 1846} · ${m}`); S.log = S.log.slice(0, 30); }
+
+/* ---------- derived values ---------- */
+const year = () => S.round >= 12 ? 1846 : YEARS[S.round];
+const landlords = () => S.council.filter(p => p.role === "L");
+function connected(a, b){
+  const adj = {}; S.claimed.forEach(id => { const r = ROUTES[id]; (adj[r.a] = adj[r.a] || []).push(r.b); (adj[r.b] = adj[r.b] || []).push(r.a); });
+  const seen = new Set([a]), q = [a];
+  while (q.length){ const c = q.shift(); if (c === b) return true; (adj[c] || []).forEach(n => { if (!seen.has(n)){ seen.add(n); q.push(n); } }); }
+  return false;
+}
+function score(final){
+  let s = S.claimed.reduce((t, id) => t + RPTS[ROUTES[id].len], 0);
+  S.tickets.forEach(t => { if (t.done) s += t.pts; else if (final) s -= t.pts; });
+  s += landlords().filter(p => p.exposed).length * 8 - S.wrong * 4 - Math.floor(S.deaths / 5);
+  if (final) s += Math.floor(S.pop / 3) - Math.floor(S.unrest / 4);
+  return s;
+}
+function growthRate(){ return clamp(.12 + (S.wellFed ? .04 : 0) + S.growthMod + (S.wage - .45) * .2, 0, .25); }
+function project(alloc){
+  const grainW = S.pop * alloc, millW = S.pop - grainW;
+  const food = Math.min(grainW * 1.8, S.farmCap) * (S.flags.foodMult || 1);
+  const goods = millW * S.millProd;
+  const demand = Math.max(0, S.pop * S.wage * .8 + S.lastRent * 1.2 + S.servants + (S.freeTrade ? S.exportCap : S.exportCap * .4) + (S.flags.demandMod || 0));
+  const sold = Math.min(goods, demand), glut = goods - sold;
+  const imports = S.freeTrade ? Math.min(S.exportCap, sold * .6) : 0;
+  return {food, goods, demand, sold, glut, imports, grainW,
+    cards:{r:Math.max(1, Math.floor(food / 35)), b:Math.max(1, Math.floor(goods / 30)), y:Math.floor(sold / 22)}};
+}
+
+/* ---------- round flow ---------- */
+function startRound(){
+  S.flags = {deathMult:1};
+  S.prod = null; S.evResult = "";
+  if (S.round > 0){
+    const g = growthRate(), births = S.pop * g;
+    S.pop += births; S.growthMod *= .8;
+    logm(`${N(births)} born (+${N(g * 100)}%). Pop ${N(S.pop)}.`);
+    S.farmCap += 5; // slow, arithmetic improvement of the land
+  }
+  let key = FIXED_EV[S.round];
+  if (S.round === 5) key = S.unrest > 40 ? "peterloo" : "reformmeet";
+  if (!key){ const pool = RANDOM_EV.filter(k => !S.usedEv.includes(k)); key = pick(pool.length ? pool : RANDOM_EV); }
+  S.usedEv.push(key); S.evKey = key;
+  const e = EV[key];
+  if (e.ch) S.evDone = false;
+  else { if (e.fx) e.fx(S); S.evDone = true; }
+  S.unrest = clamp(S.unrest, 0, 100);
+  S.phase = "what";
+  render();
+}
+function produce(){
+  const p = project(S.alloc);
+  S.prod = p;
+  S.foodAvail = p.food + p.imports + S.stock; S.stock = 0;
+  S.hand.r += p.cards.r; S.hand.b += p.cards.b; S.hand.y += p.cards.y;
+  if (p.glut > 3){ S.gluts++; S.unrest = clamp(S.unrest + p.glut / 3, 0, 100); logm(`GLUT! ${N(p.glut)} goods unsold. Mills idle.`); }
+  logm(`Harvest ${N(p.food)} food, ${N(p.goods)} goods made.`);
+  render();
+}
+function toHow(){ S.phase = "how"; S.draws = 2; S.acted = null; UI.sel = null; render(); }
+function toDay(){
+  let m = SCHED[S.round];
+  if (m === "cornlaw" && S.cornLaw) m = null;
+  if (m === "repeal" && S.freeTrade) m = "godwin";
+  if (!m){
+    const pool = ["relief","wages","sermon","servants","godwin","workhouse","combo", S.cornLaw ? "repeal" : "cornlaw"].filter(x => x !== S.lastMotion);
+    m = pick(pool);
+  }
+  S.motion = m; S.lastMotion = m; S.voted = null; S.passed = null; S.accused = false;
+  const M = MOT[m];
+  S.votes = S.council.map(p => {
+    let v = M.pref[p.role];
+    if (p.role === "L" && !p.exposed && M.stakes !== "high" && Math.random() < .25) v = -v;
+    else if (p.role !== "L" && Math.random() < .08) v = -v;
+    const voice = p.exposed ? VOICE.L : VOICE[p.claim];
+    let line = voice + pick(v > 0 ? M.yes : M.no);
+    if (p.role === "L" && !p.exposed && Math.random() < .3) line += pick(TELLS);
+    return {v, line};
+  });
+  S.phase = "day"; render();
+}
+function vote(v){
+  S.voted = v;
+  const ayes = S.votes.filter(x => x.v > 0).length + (v > 0 ? 1 : 0);
+  const nays = 7 - ayes;
+  S.passed = ayes > nays;
+  const M = MOT[S.motion];
+  if (S.passed){ M.apply(S); logm(`Vestry PASSED ${M.t} (${ayes}–${nays}).`); }
+  else { logm(`Vestry REJECTED ${M.t} (${ayes}–${nays}).`); if (M.pref.W > 0) S.unrest += 3; }
+  S.unrest = clamp(S.unrest, 0, 100);
+  render();
+}
+function nightfall(){
+  const L = landlords(), hidden = L.filter(p => !p.exposed).length, shown = L.length - hidden;
+  let rate = hidden * .05 + shown * .02 + L.length * S.rentBonus;
+  if (S.cornLaw) rate *= 1.6;
+  const rent = S.foodAvail * rate, fed = S.foodAvail - rent;
+  const popBefore = S.pop, need = S.pop;
+  const war = year() < 1815 ? S.pop * .02 : 0;
+  const deficit = Math.max(0, need - fed);
+  const famine = deficit * .6 * S.flags.deathMult;
+  const plague = S.pop * (S.flags.plague || 0) * (S.flags.deathMult < 1 ? .7 : 1);
+  const total = famine + plague + war;
+  S.pop = Math.max(0, S.pop - total);
+  S.deaths += total;
+  S.lastRent = rent;
+  S.stock = Math.min(40, Math.max(0, fed - need) * .5);
+  S.wellFed = fed / need >= 1.05;
+  S.unrest = clamp(S.unrest + total / popBefore * 140 - 4, 0, 100);
+  S.hist.push({y:year(), pop:popBefore, food:fed});
+  const lines = [];
+  lines.push(`Rent collected: ${N(rent)} food${hidden ? `, ${hidden === 1 ? "one hidden landlord" : hidden + " hidden landlords"} among you` : ""}${S.cornLaw ? " (Corn Law ×1.6)" : ""}.`);
+  if (hidden > 0 && Math.random() < .3 * hidden && S.blocked.length < 5){
+    const opts = ROUTES.filter(r => !S.claimed.includes(r.id) && !S.blocked.includes(r.id) && (CITY[r.a].t === "farm" || CITY[r.b].t === "farm"));
+    if (opts.length){ const r = pick(opts); S.blocked.push(r.id); lines.push(`ENCLOSURE! ${CITY[r.a].n}–${CITY[r.b].n} has been fenced off.`); logm(`Enclosure: ${CITY[r.a].n}–${CITY[r.b].n} blocked.`); }
+  }
+  lines.push(`Food for the people: ${N(fed)}. Mouths to feed: ${N(need)}.`);
+  if (famine >= .5) lines.push(`FAMINE took ${N(famine)}.`);
+  if (plague >= .5) lines.push(`PLAGUE took ${N(plague)}.`);
+  if (war >= .5) lines.push(`WAR took ${N(war)}.`);
+  if (total < .5) lines.push("No one died tonight. The checks went hungry.");
+  if (S.stock > 0) lines.push(`${N(S.stock)} surplus food saved in the granary.`);
+  logm(`Night: ${N(total)} died. Pop ${N(S.pop)}.`);
+  S.night = {lines, frac:total / popBefore, ghosts:{famine:famine >= .5, plague:plague >= .5, war:war >= .5}};
+  if (S.unrest >= 100) S.over = "revolution";
+  else if (S.pop <= 30) S.over = "collapse";
+  S.phase = "night"; render();
+}
+function dawn(){
+  if (S.over){ endGame(); return; }
+  S.round++;
+  if (S.round >= 12){ S.over = "complete"; endGame(); return; }
+  startRound();
+}
+
+/* ---------- HOW actions ---------- */
+function drawCard(i){
+  if (S.acted === "claim" || S.draws <= 0) return;
+  let c;
+  if (i === "deck"){ refill(); c = S.deck.pop(); }
+  else { c = S.market[+i]; S.market[+i] = null; refill(); S.market[+i] = S.deck.pop() || null; }
+  if (!c) return;
+  S.hand[c]++; S.draws--; S.acted = "draw";
+  logm(`Drew a ${CARD[c].n} card.`);
+  render();
+}
+function refill(){ if (!S.deck.length){ S.deck = shuffle(S.discard); S.discard = []; } }
+function payPlan(r){
+  if (S.claimed.includes(r.id) || S.blocked.includes(r.id)) return null;
+  const opts = r.col === "gray" ? ["r","b","y"] : [r.col[0]];
+  let best = null;
+  opts.forEach(c => { if (S.hand[c] + S.hand.w >= r.len){ const useC = Math.min(S.hand[c], r.len); const plan = {c, useC, useW:r.len - useC}; if (!best || plan.useW < best.useW) best = plan; } });
+  return best;
+}
+function claim(){
+  const r = ROUTES[UI.sel]; if (!r || S.acted) return;
+  const p = payPlan(r); if (!p) return;
+  S.hand[p.c] -= p.useC; S.hand.w -= p.useW;
+  for (let i = 0; i < p.useC; i++) S.discard.push(p.c);
+  for (let i = 0; i < p.useW; i++) S.discard.push("w");
+  S.claimed.push(r.id); S.acted = "claim";
+  [r.a, r.b].forEach(c => { const t = CITY[c].t; if (t === "farm") S.farmCap += 5 * r.len; if (t === "mill") S.millProd += .04 * r.len; if (t === "port") S.exportCap += 5 * r.len; });
+  logm(`Built ${CITY[r.a].n}–${CITY[r.b].n} (+${RPTS[r.len]} pts).`);
+  S.tickets.forEach(t => { if (!t.done && connected(t.a, t.b)){ t.done = true; logm(`TICKET DONE: ${t.n} +${t.pts}!`); } });
+  UI.sel = null; render();
+}
+
+/* ---------- SHARE actions ---------- */
+function inspect(i){
+  const p = S.council[i]; if (p.known || S.hand.y < 2) return;
+  S.hand.y -= 2; p.known = true;
+  logm(`Clerk bribed: ${p.name} is a ${ROLE[p.role]}.`);
+  render();
+}
+function accuse(i){
+  const p = S.council[i]; if (S.accused || p.exposed) return;
+  S.accused = true;
+  if (p.role === "L"){ p.exposed = true; p.known = true; S.unrest = clamp(S.unrest - 5, 0, 100); logm(`EXPOSED! ${p.name} is a hidden LANDLORD. +8 pts.`); }
+  else { S.wrong++; p.known = true; S.unrest = clamp(S.unrest + 8, 0, 100); logm(`Wrong! ${p.name} is an honest ${ROLE[p.role]}. −4 pts, unrest +8.`); }
+  render();
+}
+
+/* =====================================================================
+   RENDERING
+   ===================================================================== */
+function render(){
+  if (!S){ renderShell(); return; }
+  renderHUD(); renderPhases(); renderSide();
+  const st = $("#stage");
+  if (S.phase === "what") st.innerHTML = viewWhat();
+  else if (S.phase === "how") st.innerHTML = viewHow();
+  else if (S.phase === "day") st.innerHTML = viewDay();
+  else if (S.phase === "night"){ st.innerHTML = viewNight(); animateNight(); }
+  if (S.phase === "what") bindAlloc();
+  save();
+}
+function renderShell(){
+  $("#hud").innerHTML = ""; $("#phases").innerHTML = ""; $("#side").innerHTML = "";
+  $("#stage").innerHTML = `<div style="display:grid;place-items:center;min-height:420px;text-align:center">${person(C.red, 5)}<p class="px blink" style="font-size:12px;color:var(--yellow)">PRESS START</p></div>`;
+}
+function renderHUD(){
+  const food = S.prod ? S.foodAvail : (S.hist.length ? S.hist[S.hist.length - 1].food : 0);
+  $("#hud").innerHTML = `
+    <div class="h"><div class="l">YEAR</div><div class="v" style="color:var(--yellow)">${year()} <small>${S.round < 12 ? S.round + 1 : 12}/12</small></div></div>
+    <div class="h"><div class="l">POPULATION</div><div class="v">${N(S.pop)}</div></div>
+    <div class="h"><div class="l">FOOD</div><div class="v" style="color:${!food ? "var(--dim)" : food >= S.pop ? "#7dff8a" : "var(--red)"}">${food ? N(food) : "—"}</div></div>
+    <div class="h"><div class="l">UNREST</div><div class="bar"><i style="width:${S.unrest}%"></i></div></div>
+    <div class="h"><div class="l">SCORE</div><div class="v" style="color:var(--yellow)">${String(Math.max(0, score(false))).padStart(4, "0")}</div></div>`;
+}
+function renderPhases(){
+  const ph = S.phase;
+  $("#phases").innerHTML = `
+    <div class="ph ${ph === "what" ? "on" : ""}" style="--c:var(--red)"><b>1 · WHAT</b>THE TRAIL</div>
+    <div class="ph ${ph === "how" ? "on" : ""}" style="--c:var(--blue)"><b>2 · HOW</b>THE RAILS</div>
+    <div class="ph ${ph === "day" || ph === "night" ? "on" : ""}" style="--c:var(--yellow)"><b>3 · SHARE</b>${ph === "night" ? "NIGHTFALL" : "THE VESTRY"}</div>`;
+}
+function narr(text){ return `<div class="narr">${parson(3)}<div><div class="who">PARSON MALTHUS</div><p>${text}</p></div></div>`; }
+
+/* ----- WHAT ----- */
+function sceneSVG(){
+  let s = `<svg viewBox="0 0 200 64" shape-rendering="crispEdges" role="img" aria-label="The trail of years from 1798 to 1846">`;
+  for (let i = 0; i < 40; i++){ const x = (i * 37 + i * i * 3) % 200, y = 2 + (i * 7 + i * i * 5) % 24; s += `<rect x="${x}" y="${y}" width="1" height="1" fill="${i % 5 ? "#555a9a" : C.cream}"/>`; }
+  s += `<circle cx="178" cy="12" r="7" fill="#f3ecd2"/><rect x="175" y="9" width="2" height="2" fill="#d6cdb0"/><rect x="180" y="13" width="3" height="2" fill="#d6cdb0"/><rect x="176" y="15" width="1" height="1" fill="#d6cdb0"/>`;   // moon
+  [[4,34,30,8],[30,30,26,12],[60,36,40,6],[98,32,30,10],[130,35,30,7],[158,31,42,11]].forEach(h => s += `<rect x="${h[0]}" y="${h[1]}" width="${h[2]}" height="${h[3] + 20}" fill="#0d1450"/>`);
+  [[20,28],[70,30],[120,26],[150,29]].forEach(m => { s += `<rect x="${m[0]}" y="${m[1]}" width="12" height="16" fill="${C.maze}"/><rect x="${m[0] + 8}" y="${m[1] - 8}" width="3" height="8" fill="${C.maze}"/>`; for (let k = 0; k < 3; k++) s += `<rect x="${m[0] + 2 + k * 3}" y="${m[1] + 4}" width="2" height="2" fill="${C.yellow}"/>`; s += `<rect x="${m[0] + 9}" y="${m[1] - 12}" width="2" height="2" fill="#555"/><rect x="${m[0] + 11}" y="${m[1] - 15}" width="2" height="2" fill="#444"/>`; });
+  s += `<rect x="0" y="44" width="200" height="20" fill="#05061a"/>`;
+  for (let x = 2; x < 200; x += 6) s += `<rect x="${x}" y="46" width="1" height="3" fill="#6b5a10"/>`;
+  const x0 = 8, x1 = 186, pos = i => x0 + (i / 12) * (x1 - x0);
+  for (let x = x0; x <= x1; x += 4){ if (x > pos(S.round) + 18) s += `<rect x="${x}" y="55" width="1.5" height="1.5" fill="${C.cream}"/>`; }
+  YEARS.concat([1846]).forEach((y, i) => {
+    const x = pos(i); const key = [1798,1815,1819,1832,1846].includes(y);
+    s += `<rect x="${x}" y="50" width="1" height="6" fill="${i <= S.round ? C.red : "#444"}"/><rect x="${x + 1}" y="50" width="3" height="2" fill="${i <= S.round ? C.red : "#444"}"/>`;
+    if (key) s += `<text x="${x}" y="63" font-family="Press Start 2P" font-size="3" fill="${C.dim || "#8a8fb8"}">${y}</text>`;
+  });
+  const wx = pos(S.round) - 4;
+  s += `<g transform="translate(${wx},46)">`;
+  WAGON.forEach((row, y) => [...row].forEach((c, x) => { const col = {W:C.cream, R:C.red, O:C.yellow, k:"#888", K:"#ccc"}[c]; if (col) s += `<rect x="${x}" y="${y}" width="1" height="1" fill="${col}"/>`; }));
+  s += `</g></svg>`;
+  return s;
+}
+function viewWhat(){
+  const e = EV[S.evKey];
+  let ev = `<div class="evyr">YEAR ${year()}</div><p>${e.t}</p>`;
+  if (e.ch && !S.evDone) ev += `<div class="btnrow">${e.ch.map((c, i) => `<button class="pbtn ${i ? "ghost" : "red"} sm" type="button" data-act="choice" data-arg="${i}" ${c.req && !c.req(S) ? "disabled" : ""}>${c.l}</button>`).join("")}</div>`;
+  if (S.evResult) ev += `<p class="result">▶ ${S.evResult}</p>`;
+  let right;
+  if (!S.prod){
+    right = `<h3>WHAT WILL WE MAKE?</h3>
+      <p style="font-size:18px;color:var(--dim)">Split your ${N(S.pop)} people between the fields and the mills.</p>
+      <div class="slider"><div class="ends"><span style="color:var(--red)">◀ GRAIN</span><span style="color:var(--blue)">GOODS ▶</span></div>
+      <input type="range" id="alloc" min="20" max="90" step="5" value="${N(S.alloc * 100)}" aria-label="Share of workers in the fields" ${S.evDone ? "" : "disabled"}></div>
+      <div id="projBox"></div>
+      <div class="btnrow"><button class="pbtn" type="button" data-act="produce" ${S.evDone ? "" : "disabled"}>▶ WORK THE YEAR</button></div>
+      ${S.evDone ? "" : `<p style="font-size:17px;color:var(--red)">Deal with the event first.</p>`}`;
+  } else {
+    const p = S.prod;
+    right = `<h3>HARVEST REPORT</h3>
+      <div class="report">
+        <div><span>Grain harvested</span><span>${N(p.food)}</span></div>
+        ${p.imports ? `<div><span>Imports through your ports</span><span>+${N(p.imports)}</span></div>` : ""}
+        <div><span>From the granary</span><span>+${N(S.foodAvail - p.food - p.imports)}</span></div>
+        <div><span>Food this year</span><span class="${S.foodAvail >= S.pop ? "ok" : "bad"}">${N(S.foodAvail)} / ${N(S.pop)} mouths</span></div>
+        <div><span>Goods made / sold</span><span>${N(p.goods)} / ${N(p.sold)}</span></div>
+        ${p.glut > 3 ? `<div class="bad"><span>GLUT: unsold goods</span><span>${N(p.glut)}</span></div>` : ""}
+        <div><span>Cards earned</span><span><span style="color:var(--red)">+${p.cards.r} GRAIN</span> <span style="color:var(--blue)">+${p.cards.b} LABOR</span> <span style="color:var(--yellow)">+${p.cards.y} COIN</span></span></div>
+      </div>
+      <div class="btnrow"><button class="pbtn blue" type="button" data-act="tohow">▶ TO THE RAILS (HOW)</button></div>`;
+  }
+  return narr(S.round === 0 ? "Population, when unchecked, increases in a geometrical ratio. Subsistence increases only in an arithmetical ratio. Let us see how far you get." : pick(["The trail grows longer, and the mouths more numerous.","Every harvest must feed more people than the last.","You may plough more land, but the best soil is already taken."])) +
+    `<div class="scene">${sceneSVG()}</div><div class="two"><div class="box">${ev}</div><div class="box">${right}</div></div>`;
+}
+function bindAlloc(){
+  const a = $("#alloc"); if (!a) return;
+  const upd = () => {
+    S.alloc = +a.value / 100; a.style.setProperty("--p", a.value + "%");
+    const p = project(S.alloc), foodTot = p.food + p.imports + S.stock, max = Math.max(foodTot, S.pop, p.goods, p.demand) * 1.1;
+    $("#projBox").innerHTML = `<div class="proj">
+      <span class="k" style="color:var(--red)">FOOD</span><div class="mbar"><i style="width:${foodTot / max * 100}%;background:var(--red)"></i><b style="left:${S.pop / max * 100}%" title="mouths to feed"></b></div><span class="${foodTot >= S.pop ? "ok" : "bad"}">${N(foodTot)}/${N(S.pop)}</span>
+      <span class="k" style="color:var(--blue)">GOODS</span><div class="mbar"><i style="width:${p.goods / max * 100}%;background:var(--blue)"></i><b style="left:${p.demand / max * 100}%" title="demand"></b></div><span class="${p.glut > 3 ? "bad" : "ok"}">${N(p.goods)}/${N(p.demand)}</span></div>
+      <p style="font-size:17px;color:var(--dim);margin-top:8px">White tick = mouths to feed / buyers. Land caps grain at ${N(S.farmCap * (S.flags.foodMult || 1))}.${p.glut > 3 ? ` <span class="bad">Glut of ${N(p.glut)}!</span>` : ""}</p>`;
+  };
+  a.addEventListener("input", upd); upd();
+}
+
+/* ----- HOW ----- */
+function mapSVG(){
+  let s = `<svg class="map" viewBox="4 0 84 100" role="img" aria-label="Map of Britain with rail and canal routes">
+    <defs><pattern id="pxg" width="2" height="2" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#050826"/><rect width="1" height="1" fill="#0c1350"/></pattern></defs>
+    <polygon points="${BRITAIN}" fill="url(#pxg)" stroke="${C.maze}" stroke-width="1.4" stroke-linejoin="round"/>
+    <polygon points="${BRITAIN}" fill="none" stroke="#000" stroke-width=".4" stroke-linejoin="round"/>`;
+  ROUTES.forEach(r => {
+    const A = CITY[r.a], B = CITY[r.b];
+    const dx = B.x - A.x, dy = B.y - A.y, d = Math.hypot(dx, dy), ux = dx / d, uy = dy / d, ang = Math.atan2(dy, dx) * 180 / Math.PI;
+    const pad = 3, gap = .7, L = (d - pad * 2 - gap * (r.len - 1)) / r.len;
+    const claimed = S.claimed.includes(r.id), blocked = S.blocked.includes(r.id), sel = UI.sel === r.id;
+    s += `<g class="rt ${sel ? "sel" : ""}" data-act="route" data-arg="${r.id}"><line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="transparent" stroke-width="5"/>`;
+    for (let k = 0; k < r.len; k++){
+      const off = pad + k * (L + gap) + L / 2, cx = A.x + ux * off, cy = A.y + uy * off;
+      const fill = claimed ? C.cream : blocked ? "#222" : RCOL[r.col];
+      s += `<rect class="seg" x="${cx - L / 2}" y="${cy - 1.2}" width="${L}" height="2.4" fill="${fill}" stroke="#000" stroke-width=".35" transform="rotate(${ang} ${cx} ${cy})"/>`;
+      if (claimed) s += `<rect x="${cx - .5}" y="${cy - .5}" width="1" height="1" fill="#000" transform="rotate(${ang} ${cx} ${cy})"/>`;
+    }
+    if (blocked){ const mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2; s += `<path d="M${mx - 2} ${my - 2} L${mx + 2} ${my + 2} M${mx + 2} ${my - 2} L${mx - 2} ${my + 2}" stroke="${C.red}" stroke-width="1"/>`; }
+    s += `</g>`;
+  });
+  const tk = new Set(S.tickets.filter(t => !t.done).flatMap(t => [t.a, t.b]));
+  Object.entries(CITY).forEach(([k, c]) => {
+    if (tk.has(k)) s += `<rect x="${c.x - 3}" y="${c.y - 3}" width="6" height="6" fill="none" stroke="${C.yellow}" stroke-width=".5" stroke-dasharray="1 .6" class="blink"/>`;
+    s += `<rect x="${c.x - 1.9}" y="${c.y - 1.9}" width="3.8" height="3.8" fill="${TYPE[c.t].c}" stroke="#000" stroke-width=".6"/>`;
+    const pos = LABEL[k] || (c.x < 66 ? "r" : "l");
+    const lx = pos === "r" ? c.x + 2.8 : pos === "l" ? c.x - 2.8 : c.x;
+    const ly = pos === "b" ? c.y + 5.6 : pos === "t" ? c.y - 3 : c.y + 1.2;
+    s += `<text x="${lx}" y="${ly}" text-anchor="${pos === "r" ? "start" : pos === "l" ? "end" : "middle"}">${c.n}</text>`;
+  });
+  return s + `</svg>`;
+}
+function viewHow(){
+  const r = UI.sel != null ? ROUTES[UI.sel] : null;
+  let info = `<div class="rn">SELECT A ROUTE</div><p style="font-size:18px;color:var(--dim)">Click a colored track on the map. Build it with cards of its color (gray takes any one color; STEAM is wild).</p>`;
+  if (r){
+    const plan = payPlan(r), claimed = S.claimed.includes(r.id), blocked = S.blocked.includes(r.id);
+    const bonus = [r.a, r.b].map(c => `<div style="font-size:17px"><span style="color:${TYPE[CITY[c].t].c}">■</span> ${CITY[c].n}: ${TYPE[CITY[c].t].n}</div>`).join("");
+    info = `<div class="rn">${CITY[r.a].n.toUpperCase()} – ${CITY[r.b].n.toUpperCase()}</div>
+      <div style="font-size:19px">Length ${r.len} · <span style="color:${RCOL[r.col]}">${r.col.toUpperCase()}</span> · ${RPTS[r.len]} pts</div>${bonus}
+      ${claimed ? `<p class="ok">Already yours.</p>` : blocked ? `<p class="bad">Enclosed by a landlord. It cannot be built.</p>` :
+        `<div class="btnrow"><button class="pbtn" type="button" data-act="claim" ${plan && !S.acted ? "" : "disabled"}>BUILD${plan ? ` · ${plan.useC} ${CARD[plan.c].n}${plan.useW ? ` + ${plan.useW} STEAM` : ""}` : ""}</button></div>
+         ${!plan ? `<p class="bad" style="font-size:17px">Not enough cards.</p>` : S.acted ? `<p class="bad" style="font-size:17px">You've already ${S.acted === "draw" ? "drawn cards" : "built"} this year.</p>` : ""}`}`;
+  }
+  const canDraw = S.acted !== "claim" && S.draws > 0;
+  const status = S.acted === "claim" ? "Route built. Your turn on the rails is done." : S.acted === "draw" && S.draws === 0 ? "Two cards drawn. Your turn on the rails is done." : S.acted === "draw" ? "Draw 1 more card." : "Choose ONE: draw 2 cards, or build 1 route.";
+  return narr("The power of population is greater than the power in the earth to produce subsistence. Lay your rails to farms and ports, if you think you can outrun it.") +
+    `<div class="howgrid">
+      <div><div class="mapwrap">${mapSVG()}</div>
+        <div class="legend"><span><i style="background:${C.red}"></i>Farm</span><span><i style="background:${C.blue}"></i>Mill</span><span><i style="background:${C.yellow}"></i>Port</span><span><i style="background:${C.cream}"></i>Yours</span><span style="color:var(--red)">✕ Enclosed</span></div></div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <div class="box"><h3>CARD MARKET</h3><div class="cards">
+          ${S.market.map((c, i) => c ? `<button class="cardp" type="button" style="--c:${CARD[c].c}" data-act="draw" data-arg="${i}" ${canDraw ? "" : "disabled"} aria-label="Take ${CARD[c].n}">${cardIcon(c, 4)}<span class="nm">${CARD[c].n}</span></button>` : "").join("")}
+          <button class="cardp deck" type="button" data-act="draw" data-arg="deck" ${canDraw ? "" : "disabled"} aria-label="Draw from deck"><span class="nm" style="color:var(--cream)">DECK</span><span class="nm">${S.deck.length + S.discard.length}</span></button>
+        </div><p style="font-size:18px;margin:10px 0 0;color:${S.acted ? "var(--yellow)" : "var(--dim)"}">${status}</p></div>
+        <div class="box rinfo">${info}</div>
+        <button class="pbtn" type="button" data-act="today">▶ TO THE VESTRY (SHARE)</button>
+      </div>
+    </div>`;
+}
+
+/* ----- SHARE: day ----- */
+function faceSVG(p, px){ return spr(FACE, {H:p.exposed ? "#222" : p.hair, F:p.skin, E:"#000", M:"#7a2a2a", S:p.shirt}, px); }
+function viewDay(){
+  const M = MOT[S.motion];
+  const seats = S.council.map((p, i) => {
+    const v = S.votes[i];
+    const badge = S.voted == null ? `<span class="vote q">?</span>` : v.v > 0 ? `<span class="vote aye">AYE</span>` : `<span class="vote nay">NAY</span>`;
+    const known = p.exposed ? `<span class="known" style="background:var(--red);color:#fff">EXPOSED LANDLORD</span>` : p.known ? `<span class="known" style="background:${ROLECOL[p.role]};color:#000">${ROLE[p.role]}</span>` : "";
+    return `<div class="seat ${p.exposed ? "exposed" : ""}">${badge}
+      <div class="hd">${faceSVG(p, 4)}<div><div class="nm">${p.name}</div><div class="cl">claims: ${ROLE[p.claim]}</div></div></div>
+      ${known}<div class="say">${v.line}</div>
+      ${p.known ? "" : `<div class="acts"><button class="pbtn ghost sm" type="button" data-act="inspect" data-arg="${i}" ${S.hand.y >= 2 ? "" : "disabled"}>INSPECT · 2 COIN</button><button class="pbtn red sm" type="button" data-act="accuse" data-arg="${i}" ${S.accused ? "disabled" : ""}>ACCUSE</button></div>`}
+    </div>`;
+  }).join("");
+  let foot;
+  if (S.voted == null) foot = `<div class="btnrow" style="justify-content:center"><button class="pbtn" type="button" data-act="vote" data-arg="1">VOTE AYE</button><button class="pbtn red" type="button" data-act="vote" data-arg="-1">VOTE NAY</button></div>`;
+  else foot = `<div class="verdict-banner" style="color:${S.passed ? "#7dff8a" : "var(--red)"}">${M.t}: ${S.passed ? "PASSED" : "REJECTED"}</div><div class="btnrow" style="justify-content:center"><button class="pbtn blue" type="button" data-act="nightfall">▶ NIGHTFALL</button></div>`;
+  return narr(`Two members of this vestry are secretly LANDLORDS. By night they take their rent. Watch how they vote, listen for slips, then ACCUSE (1 per day) or bribe the clerk to INSPECT.`) +
+    `<div class="motion"><div class="mt">MOTION: ${M.t}</div><div>${M.d}</div><div class="fx">${M.fx}</div></div>
+     <div class="council">${seats}</div>${foot}`;
+}
+
+/* ----- SHARE: night ----- */
+const CROWD = 40;   // each figure stands for 1/40th of the parish
+function viewNight(){
+  const g = S.night.ghosts;
+  const gs = [["FAMINE", C.red, g.famine], ["PLAGUE", C.blue, g.plague], ["WAR", C.yellow, g.war]].filter(x => x[2]);
+  const coats = [C.red, C.blue, C.yellow, C.gray, "#8a5a3c"];
+  const crowd = Array.from({length:CROWD}, (_, i) => `<i>${person(coats[(i * 7) % coats.length], 3, i * 3)}</i>`).join("");
+  return `<div class="night">
+    ${narr(pick(["Night falls. The checks walk abroad.","While the parish sleeps, the rent is quietly gathered.","Nature, Mr. Overseer, keeps her own accounts."]))}
+    <div class="checks">${gs.length ? gs.map(x => `<span class="check" style="--c:${x[1]}">${x[0]}</span>`).join("") : `<span class="check" style="--c:#7dff8a">EVERYONE FED</span>`}</div>
+    <div class="dots" id="dots" aria-label="The people of the parish; those lost tonight fade out">${crowd}</div>
+    <div class="nlog" id="nlog">${S.night.lines.map(l => `<div>▶ ${l}</div>`).join("")}</div>
+    <div class="btnrow" style="justify-content:center"><button class="pbtn" type="button" data-act="dawn" id="dawnBtn">${S.over ? "▶ SEE WHAT BECAME OF THE PARISH" : S.round >= 11 ? "▶ 1846: JOURNEY'S END" : "▶ DAWN"}</button></div>
+  </div>`;
+}
+function animateNight(){
+  clearTimeout(UI.nightTimer);
+  const dots = [...document.querySelectorAll("#dots i")], lines = [...document.querySelectorAll("#nlog div")];
+  const eat = Math.min(CROWD, S.night.frac > 0.004 ? Math.max(1, Math.round(S.night.frac * CROWD)) : 0);
+  const order = shuffle(dots.map((_, i) => i)).slice(0, eat);
+  let step = 0;
+  const tick = () => {
+    if (step < lines.length) lines[step].classList.add("in");
+    if (step < order.length) dots[order[step]].classList.add("eaten");
+    step++;
+    if (step < Math.max(lines.length, order.length)) UI.nightTimer = setTimeout(tick, 280);
+  };
+  UI.nightTimer = setTimeout(tick, 250);
+}
+
+/* ----- side panel ----- */
+function chartSVG(){
+  const H = S.hist; if (!H.length) return `<p style="font-size:17px;color:var(--dim);margin:0">The chart fills in each night.</p>`;
+  const max = Math.max(...H.map(h => Math.max(h.pop, h.food))) * 1.1, W = 120, Hh = 60;
+  const xs = i => H.length === 1 ? W / 2 : 6 + i / (H.length - 1) * (W - 12), ys = v => Hh - 4 - v / max * (Hh - 10);
+  const step = key => H.map((h, i) => `${i ? "L" : "M"}${xs(i).toFixed(1)} ${ys(h[key]).toFixed(1)}`).join(" ");
+  return `<svg viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="img" aria-label="Population versus food by year">
+    <path d="${step("pop")}" fill="none" stroke="${C.red}" stroke-width="1.6"/><path d="${step("food")}" fill="none" stroke="${C.blue}" stroke-width="1.6"/>
+    ${H.map((h, i) => `<rect x="${xs(i) - 1}" y="${ys(h.pop) - 1}" width="2" height="2" fill="${C.red}"/><rect x="${xs(i) - 1}" y="${ys(h.food) - 1}" width="2" height="2" fill="${C.blue}"/>`).join("")}
+  </svg><div class="legend"><span><i style="background:${C.red}"></i>People</span><span><i style="background:${C.blue}"></i>Food</span></div>`;
+}
+function renderSide(){
+  const policy = [S.cornLaw ? `<span class="bad">CORN LAW</span>` : "", S.freeTrade ? `<span class="ok">FREE TRADE</span>` : "", `WAGES ${N(S.wage * 100)}%`, `BIRTHS +${N(growthRate() * 100)}%`].filter(Boolean).join(" · ");
+  $("#side").innerHTML = `
+    <div class="maze"><h3>YOUR HAND</h3><div class="hand">${["r","b","y","w"].map(k => `<div class="cardp" style="--c:${CARD[k].c}">${cardIcon(k, 3)}<span class="nm">${CARD[k].n}</span><span class="ct">${S.hand[k]}</span></div>`).join("")}</div>
+      <p style="font-size:17px;color:var(--dim);margin:10px 0 0">Red = WHAT · Blue = HOW · Yellow = SHARE</p></div>
+    <div class="maze"><h3>DESTINATION TICKETS</h3>${S.tickets.map(t => `<div class="tk ${t.done ? "done" : ""}"><span>${t.done ? "✓ " : ""}${t.n}<br><span style="color:var(--dim);font-size:16px">${CITY[t.a].n} → ${CITY[t.b].n}</span></span><span class="tp">${t.pts}</span></div>`).join("")}
+      <p style="font-size:16px;color:var(--dim);margin:8px 0 0">Unfinished tickets cost their points at the end.</p></div>
+    <div class="maze chart"><h3>PEOPLE vs FOOD</h3>${chartSVG()}<p style="font-size:16px;color:var(--dim);margin:6px 0 0">${policy}</p></div>
+    <div class="maze"><h3>PARISH LOG</h3><div class="log">${S.log.map(l => `<div>${l}</div>`).join("")}</div></div>`;
+}
+
+/* ----- overlays ----- */
+function showOverlay(html){ const o = $("#overlay"); o.innerHTML = `<div class="maze modal">${html}</div>`; o.hidden = false; }
+function hideOverlay(){ $("#overlay").hidden = true; }
+function titleScreen(){
+  const saved = load();
+  showOverlay(`
+    <div style="display:flex;justify-content:center;gap:14px">${person(C.red, 5, 0)}${person(C.blue, 5, 1)}${person(C.yellow, 5, 2)}</div>
+    <h2>THE MALTHUS TRAIL</h2>
+    <p class="sub">England, 1798. You are the Overseer of the Poor. Get your parish to 1846 while the population grows geometrically and the food only arithmetically, and while two hidden landlords sit on your vestry.</p>
+    <div class="cols3">
+      <div class="box"><h3 style="color:var(--red)">1 · WHAT · THE TRAIL</h3><p>Like The Oregon Trail: face each year's events, then split your people between grain and goods. Too many goods and no buyers means a GLUT.</p></div>
+      <div class="box"><h3 style="color:var(--blue)">2 · HOW · THE RAILS</h3><p>Like Ticket to Ride: draw colored cards and build routes. Farms add food, mills add goods, ports add trade. Finish your tickets.</p></div>
+      <div class="box"><h3 style="color:var(--yellow)">3 · SHARE · THE VESTRY</h3><p>Like Ultimate Werewolf: vote on who gets what. By night, hidden landlords take rent, and FAMINE, PLAGUE and WAR take their toll.</p></div>
+    </div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="pbtn" type="button" data-act="begin"><span class="blink">▶ PRESS START</span></button>
+      ${saved && !saved.over ? `<button class="pbtn blue" type="button" data-act="resume">CONTINUE (${saved.round < 12 ? YEARS[saved.round] : 1846})</button>` : ""}
+    </div>`);
+}
+function ticketScreen(){
+  UI.tix = shuffle(TICKETS.slice()).slice(0, 3); UI.pickT = [true, true, false];
+  drawTickets();
+}
+function drawTickets(){
+  const n = UI.pickT.filter(Boolean).length;
+  showOverlay(`<h2 style="font-size:20px">DESTINATION TICKETS</h2>
+    <p class="sub">Keep at least two. Connect both cities with your own routes before 1846 to score the points. Any you leave unfinished count against you.</p>
+    <div class="tickets">${UI.tix.map((t, i) => `<button class="ticket" type="button" data-act="toggleT" data-arg="${i}" aria-pressed="${UI.pickT[i]}"><div class="tn">${t[3].toUpperCase()}</div><div class="tr">${CITY[t[0]].n} → ${CITY[t[1]].n}</div><div class="tp">${t[2]} PTS</div></button>`).join("")}</div>
+    <div class="btnrow" style="justify-content:center"><button class="pbtn" type="button" data-act="go" ${n >= 2 ? "" : "disabled"}>▶ SET OUT (${n} TICKETS)</button></div>`);
+}
+function helpScreen(){
+  showOverlay(`<h2 style="font-size:20px">HOW TO PLAY</h2>
+    <div class="why">
+      <p>Each year from 1798 to 1846 has three phases, one for each economic question.</p>
+      <p><b style="color:var(--red)">1 · WHAT will we make?</b> Resolve the year's event, then slide your workforce between GRAIN and GOODS. The land caps how much grain you can grow (Malthus's arithmetic ratio). Goods only sell if someone has money to buy them: workers' wages, landlords' rent, or exports. Unsold goods are a GLUT and raise unrest. You earn cards: red for food, blue for goods, yellow for sales.</p>
+      <p><b style="color:var(--blue)">2 · HOW will we make it?</b> Draw 2 cards OR build 1 route. Routes touching farm towns raise your land's food cap, mills raise output per worker, and ports raise exports (and imports, once the Corn Laws are repealed). Landlords may enclose farm routes at night.</p>
+      <p><b style="color:var(--yellow)">3 · How will we SHARE it?</b> The vestry votes on a motion; you have one vote of seven. Two members are secret landlords who vote their interest (usually) and lie about who they are. Accuse one per day (+8 if right, −4 if wrong) or spend 2 COIN to inspect. At night, rent is taken, and if there isn't enough food, the positive checks strike.</p>
+      <p><b>Lose</b> if unrest hits 100 (revolution) or the population falls to 30. <b>Score</b> comes from routes, tickets, exposed landlords, and the people you bring to 1846. Births rise when people are well fed and wages are high, just as Malthus predicted. Can you prove him wrong anyway?</p>
+    </div>
+    <div class="btnrow" style="justify-content:center"><button class="pbtn" type="button" data-act="closeov">▶ BACK TO THE TRAIL</button></div>`);
+}
+function endGame(){
+  const final = score(true), last = S.hist[S.hist.length - 1] || {pop:S.pop, food:0};
+  const exposed = landlords().filter(p => p.exposed).length;
+  let title, verdict;
+  if (S.over === "revolution"){ title = "REVOLUTION!"; verdict = "Unrest boiled over. The parish rose against the vestry. Malthus feared exactly this, and wrote to keep the poor patient."; }
+  else if (S.over === "collapse"){ title = "THE CHECKS WON"; verdict = "Famine, plague and war carried off your parish. Malthus would call it the law of nature. Hunt and Lautzenheiser would ask who held the rent."; }
+  else if (S.pop >= 150 && last.food >= last.pop){ title = "MALTHUS DEFIED"; verdict = "Your parish reached 1846 larger and fed. Routes, trade and a fairer share outran the geometric ratio. The authors argue his population theory was always the weak link."; }
+  else { title = "JOURNEY'S END"; verdict = "You reached 1846 and the Corn Laws fall, but hunger shadowed the whole trail. Was that nature's law, or the way the harvest was shared?"; }
+  S.over = S.over || "complete";
+  try { localStorage.removeItem(SAVE_KEY); } catch(e){}
+  showOverlay(`<div style="display:flex;justify-content:center">${parson(5)}</div><h2>${title}</h2><p class="sub">${verdict}</p>
+    <div class="stats">
+      <div><div class="v">${String(Math.max(0, final)).padStart(4, "0")}</div><div class="l">final score</div></div>
+      <div><div class="v">${N(S.pop)}</div><div class="l">people in ${year()}</div></div>
+      <div><div class="v">${N(S.deaths)}</div><div class="l">lost to the checks</div></div>
+      <div><div class="v">${S.gluts}</div><div class="l">gluts</div></div>
+      <div><div class="v">${S.claimed.length}</div><div class="l">routes built</div></div>
+      <div><div class="v">${S.tickets.filter(t => t.done).length}/${S.tickets.length}</div><div class="l">tickets done</div></div>
+      <div><div class="v">${exposed}/2</div><div class="l">landlords exposed</div></div>
+      <div><div class="v">${N(S.unrest)}</div><div class="l">final unrest</div></div>
+    </div>
+    <div class="why"><p><b style="color:var(--yellow)">Who were the landlords?</b> ${landlords().map(p => p.name).join(" and ")}.</p>
+      <p><b style="color:var(--yellow)">The authors' view:</b> Malthus's glut theory, that demand can fall short, was his lasting contribution. His cure of paying landlords to consume was a double standard, since higher wages would have created the same demand.</p></div>
+    <div class="btnrow" style="justify-content:center"><button class="pbtn" type="button" data-act="begin">▶ PLAY AGAIN</button><a class="pbtn blue" href="../" style="text-decoration:none">← MALTHUS'S IDEAS</a></div>`);
+}
+
+/* ---------- input ---------- */
+const ACT = {
+  begin:() => ticketScreen(),
+  resume:() => { S = load(); hideOverlay(); UI.sel = null; render(); if (S.phase === "night") { /* re-show report */ } },
+  toggleT:i => { UI.pickT[+i] = !UI.pickT[+i]; drawTickets(); },
+  go:() => { newGame(UI.tix.filter((_, i) => UI.pickT[i])); hideOverlay(); },
+  help:() => helpScreen(),
+  closeov:() => { if (S) hideOverlay(); else titleScreen(); },
+  choice:i => { const c = EV[S.evKey].ch[+i]; if (c.req && !c.req(S)) return; if (c.fx) c.fx(S); S.unrest = clamp(S.unrest, 0, 100); S.evDone = true; S.evResult = c.r; logm(c.r); render(); },
+  produce:() => produce(),
+  tohow:() => toHow(),
+  draw:i => drawCard(i),
+  route:i => { UI.sel = +i; render(); },
+  claim:() => claim(),
+  today:() => toDay(),
+  vote:v => { if (S.voted == null) vote(+v); },
+  inspect:i => inspect(+i),
+  accuse:i => accuse(+i),
+  nightfall:() => nightfall(),
+  dawn:() => dawn()
+};
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]");
+  if (!b || b.disabled) return;
+  const f = ACT[b.dataset.act]; if (f) f(b.dataset.arg);
+});
+
+$("#logoGhost").innerHTML = person(C.red, 3);
+render();
+titleScreen();
+</script>
+</body>
+</html>

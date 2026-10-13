@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David Ricardo · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Exo+2:ital,wght@0,400;0,600;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#04050d; --deep:#080b1c; --panel:rgba(12,20,44,.72); --panel2:rgba(18,30,64,.8);
+  --cyan:#22e5ff; --magenta:#ff2bd6; --violet:#8b6cff; --lime:#b6ff3b; --amber:#ffb02e; --red:#ff4d6d;
+  --text:#d8e6ff; --muted:#7f93c4; --line:rgba(34,229,255,.28); --line2:rgba(34,229,255,.55);
+  --display:"Orbitron","Eurostile",system-ui,sans-serif;
+  --body:"Exo 2",system-ui,sans-serif;
+  --mono:"Share Tech Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0; overflow-x:clip}
+body{font-family:var(--body); font-size:16px; line-height:1.55; color:var(--text); min-height:100vh;
+  background:radial-gradient(1000px 600px at 80% -10%,rgba(139,108,255,.22),transparent 60%),radial-gradient(800px 500px at 0% 40%,rgba(34,229,255,.10),transparent 60%),var(--void);
+  background-attachment:fixed}
+body::before{ /* starfield */
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.7;
+  background-image:radial-gradient(1px 1px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 140px 80px,#9fdfff,transparent),radial-gradient(1.5px 1.5px at 260px 160px,#fff,transparent),radial-gradient(1px 1px at 330px 40px,#ffc6f2,transparent),radial-gradient(1px 1px at 90px 210px,#fff,transparent);
+  background-size:380px 260px}
+body::after{ /* scanlines */
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:60;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
+a{color:var(--cyan)}
+button{font:inherit; color:inherit; cursor:pointer; background:none; border:0; padding:0}
+button:focus-visible,a:focus-visible{outline:2px solid var(--cyan); outline-offset:3px}
+h1,h2,h3,h4{font-family:var(--display); font-weight:700; margin:0; letter-spacing:.06em; line-height:1.15}
+p{margin:0 0 .8em}
+.mono{font-family:var(--mono)}
+.app{max-width:1200px; margin:0 auto; padding:0 16px 60px}
+
+/* ---------- header ---------- */
+.mast{position:relative; overflow:hidden; padding:26px 0 40px; margin-bottom:6px}
+.floor{position:absolute; left:-40%; right:-40%; bottom:-10px; height:220px; z-index:0; pointer-events:none;
+  background:linear-gradient(transparent 0 0),
+    repeating-linear-gradient(90deg,rgba(34,229,255,.35) 0 1px,transparent 1px 60px),
+    repeating-linear-gradient(0deg,rgba(255,43,214,.35) 0 1px,transparent 1px 40px);
+  transform:perspective(320px) rotateX(62deg); transform-origin:bottom; mask-image:linear-gradient(transparent,#000 70%); -webkit-mask-image:linear-gradient(transparent,#000 70%);
+  animation:floor 6s linear infinite}
+@keyframes floor{to{background-position:0 0,0 0,0 40px}}
+.mast-inner{position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center}
+.boot{font-family:var(--mono); font-size:13px; color:var(--lime); letter-spacing:.08em}
+.boot .cur{display:inline-block; width:8px; height:14px; background:var(--lime); vertical-align:-2px; animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.mast h1{font-family:var(--display); font-weight:900; font-size:clamp(34px,6.5vw,74px); margin:10px 0 6px; letter-spacing:.08em;
+  background:linear-gradient(90deg,var(--cyan),#fff 45%,var(--magenta)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 0 18px rgba(34,229,255,.35))}
+.mast .sub{font-family:var(--display); font-size:clamp(13px,1.8vw,17px); color:var(--magenta); letter-spacing:.18em; text-shadow:0 0 12px rgba(255,43,214,.5)}
+.mast .tag{max-width:58ch; color:var(--muted); margin-top:12px}
+.btns{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+.btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-size:12px; letter-spacing:.14em; text-transform:uppercase; text-decoration:none; color:var(--cyan); padding:10px 16px; border:1px solid var(--line2); background:rgba(34,229,255,.06);
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px); transition:background .15s, color .15s, box-shadow .15s}
+.btn:hover{background:var(--cyan); color:var(--void); box-shadow:0 0 18px var(--cyan)}
+.btn.mag{color:var(--magenta); border-color:rgba(255,43,214,.6); background:rgba(255,43,214,.07)}
+.btn.mag:hover{background:var(--magenta); color:var(--void)}
+.btn[aria-pressed="true"]{background:var(--cyan); color:var(--void)}
+.btn.off{opacity:.45; pointer-events:none}
+.holo{position:relative; width:200px; height:200px; display:grid; place-items:center}
+.holo .ring{position:absolute; inset:0; border-radius:50%; border:1px solid var(--cyan); box-shadow:0 0 20px rgba(34,229,255,.35), inset 0 0 20px rgba(34,229,255,.25); animation:spin 14s linear infinite}
+.holo .ring.r2{inset:18px; border-color:var(--magenta); border-style:dashed; animation-duration:9s; animation-direction:reverse}
+.holo .ring.r3{inset:40px; border-color:var(--violet); animation-duration:20s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.holo .core{font-family:var(--display); font-weight:900; font-size:44px; color:#fff; text-shadow:0 0 18px var(--cyan),0 0 40px var(--magenta)}
+.holo .lbl{position:absolute; bottom:-6px; font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.1em}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky; top:0; z-index:30; display:flex; gap:6px; overflow-x:auto; padding:10px 0; margin-bottom:16px; background:linear-gradient(180deg,var(--void) 75%,transparent); scrollbar-width:none}
+.tab{flex:0 0 auto; text-decoration:none; color:var(--muted); font-family:var(--display); font-size:12px; letter-spacing:.14em; padding:10px 16px 8px; border:1px solid rgba(127,147,196,.3); background:rgba(8,11,28,.8);
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.tab .n{color:var(--magenta); margin-right:6px}
+.tab .q{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.08em; color:var(--muted); margin-top:2px}
+.tab:hover{color:var(--text); border-color:var(--line2)}
+.tab.active{color:var(--void); background:var(--cyan); border-color:var(--cyan); box-shadow:0 0 18px rgba(34,229,255,.5)}
+.tab.active .n,.tab.active .q{color:var(--void)}
+
+section.view{display:none}
+section.view.active{display:grid; gap:18px; animation:warp .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes warp{from{opacity:0; transform:translateY(14px) scale(.99); filter:blur(4px)}}
+
+/* ---------- holo panels ---------- */
+.panel{position:relative; background:var(--panel); border:1px solid var(--line); padding:20px 22px; backdrop-filter:blur(6px); min-width:0;
+  box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 18px 40px -20px rgba(0,0,0,.8), inset 0 0 40px rgba(34,229,255,.04)}
+.panel::before,.panel::after{content:""; position:absolute; width:16px; height:16px; border:2px solid var(--c,var(--cyan)); pointer-events:none}
+.panel::before{top:-1px; left:-1px; border-right:0; border-bottom:0}
+.panel::after{bottom:-1px; right:-1px; border-left:0; border-top:0}
+.panel.mag{--c:var(--magenta)} .panel.vio{--c:var(--violet)} .panel.lime{--c:var(--lime)} .panel.amber{--c:var(--amber)}
+.panel .k{display:block; font-family:var(--mono); font-size:12px; letter-spacing:.14em; color:var(--c,var(--cyan)); margin-bottom:6px}
+.panel h2{font-size:clamp(22px,3.4vw,36px); color:#fff; margin-bottom:10px; text-shadow:0 0 16px rgba(34,229,255,.3)}
+.panel h3{font-size:16px; color:var(--c,var(--cyan)); margin-bottom:10px}
+.lede{font-size:18px; max-width:72ch; color:var(--text)}
+.cite{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:10px; letter-spacing:.04em}
+.grid{display:grid; gap:18px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g12{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+.qcard{text-decoration:none; color:inherit; transition:transform .2s, box-shadow .2s}
+.qcard:hover{transform:translateY(-4px); box-shadow:0 0 24px rgba(34,229,255,.25)}
+.qcard .n{font-family:var(--display); font-weight:900; font-size:34px; color:var(--c); text-shadow:0 0 14px var(--c)}
+.qcard p{margin:0; color:var(--muted)}
+
+/* transmissions (quotes) */
+.tx{border-left:3px solid var(--magenta); background:linear-gradient(90deg,rgba(255,43,214,.12),transparent); padding:14px 16px}
+.tx .h{font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--magenta)}
+.tx q{display:block; font-family:var(--body); font-style:italic; font-size:18px; color:#fff; margin:6px 0}
+.tx small{font-family:var(--mono); color:var(--muted)}
+
+/* readouts & controls */
+.ctrl{margin:12px 0}
+.ctrl label{display:flex; justify-content:space-between; gap:10px; font-family:var(--mono); font-size:13px; color:var(--muted); margin-bottom:8px; letter-spacing:.06em}
+.ctrl output{color:var(--cyan); font-size:15px}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:4px; background:linear-gradient(90deg,var(--cyan),var(--magenta)); outline:none; border-radius:2px; box-shadow:0 0 10px rgba(34,229,255,.4)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--void); border:2px solid var(--cyan); box-shadow:0 0 12px var(--cyan); cursor:pointer}
+input[type=range]::-moz-range-thumb{width:16px; height:16px; border-radius:50%; background:var(--void); border:2px solid var(--cyan); box-shadow:0 0 12px var(--cyan); cursor:pointer}
+.row{display:flex; flex-wrap:wrap; gap:8px}
+.readout{margin-top:14px; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--line); background:rgba(4,5,13,.6); line-height:1.6}
+.readout b{color:var(--cyan); font-weight:400}
+.readout .m{color:var(--magenta)} .readout .l{color:var(--lime)} .readout .a{color:var(--amber)} .readout .r{color:var(--red)}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-top:12px}
+.stat{border:1px solid var(--line); padding:10px 12px; background:rgba(4,5,13,.5)}
+.stat .v{font-family:var(--display); font-weight:700; font-size:20px; color:#fff}
+.stat .l{font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.06em}
+svg.chart{width:100%; height:auto; display:block; background:rgba(4,5,13,.55); border:1px solid var(--line)}
+svg.chart text{font-family:var(--mono); font-size:12px; fill:var(--muted)}
+.alert{margin-top:12px; padding:10px 14px; border:1px solid var(--red); color:var(--red); font-family:var(--mono); background:rgba(255,77,109,.08); animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 18px rgba(255,77,109,.5)}}
+.ok{margin-top:12px; padding:10px 14px; border:1px solid var(--lime); color:var(--lime); font-family:var(--mono); background:rgba(182,255,59,.06)}
+.legend{display:flex; flex-wrap:wrap; gap:14px; font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:8px}
+.legend i{display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:-1px}
+
+/* stockings chain */
+.chain{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; margin-top:12px}
+.node{position:relative; text-align:center; padding:12px 6px; border:1px solid rgba(127,147,196,.35); background:rgba(4,5,13,.6); color:var(--muted); transition:all .25s}
+.node .i{font-size:24px; display:block; filter:grayscale(1) brightness(.7); transition:filter .25s}
+.node .t{font-family:var(--mono); font-size:11px; line-height:1.25; display:block; margin-top:4px}
+.node[aria-pressed="true"]{border-color:var(--cyan); color:#fff; box-shadow:0 0 16px rgba(34,229,255,.35); background:rgba(34,229,255,.08)}
+.node[aria-pressed="true"] .i{filter:none}
+.lbar{height:14px; margin-top:14px; border:1px solid var(--line); background:rgba(4,5,13,.6); display:flex; overflow:hidden}
+.lbar i{display:block; height:100%; transition:flex-grow .4s; box-shadow:inset -1px 0 0 rgba(4,5,13,.9)}
+
+/* matrix */
+.matrix{width:100%; border-collapse:collapse; font-size:15px}
+.matrix th,.matrix td{padding:10px 12px; border-bottom:1px solid rgba(34,229,255,.15); text-align:left; vertical-align:top}
+.matrix th{font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--muted); font-weight:400}
+.matrix td:first-child{font-family:var(--display); font-size:13px; letter-spacing:.08em; color:var(--cyan); white-space:nowrap}
+.pill{display:inline-block; font-family:var(--mono); font-size:11px; padding:2px 8px; border:1px solid; letter-spacing:.06em}
+.pill.agree{color:var(--lime); border-color:var(--lime)} .pill.clash{color:var(--magenta); border-color:var(--magenta)}
+.tbl{overflow-x:auto}
+
+/* two ricardos */
+.twin{display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:stretch}
+.twin .vs{align-self:center; font-family:var(--display); font-weight:900; font-size:22px; color:var(--magenta); text-shadow:0 0 12px var(--magenta)}
+.twin .side{border:1px solid var(--line); padding:16px; background:rgba(4,5,13,.5)}
+.twin .side h3{color:#fff}
+.twin ul{margin:0; padding-left:18px; color:var(--muted)}
+.twin li{margin-bottom:6px}
+
+/* case nav */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:30px}
+.cn{display:flex; flex-direction:column; gap:4px; text-decoration:none; padding:16px 18px; border:1px solid var(--line2); background:var(--panel); color:var(--text);
+  clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px); transition:box-shadow .2s, background .2s}
+.cn.next{text-align:right}
+.cn:hover{background:rgba(34,229,255,.1); box-shadow:0 0 24px rgba(34,229,255,.25)}
+.cn .d{font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--muted)}
+.cn .t{font-family:var(--display); font-size:clamp(14px,2vw,18px); color:var(--cyan); letter-spacing:.08em}
+.cn.off{opacity:.4; pointer-events:none; border-style:dashed}
+.foot{text-align:center; font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:26px}
+
+@media (max-width:980px){
+  .g3{grid-template-columns:1fr}
+  .g12{grid-template-columns:1fr}
+  .chain{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:700px){
+  .g2{grid-template-columns:1fr}
+  .mast-inner{grid-template-columns:1fr}
+  .holo{width:140px; height:140px; justify-self:center}
+  .holo .core{font-size:32px}
+  .twin{grid-template-columns:1fr}
+  .twin .vs{justify-self:center}
+  .casenav{grid-template-columns:1fr}
+  .cn.next{text-align:left}
+  .chain{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .panel{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="mast">
+    <div class="floor" aria-hidden="true"></div>
+    <div class="mast-inner">
+      <div>
+        <div class="boot">&gt; CASE 004 // DOSSIER DECRYPTED · 1772–1823 <span class="cur"></span></div>
+        <h1>DAVID RICARDO</h1>
+        <div class="sub">THE MACHINE OF DISTRIBUTION</div>
+        <p class="tag">A stockbroker who got rich before thirty, then built the most rigorous model of capitalism of his age. He set out the laws that divide the harvest among landlords, capitalists, and workers, and found them at war.</p>
+        <div class="btns">
+          <a class="btn" href="../">⌂ Home</a>
+          <a class="btn" href="../malthus/">◀ Case 003</a>
+          <a class="btn mag" href="game/">Ideas in Action ▶</a>
+        </div>
+      </div>
+      <div class="holo" aria-hidden="true"><span class="ring"></span><span class="ring r2"></span><span class="ring r3"></span><span class="core">DR</span><span class="lbl">SUBJECT 004</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="#overview"><span class="n">00</span>OVERVIEW<span class="q">the central problem</span></a>
+    <a class="tab" href="#what"><span class="n">01</span>WHAT<span class="q">will we make?</span></a>
+    <a class="tab" href="#how"><span class="n">02</span>HOW<span class="q">will we make it?</span></a>
+    <a class="tab" href="#share"><span class="n">03</span>SHARE<span class="q">who gets it?</span></a>
+    <a class="tab" href="#verdict"><span class="n">04</span>VERDICT<span class="q">two Ricardos</span></a>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view" id="v-overview">
+    <div class="panel">
+      <span class="k">// MISSION BRIEFING</span>
+      <h2>The laws that divide the harvest</h2>
+      <p class="lede">Ricardo read <i>The Wealth of Nations</i> in 1799 and spent the rest of his life building a model of capitalism so tight that both Marxists and mainstream economists still claim him. His big idea: as population grows, farming spreads to worse land, rents rise, and profits get squeezed toward zero. That made the landlords the enemy of everyone else.</p>
+      <div class="stats">
+        <div class="stat"><div class="v">1799</div><div class="l">reads Adam Smith</div></div>
+        <div class="stat"><div class="v">1815</div><div class="l">Essay on profits vs. Corn Laws</div></div>
+        <div class="stat"><div class="v">1817</div><div class="l">Principles, 1st edition</div></div>
+        <div class="stat"><div class="v">1821</div><div class="l">3rd edition: "On Machinery"</div></div>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <a class="panel qcard" href="#what" style="--c:var(--cyan)"><div class="n">01</div><h3>What will we make?</h3><p>Cheap food through free trade. Specialize where you're relatively best: England's cloth for Portugal's wine.</p></a>
+      <a class="panel qcard mag" href="#how" style="--c:var(--magenta)"><div class="n">02</div><h3>How will we make it?</h3><p>By labor alone. Nature works free, machines are past labor, and worse land costs more labor per bushel.</p></a>
+      <a class="panel qcard vio" href="#share" style="--c:var(--violet)"><div class="n">03</div><h3>How will we share it?</h3><p>Wages, profit, rent: locked in conflict. Rising rents squeeze profits until growth stops.</p></a>
+    </div>
+
+    <div class="grid g12">
+      <div class="tx">
+        <div class="h">// INCOMING TRANSMISSION · PRINCIPLES, 1817</div>
+        <q>To determine the laws which regulate this distribution is the principal problem in Political Economy.</q>
+        <small>David Ricardo, on dividing the produce among landlords, capital-owners, and laborers</small>
+      </div>
+      <div class="panel lime">
+        <h3>Friend vs. rival: Ricardo &amp; Malthus</h3>
+        <p style="margin:0">Close friends and lifelong opponents. Ricardo admired Malthus's population theory and took it on whole. On the great fight of the day, landlords vs. capitalists, he took the <b>capitalists'</b> side. <a href="#verdict">See where they agreed and clashed →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT ================= -->
+  <section class="view" id="v-what">
+    <div class="panel">
+      <span class="k">// QUESTION 01</span>
+      <h2>What will we make?</h2>
+      <p class="lede">Food sets the limit on everything, so make it cheap: import grain instead of plowing ever-worse land. And don't make everything yourself. Each country should specialize in what it's <i>relatively</i> best at and trade for the rest.</p>
+    </div>
+
+    <div class="grid g12">
+      <div class="panel">
+        <h3>Comparative advantage simulator</h3>
+        <p>Ricardo's own numbers: hours of labor to make one unit. Portugal is better at <b>both</b>, yet both countries still gain from trade. Each wants 1 cloth + 1 wine.</p>
+        <div class="tbl"><table class="matrix" style="margin-bottom:8px">
+          <tr><th></th><th>CLOTH</th><th>WINE</th></tr>
+          <tr><td>ENGLAND</td><td>100 hrs</td><td>120 hrs</td></tr>
+          <tr><td>PORTUGAL</td><td>90 hrs</td><td>80 hrs</td></tr>
+        </table></div>
+        <div class="row" role="group" aria-label="Trade mode">
+          <button class="btn" type="button" data-trade="self" aria-pressed="true">Each makes both</button>
+          <button class="btn" type="button" data-trade="spec" aria-pressed="false">Specialize &amp; trade</button>
+        </div>
+        <div class="ctrl" id="termsCtrl"><label for="terms">Terms of trade: wine per cloth <output id="termsOut"></output></label><input type="range" id="terms" min="0.84" max="1.12" step="0.01" value="1"></div>
+        <svg class="chart" id="caChart" viewBox="0 0 560 210" role="img" aria-label="Hours of labor each country needs"></svg>
+        <div class="readout" id="caRead"></div>
+        <div class="cite">Table 5.3, pp. 119–20. Hours are Ricardo's; the "hours saved" framing is ours.</div>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="tx">
+          <div class="h">// TRANSMISSION · ON FREE TRADE</div>
+          <q>This pursuit of individual advantage is admirably connected with the universal good of the whole.</q>
+          <small>David Ricardo, Principles</small>
+        </div>
+        <div class="panel mag">
+          <h3>Whose "sum of enjoyments"?</h3>
+          <p>Ricardo said free trade raises the "sum of enjoyments." The authors ask: whose? If only landlords and capitalists drink the imported wine while workers lack warm clothes, the market counts that as a gain.</p>
+          <div class="row" role="group" aria-label="Way of counting">
+            <button class="btn mag" type="button" data-count="money" aria-pressed="true">Count by purchasing power</button>
+            <button class="btn mag" type="button" data-count="need" aria-pressed="false">Count by need</button>
+          </div>
+          <div class="readout" id="enjoyRead"></div>
+          <div class="cite">pp. 120–21</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel vio">
+        <h3>Reproducible vs. rare</h3>
+        <p>Ricardo's theory covers goods that labor can multiply "almost without assignable limit." A few things, like rare statues, scarce books, and peculiar wines, are priced by the wealth and whims of buyers instead. Ricardo set them aside as unimportant.</p>
+        <div class="row" role="group" aria-label="Pick a good">
+          <button class="btn" type="button" data-good="stock" aria-pressed="true">🧦 Stockings</button>
+          <button class="btn" type="button" data-good="corn" aria-pressed="false">🌾 Corn</button>
+          <button class="btn" type="button" data-good="statue" aria-pressed="false">🗿 Rare statue</button>
+          <button class="btn" type="button" data-good="wine" aria-pressed="false">🍷 Rare vintage</button>
+        </div>
+        <div class="readout" id="goodRead"></div>
+        <div class="cite">pp. 98–99</div>
+      </div>
+      <div class="panel amber">
+        <h3>Capital comes first</h3>
+        <p>For Ricardo, a nation's welfare rides on accumulating capital. Shrink it, and "the resources of the people and the state will fall away with increasing rapidity, and distress and ruin will follow." What gets made should keep profits, and so investment, alive.</p>
+        <p style="margin:0">The authors' point: the labor theory let him focus on exactly the forces that drive accumulation, which a theory based on individual utility never could.</p>
+        <div class="cite">p. 99</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="view" id="v-how">
+    <div class="panel mag" style="--c:var(--magenta)">
+      <span class="k">// QUESTION 02</span>
+      <h2>How will we make it?</h2>
+      <p class="lede">By labor alone. Nature does its work for free, machines are just labor done earlier, and every extra bushel from worse land takes more labor than the last.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Scan a pair of stockings · trace the labor inside</h3>
+      <p>Ricardo listed every kind of labor that goes into stockings. Activate each node to add it to the total. The machines and the ship aren't separate "inputs"; they're labor too.</p>
+      <div class="chain" id="chain"></div>
+      <div class="lbar" id="lbar"></div>
+      <div class="readout" id="chainRead"></div>
+      <div class="cite">Ricardo's list, p. 102. Hour figures are illustrative.</div>
+    </div>
+
+    <div class="grid g12">
+      <div class="panel vio">
+        <h3>Time is money: capital tied up</h3>
+        <p>Profit compounds for as long as a capitalist's money is tied up. So $100 of wages paid years before a product is finished adds more than $100 to its price.</p>
+        <div class="ctrl"><label for="yrs">Years tied up <output id="yrsOut"></output></label><input type="range" id="yrs" min="1" max="6" value="4"></div>
+        <div class="ctrl"><label for="rate">Rate of profit <output id="rateOut"></output></label><input type="range" id="rate" min="0" max="50" value="10"></div>
+        <svg class="chart" id="tyChart" viewBox="0 0 560 200" role="img" aria-label="Value of $100 of wages growing over time"></svg>
+        <div class="readout" id="tyRead"></div>
+        <div class="cite">The book's example ($100, 4 years, 10% → $146.41) is on pp. 107–8.</div>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="tx">
+          <div class="h">// TRANSMISSION · ON NATURE</div>
+          <q>…as nothing is paid for the use, of air, of heat and of water, the assistance which they afford us adds nothing to value in exchange.</q>
+          <small>David Ricardo, Principles</small>
+        </div>
+        <div class="panel lime">
+          <h3>A loom is partly made cloth</h3>
+          <p style="margin:0">Later economists would say the weaver <i>and the loom</i> make the cloth. Ricardo said the weaver <i>and the worker who built the loom</i> make it. Production is a strictly human activity. <a href="../smith/#how">Compare Smith's loom →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel amber">
+      <h3>Why prices drift from labor · goods X and Y</h3>
+      <p>X and Y each take <b>400 units of labor</b> to make 100 units. But X uses more past labor and a longer production period (more capital). The book's two tables show their prices diverge, and diverge less as profits fall. Slide the profit rate.</p>
+      <div class="grid g2" style="align-items:center">
+        <div>
+          <div class="ctrl"><label for="pr">Rate of profit <output id="prOut"></output></label><input type="range" id="pr" min="0" max="60" value="50"></div>
+          <div class="ctrl"><label for="wg">Wage per labor unit <output id="wgOut"></output></label><input type="range" id="wg" min="1" max="2" step="0.25" value="1"></div>
+          <div class="row"><button class="btn" type="button" id="t51">Table 5.1 · $1, 50%</button><button class="btn" type="button" id="t52">Table 5.2 · $2, 10%</button></div>
+        </div>
+        <svg class="chart" id="xyChart" viewBox="0 0 360 200" role="img" aria-label="Price of X versus Y"></svg>
+      </div>
+      <div class="readout" id="xyRead"></div>
+      <div class="cite">Production patterns from Figure 5.7; formula reproduces Tables 5.1–5.2, pp. 108–112.</div>
+    </div>
+
+    <div class="panel mag">
+      <h3>The machinery reversal · 1817 vs. 1821</h3>
+      <p>At first Ricardo thought labor-saving machines help everyone. In his third edition he changed his mind.</p>
+      <div class="row" role="group" aria-label="Edition">
+        <button class="btn mag" type="button" data-ed="1" aria-pressed="true">1st edition view</button>
+        <button class="btn mag" type="button" data-ed="3" aria-pressed="false">3rd edition: "On Machinery"</button>
+      </div>
+      <svg class="chart" id="mxChart" viewBox="0 0 560 190" role="img" aria-label="Workers employed and income before and after machinery" style="margin-top:12px"></svg>
+      <div class="readout" id="mxRead"></div>
+      <div class="cite">pp. 117–18; figures illustrative.</div>
+    </div>
+  </section>
+
+  <!-- ================= SHARE ================= -->
+  <section class="view" id="v-share">
+    <div class="panel vio" style="--c:var(--violet)">
+      <span class="k">// QUESTION 03</span>
+      <h2>How will we share it?</h2>
+      <p class="lede">Through conflict. With output fixed, higher wages mean lower profits. And as farming spreads to worse land, landlords take a growing share at the capitalists' expense, until profits vanish and growth stops.</p>
+    </div>
+
+    <div class="grid g12">
+      <div class="panel">
+        <h3>The rent ladder · Ricardo's own example</h3>
+        <p>Plots yield 100, 90, 80… quarters of corn net. Competition among farmers equalizes profit at whatever the <b>worst</b> plot yields; the rest goes to the landlords as rent.</p>
+        <div class="row"><button class="btn" type="button" id="plotLess">− Plot</button><button class="btn" type="button" id="plotMore">+ Bring worse land into cultivation</button></div>
+        <svg class="chart" id="rentChart" viewBox="0 0 560 240" role="img" aria-label="Net produce split into profit and rent on each plot" style="margin-top:12px"></svg>
+        <div class="legend"><span><i style="background:var(--cyan)"></i>Farmer's profit</span><span><i style="background:var(--magenta)"></i>Landlord's rent</span></div>
+        <div class="readout" id="rentRead"></div>
+        <div class="cite">Numbers 100/90/80 from Ricardo, pp. 92–94; extended plots illustrative.</div>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="tx">
+          <div class="h">// TRANSMISSION · ON LANDLORDS</div>
+          <q>The interest of the landlord is always opposed to that of the consumer and manufacturer.</q>
+          <small>David Ricardo, Principles</small>
+        </div>
+        <div class="tx" style="border-color:var(--cyan);background:linear-gradient(90deg,rgba(34,229,255,.12),transparent)">
+          <div class="h" style="color:var(--cyan)">// TRANSMISSION · ON WAGES</div>
+          <q>Can any point be more clearly established than that profits must fall with a rise in wages?</q>
+          <small>David Ricardo, Principles</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel lime">
+      <h3>The squeeze · toward the stationary state</h3>
+      <p>Push cultivation outward as population grows. The line shows what each new unit of land yields. Rent (the triangle) swells, wages hold just above subsistence while capital grows, and profit (the band between them) thins to nothing.</p>
+      <div class="grid g12" style="align-items:center">
+        <svg class="chart" id="sqChart" viewBox="0 0 560 300" role="img" aria-label="Diminishing returns dividing produce into rent, profit and wages"></svg>
+        <div>
+          <div class="ctrl"><label for="land">Land under cultivation <output id="landOut"></output></label><input type="range" id="land" min="1" max="10" step="0.25" value="3"></div>
+          <div class="row"><button class="btn" type="button" id="cornBtn" aria-pressed="false">Repeal the Corn Laws</button></div>
+          <div class="legend"><span><i style="background:var(--magenta)"></i>Rent</span><span><i style="background:var(--cyan)"></i>Profit</span><span><i style="background:var(--violet)"></i>Wages</span></div>
+          <div id="sqMsg"></div>
+        </div>
+      </div>
+      <div class="readout" id="sqRead"></div>
+      <div class="cite">After Figure 5.4, p. 98; units illustrative.</div>
+    </div>
+
+    <div class="panel amber">
+      <h3>Workers' share</h3>
+      <p style="margin:0">Ricardo agreed with Malthus that workers would always drift back toward subsistence: more income, bigger families. And wages, "like all other contracts," should be "left to the fair and free competition of the market, and should never be controlled by the interference of the legislature." His sympathy, the authors note, lay with the capitalists. <a href="../malthus/#share">See Malthus on the poor →</a></p>
+      <div class="cite">pp. 95, 115, 118</div>
+    </div>
+  </section>
+
+  <!-- ================= VERDICT ================= -->
+  <section class="view" id="v-verdict">
+    <div class="panel">
+      <span class="k">// FINAL ANALYSIS</span>
+      <h2>Two Ricardos</h2>
+      <div class="twin">
+        <div class="side">
+          <h3>The class-conflict Ricardo</h3>
+          <ul>
+            <li>Profits must fall when wages rise.</li>
+            <li>The landlord's gain is wholly someone else's loss.</li>
+            <li>Machines can throw workers out of work.</li>
+            <li>A mother country can profit by squeezing its colonies.</li>
+          </ul>
+        </div>
+        <div class="vs">VS</div>
+        <div class="side">
+          <h3>The free-market Ricardo</h3>
+          <ul>
+            <li>Free trade raises everyone's "sum of enjoyments."</li>
+            <li>Gluts are impossible; supply creates its own demand.</li>
+            <li>Wages should be left to the free market.</li>
+            <li>Capitalism's property relations are natural and eternal.</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin:16px 0 0">The authors see Smith's contradiction again. The labor-theory side of Ricardo sees conflict everywhere, but conflict implies change, and Ricardo denied that capitalism would ever change. So he fell back on an invisible hand. <span class="cite">pp. 120–23</span></p>
+    </div>
+
+    <div class="panel mag">
+      <h3>Ricardo vs. Malthus · agree or clash?</h3>
+      <div class="row" role="group" aria-label="Filter" style="margin-bottom:10px">
+        <button class="btn mag" type="button" data-mf="all" aria-pressed="true">All</button>
+        <button class="btn mag" type="button" data-mf="agree" aria-pressed="false">Where they agreed</button>
+        <button class="btn mag" type="button" data-mf="clash" aria-pressed="false">Where they clashed</button>
+      </div>
+      <div class="tbl"><table class="matrix" id="rmTable"></table></div>
+    </div>
+
+    <div class="panel vio">
+      <h3>The three questions, decoded</h3>
+      <div class="tbl"><table class="matrix">
+        <tr><th>QUESTION</th><th>RICARDO'S ANSWER</th><th>THE TENSION</th></tr>
+        <tr><td>WHAT</td><td>Cheap food through free trade; specialize by comparative advantage.</td><td>The "sum of enjoyments" counts only those who can pay.</td></tr>
+        <tr><td>HOW</td><td>Labor alone creates value; land shows diminishing returns; machines are past labor.</td><td>He admitted machines can push workers out of work.</td></tr>
+        <tr><td>SHARE</td><td>Wages, profit, and rent in permanent conflict; landlords against all.</td><td>He saw the conflict, yet treated capitalism as natural and eternal.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel lime">
+        <h3>Signal echoes</h3>
+        <p>📜 <b>Smith</b>: Ricardo kept the labor theory Smith abandoned, and fixed it. <a href="../smith/">Case 002</a></p>
+        <p>🌾 <b>Malthus</b>: shared population theory, opposite sides on rent and gluts. <a href="../malthus/">Case 003</a></p>
+        <p>🏛️ <b>Physiocrats</b>: Ricardo's rent finishes their idea of a farm surplus. <a href="../before-smith/">Case 001</a></p>
+        <p style="margin:0">🔭 <b>Ahead</b>: Say's law of markets, and Marx, who solved the skilled-labor puzzle.</p>
+      </div>
+      <div class="panel amber" style="text-align:center">
+        <span class="k">// IDEAS IN ACTION</span>
+        <h3 style="color:#fff">The Stationary State</h3>
+        <p>Farm a colony's land as its capitalist. Every harvest splits into <span style="color:var(--violet)">wages</span>, <span style="color:var(--magenta)">rent</span>, and <span style="color:var(--cyan)">profit</span> by Ricardo's rule. As population pushes onto worse land, rents climb and profit shrinks. Deduce which argument wins each MP and repeal the Corn Laws before profit hits zero.</p>
+        <div class="btns" style="justify-content:center"><a class="btn mag" href="game/">▶ Begin the colony</a><a class="btn" href="../compare/">The line-up</a><a class="btn" href="../who-said-it/">Who said it?</a></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn" href="../malthus/"><span class="d">◀ PREVIOUS CASE</span><span class="t">CASE 003 · MALTHUS</span></a>
+    <span class="cn next off" aria-disabled="true"><span class="d">NEXT CASE ▶</span><span class="t">CASE 005 · PENDING</span></span>
+  </nav>
+  <p class="foot">Interpretation follows E.K. Hunt &amp; Mark Lautzenheiser, <i>History of Economic Thought</i>, ch. 5, pp. 91–124. Quotations attributed to Ricardo are his own words.</p>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const C = {cyan:"#22e5ff", mag:"#ff2bd6", vio:"#8b6cff", lime:"#b6ff3b", amber:"#ffb02e", red:"#ff4d6d", muted:"#7f93c4", text:"#d8e6ff", grid:"rgba(34,229,255,.12)"};
+  const f2 = v => v.toFixed(2);
+
+  /* ---------- routing ---------- */
+  const views = ["overview","what","how","share","verdict"];
+  function route(){
+    const h = location.hash.slice(1), v = views.includes(h) ? h : "overview";
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "v-" + v));
+    $$(".tab").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + v));
+    if (location.hash) window.scrollTo(0, $(".tabs").offsetTop);
+  }
+  window.addEventListener("hashchange", route); route();
+  const press = (sel, val, attr) => $$(sel).forEach(b => b.setAttribute("aria-pressed", b.dataset[attr] === val));
+
+  /* ---------- comparative advantage ---------- */
+  let trade = "self";
+  function drawCA(){
+    const t = +$("#terms").value;
+    $("#termsOut").textContent = `${f2(t)} wine for 1 cloth`;
+    $("#termsCtrl").style.opacity = trade === "spec" ? 1 : .4;
+    $("#terms").disabled = trade !== "spec";
+    const eSelf = 220, pSelf = 170;
+    const eSpec = 100 * (1 + 1 / t), pSpec = 80 * (1 + t);
+    const e = trade === "spec" ? eSpec : eSelf, p = trade === "spec" ? pSpec : pSelf;
+    const svg = $("#caChart"), X = 110, W = 420, max = 240, sx = v => v / max * W;
+    let s = "";
+    for (let v = 0; v <= 240; v += 40) s += `<line x1="${X + sx(v)}" x2="${X + sx(v)}" y1="20" y2="180" stroke="${C.grid}"/><text x="${X + sx(v)}" y="198" text-anchor="middle">${v}h</text>`;
+    const bar = (y, val, base, col, lbl) => `<text x="10" y="${y + 22}" style="fill:${C.text}">${lbl}</text>
+      <rect x="${X}" y="${y}" width="${sx(base)}" height="34" fill="none" stroke="${C.muted}" stroke-dasharray="4 4"/>
+      <rect x="${X}" y="${y}" width="${sx(val)}" height="34" fill="${col}" opacity=".85" style="filter:drop-shadow(0 0 6px ${col})"/>
+      <text x="${X + sx(val) + 8}" y="${y + 22}" style="fill:#fff">${val.toFixed(0)}h${val < base - .5 ? ` (saves ${(base - val).toFixed(0)})` : ""}</text>`;
+    s += bar(40, e, eSelf, C.cyan, "ENGLAND") + bar(110, p, pSelf, C.mag, "PORTUGAL");
+    svg.innerHTML = s;
+    press("[data-trade]", trade, "trade");
+    if (trade === "self"){
+      $("#caRead").innerHTML = `Each country makes its own cloth and wine.<br>England spends <b>220 hrs</b>; Portugal spends <b>170 hrs</b>. Portugal is better at both, so why trade?`;
+    } else {
+      const ce = 1 + 1 / t, wp = 1 + t;
+      $("#caRead").innerHTML = `England makes only <b>cloth</b> (${ce.toFixed(2)} units) and swaps ${(1 / t).toFixed(2)} for 1 wine. Portugal makes only <b>wine</b> (${wp.toFixed(2)} units) and swaps ${t.toFixed(2)} for 1 cloth.<br>
+        England saves <b>${(eSelf - eSpec).toFixed(1)} hrs</b>; Portugal saves <span class="m">${(pSelf - pSpec).toFixed(1)} hrs</span>. ${eSelf - eSpec < 1 ? `<span class="r">At this price England gains nothing; all the gain goes to Portugal.</span>` : pSelf - pSpec < 1 ? `<span class="r">At this price Portugal gains nothing; all the gain goes to England.</span>` : `<span class="l">Both gain. That's comparative advantage.</span>`}`;
+    }
+  }
+  $$("[data-trade]").forEach(b => b.addEventListener("click", () => { trade = b.dataset.trade; drawCA(); }));
+  $("#terms").addEventListener("input", drawCA); drawCA();
+
+  let count = "money";
+  function drawEnjoy(){
+    press("[data-count]", count, "count");
+    $("#enjoyRead").innerHTML = count === "money"
+      ? `Imported wine for landlords and capitalists: <b>+ enjoyment</b>.<br>Workers' missing coats: not counted. No money, no demand.<br><span class="l">Verdict: free trade maximizes the sum of enjoyments.</span>`
+      : `Imported wine for landlords and capitalists: <b>+ a little</b>.<br>Coats for cold workers: <span class="m">+ a lot</span>.<br><span class="a">Verdict: ban wine imports until every worker is clothed? Ricardo never considered it.</span>`;
+  }
+  $$("[data-count]").forEach(b => b.addEventListener("click", () => { count = b.dataset.count; drawEnjoy(); })); drawEnjoy();
+
+  const GOODS = {
+    stock:"Freely reproducible. Make more by adding labor, so its value tracks the <b>labor needed</b> to make it.",
+    corn:"Freely reproducible, but each extra bushel from worse land takes <b>more labor</b>, so its value rises as cultivation spreads. That's the engine of Ricardo's whole model.",
+    statue:`<span class="m">Not reproducible.</span> Its value is "wholly independent" of labor and depends on "the varying wealth and inclinations" of buyers. Ricardo: unimportant to the laws of distribution.`,
+    wine:`<span class="m">A wine "of a peculiar quality."</span> Scarcity, not labor, sets its price. Later utility theorists would build everything on cases like this; Ricardo thought them a sideshow.`
+  };
+  let good = "stock";
+  function drawGood(){ press("[data-good]", good, "good"); $("#goodRead").innerHTML = GOODS[good]; }
+  $$("[data-good]").forEach(b => b.addEventListener("click", () => { good = b.dataset.good; drawGood(); })); drawGood();
+
+  /* ---------- stockings chain ---------- */
+  const NODES = [
+    {i:"🌱", t:"Cotton grower", h:30, c:C.lime}, {i:"⛵", t:"Shipbuilder & crew", h:12, c:C.cyan}, {i:"🧶", t:"Spinner", h:18, c:C.vio},
+    {i:"🧵", t:"Weaver", h:22, c:C.mag}, {i:"⚙️", t:"Engineer, smith, carpenter (machines)", h:10, c:C.amber}, {i:"🏪", t:"Retail dealer", h:6, c:"#5bf0c0"}, {i:"👥", t:"Many others", h:4, c:C.muted}
+  ];
+  const onN = NODES.map(() => false);
+  $("#chain").innerHTML = NODES.map((n, i) => `<button class="node" type="button" data-n="${i}" aria-pressed="false"><span class="i">${n.i}</span><span class="t">${n.t}</span></button>`).join("");
+  function drawChain(){
+    $$("[data-n]").forEach((b, i) => b.setAttribute("aria-pressed", onN[i]));
+    const total = NODES.reduce((s, n, i) => s + (onN[i] ? n.h : 0), 0);
+    $("#lbar").innerHTML = NODES.map((n, i) => onN[i] ? `<i style="flex-grow:${n.h};background:${n.c}" title="${n.t}: ${n.h}h"></i>` : "").join("") + `<i style="flex-grow:${Math.max(0.001, 102 - total)};background:transparent"></i>`;
+    const all = onN.every(Boolean);
+    $("#chainRead").innerHTML = total === 0 ? "Activate the nodes to trace where the stockings' value comes from."
+      : `Labor traced: <b>${total} hrs</b>. ${onN[1] || onN[4] ? `<span class="m">Note: the ship and the machines count as labor too, done earlier and passed along.</span> ` : ""}${all ? `<br><span class="l">"The aggregate sum of these various kinds of labour determines the quantity of other things for which these stockings will exchange."</span>` : ""}`;
+  }
+  $$("[data-n]").forEach(b => b.addEventListener("click", () => { onN[+b.dataset.n] = !onN[+b.dataset.n]; drawChain(); })); drawChain();
+
+  /* ---------- time & capital ---------- */
+  function drawTY(){
+    const n = +$("#yrs").value, r = +$("#rate").value / 100;
+    $("#yrsOut").textContent = n + (n > 1 ? " years" : " year"); $("#rateOut").textContent = Math.round(r * 100) + "%";
+    const vals = Array.from({length:n + 1}, (_, k) => 100 * Math.pow(1 + r, k));
+    const max = Math.max(...vals) * 1.15, svg = $("#tyChart"), X = 50, W = 490, bw = Math.min(70, W / (n + 1) - 12);
+    let s = "";
+    for (let v = 0; v <= max; v += max > 400 ? 200 : 50) s += `<line x1="${X}" x2="${X + W}" y1="${175 - v / max * 150}" y2="${175 - v / max * 150}" stroke="${C.grid}"/><text x="${X - 6}" y="${179 - v / max * 150}" text-anchor="end">$${v}</text>`;
+    vals.forEach((v, k) => {
+      const x = X + 10 + k * (W / (n + 1)), h = v / max * 150, base = 100 / max * 150;
+      s += `<rect x="${x}" y="${175 - base}" width="${bw}" height="${base}" fill="${C.vio}" opacity=".8"/>`;
+      if (v > 100.01) s += `<rect x="${x}" y="${175 - h}" width="${bw}" height="${h - base}" fill="${C.cyan}" style="filter:drop-shadow(0 0 6px ${C.cyan})"/>`;
+      s += `<text x="${x + bw / 2}" y="${168 - h}" text-anchor="middle" style="fill:#fff">$${v.toFixed(2)}</text><text x="${x + bw / 2}" y="194" text-anchor="middle">${k === 0 ? "wages paid" : "yr " + k}</text>`;
+    });
+    $("#tyChart").innerHTML = s;
+    const end = vals[n];
+    $("#tyRead").innerHTML = `$100 of wages paid ${n} year${n > 1 ? "s" : ""} before sale adds <b>$${end.toFixed(2)}</b> to the price: $100 of labor plus <span class="m">$${(end - 100).toFixed(2)} of compounded profit</span>. Same labor, higher price, just because capital waited longer.`;
+  }
+  ["#yrs","#rate"].forEach(s => $(s).addEventListener("input", drawTY)); drawTY();
+
+  /* ---------- goods X and Y ---------- */
+  function costs(w, r){
+    const x = {A:100 * w, B:[1,2,3,4].reduce((s, k) => s + 75 * w * Math.pow(1 + r, k), 0)};
+    const y = {A:300 * w, B:[1,2].reduce((s, k) => s + 50 * w * Math.pow(1 + r, k), 0)};
+    [x, y].forEach(o => { o.C = r * (o.A + o.B); o.D = o.A + o.B + o.C; o.p = o.D / 100; });
+    return {x, y};
+  }
+  function drawXY(){
+    const r = +$("#pr").value / 100, w = +$("#wg").value;
+    $("#prOut").textContent = Math.round(r * 100) + "%"; $("#wgOut").textContent = "$" + w.toFixed(2);
+    const {x, y} = costs(w, r), max = Math.max(x.p, y.p, 4) * 1.18, svg = $("#xyChart");
+    const bar = (i, o, col, lbl) => { const h = o.p / max * 150, xx = 70 + i * 140;
+      return `<rect x="${xx}" y="${170 - h}" width="80" height="${h}" fill="${col}" opacity=".85" style="filter:drop-shadow(0 0 8px ${col})"/><text x="${xx + 40}" y="${163 - h}" text-anchor="middle" style="fill:#fff;font-size:14px">$${o.p.toFixed(2)}</text><text x="${xx + 40}" y="190" text-anchor="middle">${lbl}</text>`; };
+    svg.innerHTML = `<line x1="40" x2="340" y1="170" y2="170" stroke="${C.muted}"/>` + bar(0, x, C.cyan, "X · 400 labor") + bar(1, y, C.mag, "Y · 400 labor");
+    const ratio = x.p / y.p;
+    $("#xyRead").innerHTML = `Price ratio X : Y = <b>${ratio.toFixed(2)} : 1</b>. Labor ratio = 1 : 1.<br>${r === 0 ? `<span class="l">With zero profit, prices exactly match the labor embodied.</span>` : `The gap comes entirely from <span class="m">profit compounding on X's longer-tied-up capital</span>. Lower the profit rate and the gap shrinks.`} ${w > 1 && r < .5 ? `<br><span class="a">Notice: higher wages can <i>lower</i> X's price. That's why Ricardo rejected Smith's claim that rising wages raise all prices.</span>` : ""}`;
+  }
+  ["#pr","#wg"].forEach(s => $(s).addEventListener("input", drawXY));
+  $("#t51").addEventListener("click", () => { $("#pr").value = 50; $("#wg").value = 1; drawXY(); });
+  $("#t52").addEventListener("click", () => { $("#pr").value = 10; $("#wg").value = 2; drawXY(); });
+  drawXY();
+
+  /* ---------- machinery ---------- */
+  let ed = "1";
+  function drawMX(){
+    press("[data-ed]", ed, "ed");
+    const before = {work:100, gross:1000, net:300}, after = ed === "1" ? {work:100, gross:1100, net:300} : {work:75, gross:925, net:400};
+    const svg = $("#mxChart"), rows = [["WORKERS EMPLOYED", before.work, after.work, 120], ["GROSS INCOME (all)", before.gross, after.gross, 1200], ["NET INCOME (profit + rent)", before.net, after.net, 1200]];
+    let s = "";
+    rows.forEach(([l, b, a, m], i) => {
+      const y = 22 + i * 56, sx = v => v / m * 300;
+      s += `<text x="10" y="${y + 6}" style="fill:${C.text}">${l}</text>
+        <rect x="230" y="${y - 6}" width="${sx(b)}" height="14" fill="${C.muted}" opacity=".5"/><text x="${236 + sx(b)}" y="${y + 6}">${b} before</text>
+        <rect x="230" y="${y + 12}" width="${sx(a)}" height="14" fill="${a < b ? C.red : a > b ? C.lime : C.cyan}" style="filter:drop-shadow(0 0 6px currentColor)"/><text x="${236 + sx(a)}" y="${y + 24}" style="fill:#fff">${a} after</text>`;
+    });
+    svg.innerHTML = s;
+    $("#mxRead").innerHTML = ed === "1"
+      ? `<b>1817 view:</b> machines lower costs, competition lowers prices, and landlords, capitalists, and workers all buy more with the same money. <span class="l">Everyone wins.</span>`
+      : `<b>1821 view:</b> labor is first diverted into building machines, leaving fewer wage goods. Net income (profit + rent) <span class="l">rises</span> while gross output <span class="r">falls</span>, and <span class="r">25 workers become "redundant."</span><br>"…the opinion entertained by the labouring class, that the employment of machinery is frequently detrimental to their interests, is not founded on prejudice and error…"`;
+  }
+  $$("[data-ed]").forEach(b => b.addEventListener("click", () => { ed = b.dataset.ed; drawMX(); })); drawMX();
+
+  /* ---------- rent ladder ---------- */
+  const PLOTS = [100, 90, 80, 70, 60, 50];
+  let n = 1;
+  function drawRent(){
+    const svg = $("#rentChart"), marg = PLOTS[n - 1], X = 60, bw = 64, gap = 16, sy = v => v / 110 * 180;
+    let s = "";
+    for (let v = 0; v <= 100; v += 20) s += `<line x1="${X - 10}" x2="540" y1="${205 - sy(v)}" y2="${205 - sy(v)}" stroke="${C.grid}"/><text x="${X - 16}" y="${209 - sy(v)}" text-anchor="end">${v}</text>`;
+    PLOTS.forEach((v, i) => {
+      const x = X + i * (bw + gap), on = i < n;
+      if (on){
+        s += `<rect x="${x}" y="${205 - sy(marg)}" width="${bw}" height="${sy(marg)}" fill="${C.cyan}" opacity=".85"/>`;
+        if (v > marg) s += `<rect x="${x}" y="${205 - sy(v)}" width="${bw}" height="${sy(v - marg)}" fill="${C.mag}" style="filter:drop-shadow(0 0 8px ${C.mag})"/><text x="${x + bw / 2}" y="${200 - sy(v)}" text-anchor="middle" style="fill:#fff">rent ${v - marg}</text>`;
+      } else s += `<rect x="${x}" y="${205 - sy(v)}" width="${bw}" height="${sy(v)}" fill="none" stroke="${C.muted}" stroke-dasharray="4 4"/>`;
+      s += `<text x="${x + bw / 2}" y="226" text-anchor="middle" style="fill:${on ? "#fff" : C.muted}">No. ${i + 1}</text>`;
+    });
+    s += `<line x1="${X - 10}" x2="540" y1="${205 - sy(marg)}" y2="${205 - sy(marg)}" stroke="${C.lime}" stroke-dasharray="6 4"/><text x="540" y="${199 - sy(marg)}" text-anchor="end" style="fill:${C.lime}">profit per farm = ${marg}</text>`;
+    svg.innerHTML = s;
+    const rents = PLOTS.slice(0, n).map(v => v - marg), total = rents.reduce((a, b) => a + b, 0);
+    $("#rentRead").innerHTML = `${n} plot${n > 1 ? "s" : ""} farmed · every farmer earns <b>${marg}</b> quarters profit · landlords collect <span class="m">${total}</span> in rent${n > 1 ? ` (${rents.slice(0, -1).map((r, i) => `No.${i + 1}: ${r}`).join(", ")})` : ""}.<br>${n === 1 ? "Only the best land is needed. No rent yet: the farmer keeps all 100." : `If No. 1's landlord charged less, rival farmers would bid the rent up until profits were equal everywhere.`}`;
+    $("#plotLess").disabled = n <= 1; $("#plotMore").disabled = n >= PLOTS.length;
+  }
+  $("#plotMore").addEventListener("click", () => { n = Math.min(PLOTS.length, n + 1); drawRent(); });
+  $("#plotLess").addEventListener("click", () => { n = Math.max(1, n - 1); drawRent(); });
+  drawRent();
+
+  /* ---------- the squeeze ---------- */
+  let repeal = false;
+  const P = x => 100 - 6 * x, SUB = 40, WSTAR = 50, IMPORT = 76;
+  function drawSq(){
+    const want = +$("#land").value;
+    const xMax = repeal ? (100 - IMPORT) / 6 : 10;
+    const x = Math.min(want, xMax), m = P(x);
+    const wage = m >= WSTAR ? WSTAR : Math.max(SUB, m);
+    const rent = 3 * x * x, wages = wage * x, profit = Math.max(0, m - wage) * x, total = rent + wages + profit;
+    $("#landOut").textContent = `${want.toFixed(2)} units${repeal && want > xMax ? ` (farm ${x.toFixed(2)}, import the rest)` : ""}`;
+    const svg = $("#sqChart"), X = 50, Y = 270, sx = v => X + v / 10 * 480, sy = v => Y - v / 110 * 240;
+    let s = "";
+    for (let v = 0; v <= 100; v += 20) s += `<line x1="${X}" x2="${X + 480}" y1="${sy(v)}" y2="${sy(v)}" stroke="${C.grid}"/><text x="${X - 6}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`;
+    s += `<rect x="${sx(0)}" y="${sy(wage)}" width="${sx(x) - sx(0)}" height="${Y - sy(wage)}" fill="${C.vio}" opacity=".55"/>`;
+    if (m > wage) s += `<rect x="${sx(0)}" y="${sy(m)}" width="${sx(x) - sx(0)}" height="${sy(wage) - sy(m)}" fill="${C.cyan}" opacity=".7" style="filter:drop-shadow(0 0 6px ${C.cyan})"/>`;
+    s += `<polygon points="${sx(0)},${sy(100)} ${sx(x)},${sy(m)} ${sx(0)},${sy(m)}" fill="${C.mag}" opacity=".75" style="filter:drop-shadow(0 0 6px ${C.mag})"/>`;
+    if (repeal && want > xMax) s += `<rect x="${sx(x)}" y="${sy(IMPORT)}" width="${sx(want) - sx(x)}" height="${Y - sy(IMPORT)}" fill="${C.lime}" opacity=".18" stroke="${C.lime}" stroke-dasharray="5 4"/><text x="${(sx(x) + sx(want)) / 2}" y="${sy(IMPORT) - 6}" text-anchor="middle" style="fill:${C.lime}">imported grain</text>`;
+    s += `<line x1="${sx(0)}" y1="${sy(100)}" x2="${sx(10)}" y2="${sy(40)}" stroke="#fff" stroke-width="2.5" style="filter:drop-shadow(0 0 6px #fff)"/><text x="${sx(10)}" y="${sy(40) - 8}" text-anchor="end" style="fill:#fff">P: produce of each new unit</text>`;
+    s += `<line x1="${X}" x2="${X + 480}" y1="${sy(SUB)}" y2="${sy(SUB)}" stroke="${C.amber}" stroke-dasharray="6 5"/><text x="${X + 4}" y="${sy(SUB) + 14}" style="fill:${C.amber}">w: subsistence</text>`;
+    s += `<line x1="${sx(x)}" x2="${sx(x)}" y1="${sy(m)}" y2="${Y}" stroke="${C.lime}" stroke-width="2"/><text x="${sx(x)}" y="${Y + 16}" text-anchor="middle" style="fill:${C.lime}">x</text>`;
+    s += `<line x1="${X}" x2="${X + 480}" y1="${Y}" y2="${Y}" stroke="${C.muted}"/><text x="${X + 480}" y="${Y + 16}" text-anchor="end">land under cultivation →</text>`;
+    svg.innerHTML = s;
+    const pct = v => total ? Math.round(v / total * 100) : 0;
+    $("#sqRead").innerHTML = `Rent <span class="m">${pct(rent)}%</span> · Profit <b>${pct(profit)}%</b> · Wages <span style="color:${C.vio}">${pct(wages)}%</span> · rate of profit on the last unit: <b>${wage ? Math.round(Math.max(0, m - wage) / wage * 100) : 0}%</b>`;
+    $("#sqMsg").innerHTML = profit <= 0.01
+      ? `<div class="alert">⚠ STATIONARY STATE. Profits gone, no motive to accumulate, wages sinking to subsistence. Growth halts.</div>`
+      : repeal && want > xMax ? `<div class="ok">✓ Corn Laws repealed. Cheap imports stop the march onto bad land. Rents stop rising and profits survive.</div>`
+      : m < 60 ? `<div class="alert" style="animation:none">Profits thinning. Landlords now take ${pct(rent)}% of the produce.</div>` : "";
+    $("#cornBtn").setAttribute("aria-pressed", repeal); $("#cornBtn").textContent = repeal ? "✓ Corn Laws repealed" : "Repeal the Corn Laws";
+  }
+  $("#land").addEventListener("input", drawSq);
+  $("#cornBtn").addEventListener("click", () => { repeal = !repeal; drawSq(); });
+  drawSq();
+
+  /* ---------- Ricardo vs Malthus ---------- */
+  const RM = [
+    ["POPULATION", "agree", "Adopted Malthus's theory whole.", "Population outruns food."],
+    ["WAGES", "agree", "Drift back to subsistence.", "Drift back to subsistence."],
+    ["RENT", "clash", "A drain on profits; landlords oppose everyone.", "A sign of prosperity; landlords serve the nation."],
+    ["CORN LAWS", "clash", "Repeal them; import cheap grain.", "Keep them; protect the landlords."],
+    ["GLUTS", "clash", "Impossible: goods buy goods (Say's law).", "Real: too much saving, too little spending."],
+    ["VALUE", "clash", "Labor embodied.", "Supply and demand; labor commanded."],
+    ["MACHINERY", "agree", "(1821) Can hurt workers; markets don't always adjust.", "Markets don't always reallocate smoothly."]
+  ];
+  let mf = "all";
+  function drawRM(){
+    press("[data-mf]", mf, "mf");
+    $("#rmTable").innerHTML = `<tr><th>ISSUE</th><th></th><th>RICARDO</th><th>MALTHUS</th></tr>` + RM.filter(r => mf === "all" || r[1] === mf).map(r => `<tr><td>${r[0]}</td><td><span class="pill ${r[1]}">${r[1] === "agree" ? "AGREE" : "CLASH"}</span></td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+  }
+  $$("[data-mf]").forEach(b => b.addEventListener("click", () => { mf = b.dataset.mf; drawRM(); })); drawRM();
+})();
+</script>
+</body>
+</html>

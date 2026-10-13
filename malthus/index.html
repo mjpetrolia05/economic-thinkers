@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Malthus · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ead3; --card:#fffaf0; --ink:#1b1a17; --muted:#5d5645;
+  --red:#d7263d; --blue:#1b4f9c; --yellow:#f5b800;
+  --on-color:#fffaf0; --on-yellow:#1b1a17;
+  --grid:rgba(27,26,23,.12); --dot:rgba(27,26,23,.07);
+  --display:"Bungee","Arial Black",Impact,sans-serif;
+  --shade:"Bungee Shade","Bungee","Arial Black",Impact,sans-serif;
+  --mono:"Space Mono",ui-monospace,Consolas,monospace;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#15130f; --card:#211e18; --ink:#f3ead3; --muted:#bdb296;
+    --red:#ff4b5c; --blue:#5b8ff0; --yellow:#ffc933;
+    --grid:rgba(243,234,211,.14); --dot:rgba(243,234,211,.05);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15130f; --card:#211e18; --ink:#f3ead3; --muted:#bdb296;
+  --red:#ff4b5c; --blue:#5b8ff0; --yellow:#ffc933;
+  --grid:rgba(243,234,211,.14); --dot:rgba(243,234,211,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(color-mix(in srgb,var(--red) 22%,transparent) 1.4px,transparent 1.6px),
+    radial-gradient(color-mix(in srgb,var(--blue) 22%,transparent) 1.4px,transparent 1.6px);
+  background-size:18px 18px,18px 18px;
+  background-position:0 0,9px 9px;
+  color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.55;
+}
+h1,h2,h3{font-family:var(--display); font-weight:400; line-height:1.1; margin:0 0 .5em; letter-spacing:.01em}
+h2{font-size:clamp(1.5rem,3.2vw,2.3rem); text-transform:uppercase; text-shadow:3px 3px 0 var(--acc,var(--red))}
+h3{font-size:1.05rem; text-transform:uppercase}
+#v-overview{--acc:var(--yellow)} #v-what{--acc:var(--red)} #v-how{--acc:var(--blue)} #v-share{--acc:var(--yellow)} #v-verdict{--acc:var(--blue)}
+section.view{border-top:10px solid var(--acc); padding-top:18px}
+p{margin:0 0 .9em}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.cite{font-family:var(--mono); font-size:.72rem; color:var(--muted); letter-spacing:.02em}
+
+/* ---------- masthead ---------- */
+.mast{
+  display:flex; align-items:stretch; border-bottom:4px solid var(--ink); background:var(--yellow); color:var(--on-yellow);
+}
+.mast h1{font-family:var(--shade); color:var(--red); letter-spacing:.02em}
+.mast .sub{color:var(--on-yellow) !important; opacity:.85}
+.mast .tools{background:var(--red)}
+.mast .stripes{display:flex; flex:0 0 auto}
+.mast .stripes span{width:22px}
+.mast .stripes span:nth-child(1){background:var(--red)}
+.mast .stripes span:nth-child(2){background:var(--yellow)}
+.mast .stripes span:nth-child(3){background:var(--blue)}
+.mast .title{padding:14px 20px; flex:1; min-width:0}
+.mast h1{font-size:clamp(1.2rem,4vw,2.6rem); margin:0; text-transform:uppercase; overflow-wrap:anywhere}
+@media (max-width:560px){
+  .mast{flex-wrap:wrap}
+  .mast .sub{display:none} .mast .title{padding:10px 12px}
+  .mast .tools{flex-basis:100%; border-left:0 !important; border-top:4px solid var(--ink); padding:8px 12px !important; justify-content:flex-end}
+}
+.mast .sub{font-family:var(--mono); font-size:.8rem; color:var(--muted)}
+.mast .tools{display:flex; align-items:center; padding:0 16px; border-left:4px solid var(--ink)}
+.btn{
+  font-family:var(--mono); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.04em;
+  background:var(--card); color:var(--ink); border:3px solid var(--ink); padding:8px 12px; cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink); transition:transform .08s, box-shadow .08s;
+}
+.btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink)}
+.btn.red{background:var(--red); color:var(--on-color)}
+.btn.blue{background:var(--blue); color:var(--on-color)}
+.btn.yellow{background:var(--yellow); color:var(--on-yellow)}
+.btn[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+
+/* ---------- layout ---------- */
+.shell{display:grid; grid-template-columns:230px 1fr; min-height:calc(100vh - 90px)}
+nav.side{border-right:4px solid var(--ink); background:var(--blue); padding:18px 14px; position:sticky; top:0; align-self:start; height:100vh}
+nav.side a{
+  display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+  font-family:var(--mono); font-weight:700; text-transform:uppercase; font-size:.85rem;
+  border:3px solid var(--ink); padding:10px; margin-bottom:12px; background:var(--card);
+  box-shadow:4px 4px 0 var(--ink);
+}
+nav.side a .n{
+  font-family:var(--display); font-size:1.1rem; width:34px; height:34px; display:grid; place-items:center;
+  border:3px solid var(--ink); flex:0 0 auto;
+}
+nav.side a[data-c="red"] .n{background:var(--red); color:var(--on-color)}
+nav.side a[data-c="blue"] .n{background:var(--blue); color:var(--on-color)}
+nav.side a[data-c="yellow"] .n{background:var(--yellow); color:var(--on-yellow)}
+nav.side a[data-c="ink"] .n{background:var(--ink); color:var(--paper)}
+nav.side a.active{transform:translate(4px,4px); box-shadow:0 0 0 var(--ink); background:var(--yellow); color:var(--on-yellow)}
+nav.side a.home-link{background:var(--ink); color:var(--paper)}
+@media (min-width:901px){ nav.side a.home-link{margin-bottom:22px} }
+nav.side .foot{font-family:var(--mono); font-size:.7rem; color:var(--on-color); margin-top:20px; line-height:1.5}
+main{padding:28px clamp(16px,3vw,40px) 60px; min-width:0}
+section.view{display:none; max-width:1150px}
+section.view.active{display:block; animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+.kicker{display:inline-block; font-family:var(--mono); font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; padding:4px 10px; border:3px solid var(--ink); margin-bottom:12px}
+.kicker.red{background:var(--red); color:var(--on-color)}
+.kicker.blue{background:var(--blue); color:var(--on-color)}
+.kicker.yellow{background:var(--yellow); color:var(--on-yellow)}
+.lede{font-size:1.1rem; max-width:70ch}
+
+.grid{display:grid; gap:22px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g12{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.card{--c:var(--yellow); --c-on:var(--on-yellow); background:var(--card); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink),10px 10px 0 var(--c); padding:20px; min-width:0}
+.card.bar-red{--c:var(--red); --c-on:var(--on-color)}
+.card.bar-blue{--c:var(--blue); --c-on:var(--on-color)}
+.card.bar-yellow{--c:var(--yellow); --c-on:var(--on-yellow)}
+.card > h3:first-child{margin:-20px -20px 16px; padding:12px 20px; background:var(--c); color:var(--c-on); border-bottom:3px solid var(--ink)}
+.card h3 .tag{font-family:var(--mono); font-size:.7rem; vertical-align:middle; margin-left:6px; color:inherit; opacity:.85}
+.block{margin-top:26px}
+
+/* question tiles */
+.qtile{border:3px solid var(--ink); box-shadow:6px 6px 0 var(--ink); padding:20px; text-decoration:none; display:block; min-height:190px; position:relative; transition:transform .1s, box-shadow .1s}
+.qtile:hover{transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--ink)}
+.qtile .big{font-family:var(--shade); font-size:3.4rem; line-height:1}
+.qtile .q{font-family:var(--display); font-size:1.3rem; text-transform:uppercase; margin:8px 0}
+.qtile p{margin:0; font-size:.95rem}
+.qtile.red{background:var(--red); color:var(--on-color)}
+.qtile.blue{background:var(--blue); color:var(--on-color)}
+.qtile.yellow{background:var(--yellow); color:var(--on-yellow)}
+
+/* stats */
+.stat{border:3px solid var(--ink); padding:12px 14px; background:var(--red); color:var(--on-color)}
+.stat:nth-child(2){background:var(--blue)}
+.stat:nth-child(3){background:var(--yellow); color:var(--on-yellow)}
+.stat .v{font-family:var(--display); font-size:1.7rem; line-height:1}
+.stat .l{font-family:var(--mono); font-size:.72rem; text-transform:uppercase; margin-top:4px; opacity:.9}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px}
+
+/* controls */
+.ctrl{margin:14px 0}
+.ctrl label{display:flex; justify-content:space-between; font-family:var(--mono); font-size:.8rem; font-weight:700; text-transform:uppercase; margin-bottom:6px; gap:10px}
+.ctrl label output{background:var(--ink); color:var(--paper); padding:0 6px; white-space:nowrap}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:14px; background:var(--paper); border:3px solid var(--ink); outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:22px; height:26px; background:var(--yellow); border:3px solid var(--ink); cursor:pointer}
+input[type=range]::-moz-range-thumb{width:18px; height:22px; background:var(--yellow); border:3px solid var(--ink); border-radius:0; cursor:pointer}
+input[type=range].r::-webkit-slider-thumb{background:var(--red)}
+input[type=range].r::-moz-range-thumb{background:var(--red)}
+input[type=range].b::-webkit-slider-thumb{background:var(--blue)}
+input[type=range].b::-moz-range-thumb{background:var(--blue)}
+input[type=range]:focus-visible{box-shadow:0 0 0 3px var(--yellow)}
+.chk{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:.8rem; font-weight:700; text-transform:uppercase; cursor:pointer; margin:8px 0}
+.chk input{width:20px; height:20px; accent-color:var(--red)}
+.btnrow{display:flex; flex-wrap:wrap; gap:10px; margin:12px 0}
+
+/* charts */
+svg.chart{width:100%; height:auto; display:block; background:var(--paper); border:3px solid var(--ink)}
+svg text{font-family:var(--mono); fill:var(--ink); font-size:12px}
+svg .axis{stroke:var(--ink); stroke-width:2}
+svg .gridl{stroke:var(--grid); stroke-width:1}
+svg .f-red{fill:var(--red)} svg .f-blue{fill:var(--blue)} svg .f-yellow{fill:var(--yellow)} svg .f-ink{fill:var(--ink)} svg .f-paper{fill:var(--paper)} svg .f-card{fill:var(--card)}
+svg .s-red{stroke:var(--red)} svg .s-blue{stroke:var(--blue)} svg .s-yellow{stroke:var(--yellow)} svg .s-ink{stroke:var(--ink)}
+svg .t-on{fill:var(--on-color)} svg .t-on-y{fill:var(--on-yellow)} svg .t-muted{fill:var(--muted)}
+.legend{display:flex; flex-wrap:wrap; gap:14px; font-family:var(--mono); font-size:.75rem; margin-top:10px}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:16px; height:12px; border:2px solid var(--ink); display:inline-block}
+.readout{font-family:var(--mono); font-size:.85rem; border:3px solid var(--ink); padding:12px; background:var(--paper); margin-top:14px}
+.readout b{font-family:var(--display); font-weight:400; font-size:1.3rem}
+#loafRead b{font-family:var(--mono); font-weight:700; font-size:inherit}
+.hl-y{background:var(--yellow); color:var(--on-yellow); padding:0 4px}
+.alert{background:var(--red); color:var(--on-color); border:3px solid var(--ink); padding:10px 12px; font-family:var(--mono); font-size:.82rem; font-weight:700; margin-top:12px}
+.ok{background:var(--yellow); color:var(--on-yellow); border:3px solid var(--ink); padding:10px 12px; font-family:var(--mono); font-size:.82rem; font-weight:700; margin-top:12px}
+
+/* chips (checks classifier) */
+.cols{display:grid; gap:12px; margin-top:12px}
+.col{border:3px solid var(--ink); background:var(--paper); min-height:120px}
+.col h4{margin:0; padding:8px 10px; font-family:var(--mono); font-size:.8rem; text-transform:uppercase; border-bottom:3px solid var(--ink)}
+.col .chips{padding:10px; display:flex; flex-wrap:wrap; gap:8px}
+.chip{font-family:var(--mono); font-size:.78rem; border:2px solid var(--ink); background:var(--card); padding:4px 8px}
+.col.red h4{background:var(--red); color:var(--on-color)}
+.col.blue h4{background:var(--blue); color:var(--on-color)}
+.col.yellow h4{background:var(--yellow); color:var(--on-yellow)}
+
+/* compare */
+.flip{display:grid; grid-template-columns:1fr 1fr; border:3px solid var(--ink)}
+.flip > div{padding:14px}
+.flip > div:first-child{border-right:3px solid var(--ink)}
+.flip .who{font-family:var(--mono); font-size:.75rem; font-weight:700; text-transform:uppercase; margin-bottom:6px}
+
+/* inputs diagram */
+.inputs{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+.inp{border:3px solid var(--ink); padding:14px; cursor:pointer; text-align:left; font:inherit; color:inherit; box-shadow:4px 4px 0 var(--ink)}
+.inp .ico{font-family:var(--display); font-size:1.4rem; text-transform:uppercase}
+.inp.red{background:var(--red); color:var(--on-color)}
+.inp.blue{background:var(--blue); color:var(--on-color)}
+.inp.yellow{background:var(--yellow); color:var(--on-yellow)}
+.inp[aria-pressed="true"]{transform:translate(4px,4px); box-shadow:none; outline:3px dashed var(--ink); outline-offset:3px}
+
+/* loaf */
+.men{display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin:14px 0}
+.man{border:3px solid var(--ink); background:var(--paper); padding:8px 4px; text-align:center; font-family:var(--mono); font-size:.72rem; transition:all .2s}
+.man .fig{font-family:var(--display); font-size:1.5rem}
+.man .hb{height:8px; border:2px solid var(--ink); margin:6px 4px 4px; background:var(--card)}
+.man .hb i{display:block; height:100%; background:var(--red)}
+.man.win{background:var(--yellow); color:var(--on-yellow); transform:translateY(-6px); box-shadow:4px 4px 0 var(--ink)}
+
+/* timeline */
+.tl{position:relative; margin-top:10px}
+.tl::before{content:""; position:absolute; left:74px; top:0; bottom:0; width:4px; background:var(--ink)}
+.tl .ev{display:grid; grid-template-columns:62px 1fr; gap:28px; margin-bottom:14px; position:relative}
+.tl .yr{font-family:var(--display); font-size:1.05rem; text-align:right}
+.tl .ev::after{content:""; position:absolute; left:67px; top:5px; width:14px; height:14px; border:3px solid var(--ink); background:var(--c,var(--card))}
+.tl .ev p{margin:0; font-size:.93rem}
+.tl .ev .lab{font-family:var(--mono); font-size:.68rem; text-transform:uppercase; color:var(--muted)}
+
+/* debate */
+.debate{display:grid; gap:14px}
+.bubble{border:3px solid var(--ink); padding:14px 16px; max-width:80%; box-shadow:5px 5px 0 var(--ink); position:relative}
+.bubble .who{font-family:var(--mono); font-weight:700; font-size:.75rem; text-transform:uppercase; margin-bottom:4px}
+.bubble.m{background:var(--blue); color:var(--on-color)}
+.bubble.r{background:var(--red); color:var(--on-color); justify-self:end}
+.bubble.a{background:var(--yellow); color:var(--on-yellow); justify-self:center; max-width:90%}
+.bubble.hidden{display:none}
+
+table.verdict{width:100%; border-collapse:collapse; border:3px solid var(--ink); background:var(--card)}
+table.verdict th, table.verdict td{border:3px solid var(--ink); padding:12px; text-align:left; vertical-align:top; font-size:.95rem}
+table.verdict thead th{font-family:var(--mono); text-transform:uppercase; font-size:.8rem; background:var(--ink); color:var(--paper)}
+table.verdict tbody th{font-family:var(--display); font-weight:400; text-transform:uppercase; width:110px}
+table.verdict tr:nth-child(1) th{background:var(--red); color:var(--on-color)}
+table.verdict tr:nth-child(2) th{background:var(--blue); color:var(--on-color)}
+table.verdict tr:nth-child(3) th{background:var(--yellow); color:var(--on-yellow)}
+.tablewrap{overflow-x:auto}
+
+blockquote{margin:0; border-left:8px solid var(--red); padding:6px 0 6px 14px; font-style:italic}
+blockquote footer{font-style:normal; font-family:var(--mono); font-size:.72rem; color:var(--muted); margin-top:4px}
+
+/* previous / next case tabs */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:1150px; margin-top:40px}
+.cn{display:flex; flex-direction:column; gap:4px; text-decoration:none; color:var(--on-color); background:var(--blue); border:3px solid var(--ink); padding:14px 18px; box-shadow:5px 5px 0 var(--ink),10px 10px 0 var(--yellow); transition:transform .1s}
+.cn.next{text-align:right; background:var(--red)}
+.cn:hover{transform:translate(-2px,-2px)}
+.cn .d{font-family:var(--mono); font-weight:700; font-size:.75rem; letter-spacing:.08em}
+.cn .t{font-family:var(--display); font-size:clamp(1rem,2vw,1.3rem); text-transform:uppercase}
+.cn.off{background:var(--card); color:var(--muted); box-shadow:5px 5px 0 var(--ink); border-style:dashed}
+@media (max-width:560px){ .casenav{grid-template-columns:1fr} .cn.next{text-align:left} }
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav.side{position:sticky; top:0; z-index:5; height:auto; display:flex; gap:8px; overflow-x:auto; border-right:0; border-bottom:4px solid var(--ink); padding:10px 16px}
+  nav.side a{margin:0; flex:0 0 auto; padding:6px 8px; box-shadow:3px 3px 0 var(--ink)}
+  nav.side a .lbl{display:none}
+  nav.side a .n{width:30px; height:30px; font-size:.95rem}
+  nav.side a.active .lbl{display:inline}
+  nav.side .foot{display:none}
+  .g2,.g3,.g12{grid-template-columns:1fr}
+  main{padding:20px 16px 50px}
+}
+@media (max-width:560px){
+  .mast .stripes span{width:10px}
+  .mast .tools{padding:0 10px}
+  .inputs{grid-template-columns:1fr}
+  .men{grid-template-columns:repeat(3,1fr)}
+  .flip{grid-template-columns:1fr}
+  .flip > div:first-child{border-right:0; border-bottom:3px solid var(--ink)}
+  .bubble{max-width:100%}
+  .tl::before{left:58px}
+  .tl .ev{grid-template-columns:48px 1fr; gap:26px}
+  .tl .ev::after{left:51px}
+  .qtile{min-height:0}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="stripes" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="title">
+    <h1>Malthus &amp; the Three Questions</h1>
+    <div class="sub">What to make · How to make it · How to share it — after Hunt &amp; Lautzenheiser, <i>History of Economic Thought</i>, ch. 4</div>
+  </div>
+  <div class="tools" style="gap:10px"><a class="btn" href="../" style="text-decoration:none">⌂ Home</a><a class="btn red" href="game/" style="text-decoration:none">Ideas in Action ▶</a><button class="btn" id="themeBtn" type="button" aria-label="Toggle dark mode">◐ Theme</button></div>
+</header>
+
+<div class="shell">
+  <nav class="side" aria-label="Sections">
+    <a href="../" data-c="ink" class="home-link"><span class="n">⌂</span><span class="lbl">All thinkers</span></a>
+    <a href="#overview" data-c="ink"><span class="n">★</span><span class="lbl">Overview</span></a>
+    <a href="#what" data-c="red"><span class="n">1</span><span class="lbl">What to make</span></a>
+    <a href="#how" data-c="blue"><span class="n">2</span><span class="lbl">How to make it</span></a>
+    <a href="#share" data-c="yellow"><span class="n">3</span><span class="lbl">How to share it</span></a>
+    <a href="#verdict" data-c="ink"><span class="n">⚖</span><span class="lbl">Debate &amp; verdict</span></a>
+    <div class="foot">Thomas Robert Malthus<br>1766 – 1834<br><br>Interpretation follows Hunt &amp; Lautzenheiser (2011). Page refs are to the book.</div>
+  </nav>
+
+  <main>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view" id="v-overview">
+    <span class="kicker yellow">Chapter 4 · Thomas Robert Malthus</span>
+    <h2>Every economy answers three questions</h2>
+    <p class="lede">What gets made, how it gets made, and who gets what. Malthus answered all three during Britain's industrial revolution, and in Hunt and Lautzenheiser's reading, his answer to the third question, <b>who gets what</b>, shaped his answers to the other two.</p>
+
+    <div class="grid g3 block">
+      <a class="qtile red" href="#what"><div class="big">1</div><div class="q">What to make?</div><p>Food or factory goods? Goods to use now or machines for later? Can a society make <i>too much</i>?</p></a>
+      <a class="qtile blue" href="#how"><div class="big">2</div><div class="q">How to make it?</div><p>Factories, land of uneven fertility, and Malthus's view of production as a trade between three owners.</p></a>
+      <a class="qtile yellow" href="#share"><div class="big">3</div><div class="q">How to share it?</div><p>Workers vs. owners, then landlords vs. capitalists. Rents, the Corn Laws, and gluts.</p></a>
+    </div>
+
+    <div class="grid g12 block">
+      <div class="card bar-red">
+        <h3>The world Malthus wrote in</h3>
+        <p>Two class conflicts ran through his lifetime. <b>Workers against owners:</b> industrialization was built on falling or flat living standards, child labor, slums, and laws banning unions. <b>Landlords against capitalists:</b> the old landed class still ran Parliament and fought the rising industrialists over whether Britain would stay agricultural or become the workshop of the world.</p>
+        <div class="stats">
+          <div class="stat"><div class="v">31→128</div><div class="l">Wheat, shillings/qtr, 1750→1800</div></div>
+          <div class="stat"><div class="v">2→29</div><div class="l">UK cities over 50,000, 1750→1850</div></div>
+          <div class="stat"><div class="v">14–18</div><div class="l">Hours in a child's factory day</div></div>
+        </div>
+        <div class="block">
+          <h3>Price of wheat <span class="tag">shillings per quarter</span></h3>
+          <svg class="chart" id="wheatChart" viewBox="0 0 560 210" role="img" aria-label="Wheat price rose from 31 shillings in 1750 to 46 in 1775 and 128 in 1800; the 1815 Corn Law blocked imports until 80 shillings."></svg>
+          <p class="cite">Source: Hunt &amp; Lautzenheiser, pp. 70–71.</p>
+        </div>
+      </div>
+      <div class="card bar-blue">
+        <h3>Timeline</h3>
+        <div class="tl">
+          <div class="ev" style="--c:var(--ink)"><div class="yr">1766</div><div><p>Malthus born</p></div></div>
+          <div class="ev" style="--c:var(--yellow)"><div class="yr">1795</div><div><p>Speenhamland poor relief begins</p></div></div>
+          <div class="ev" style="--c:var(--red)"><div class="yr">1798</div><div><p><b>First Essay on Population</b>, written against Godwin &amp; Condorcet</p></div></div>
+          <div class="ev" style="--c:var(--yellow)"><div class="yr">1799</div><div><p>Combination Act outlaws unions</p></div></div>
+          <div class="ev" style="--c:var(--red)"><div class="yr">1803</div><div><p>Second Essay, practically a new book</p></div></div>
+          <div class="ev" style="--c:var(--ink)"><div class="yr">1805</div><div><p>First British professor of political economy</p></div></div>
+          <div class="ev" style="--c:var(--yellow)"><div class="yr">1813</div><div><p>Luddite revolts end in hangings</p></div></div>
+          <div class="ev" style="--c:var(--blue)"><div class="yr">1815</div><div><p>Corn Law passes; Malthus's pamphlet on rent</p></div></div>
+          <div class="ev" style="--c:var(--yellow)"><div class="yr">1819</div><div><p>Depression; Peterloo Massacre</p></div></div>
+          <div class="ev" style="--c:var(--blue)"><div class="yr">1820</div><div><p><b>Principles of Political Economy</b>: the theory of gluts</p></div></div>
+          <div class="ev" style="--c:var(--ink)"><div class="yr">1834</div><div><p>Malthus dies</p></div></div>
+          <div class="ev" style="--c:var(--red)"><div class="yr">1846</div><div><p>Corn Laws repealed; capitalists win</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card block">
+      <h3>Two Malthuses</h3>
+      <div class="flip">
+        <div><div class="who" style="color:var(--red)">■ 1790s–1800s · Essay on Population</div><p style="margin:0">Opponent: workers and radical reformers. Claim: poverty is a law of nature, and helping the poor makes it worse.</p></div>
+        <div><div class="who" style="color:var(--blue)">■ 1814 onward · Principles</div><p style="margin:0">Opponent: industrial capitalists. Claim: the landlords' interest <i>is</i> the nation's interest, and their spending prevents depressions.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT ================= -->
+  <section class="view" id="v-what">
+    <span class="kicker red">Question 1</span>
+    <h2>What will we make?</h2>
+    <p class="lede">For Malthus, food limits everything. Population can grow geometrically and food only arithmetically, so the first thing any society must produce is subsistence, and it will never produce enough of it for everyone.</p>
+
+    <div class="grid g12 block">
+      <div class="card bar-red">
+        <h3>Population vs. food simulator</h3>
+        <svg class="chart" id="popChart" viewBox="0 0 640 330" role="img" aria-label="Chart of unchecked population growth versus food supply over time."></svg>
+        <div class="legend">
+          <span><i style="background:var(--red)"></i>Population, unchecked</span>
+          <span><i style="background:var(--blue)"></i>People the food can feed</span>
+          <span id="lgActual"><i style="background:var(--yellow)"></i>Actual population (checked)</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Controls</h3>
+        <div class="ctrl"><label for="dbl">Population doubles every <output id="dblOut"></output></label><input type="range" class="r" id="dbl" min="15" max="50" value="25"></div>
+        <div class="ctrl"><label for="food">Food added per 25 yrs <output id="foodOut"></output></label><input type="range" class="b" id="food" min="0.25" max="4" step="0.25" value="1"></div>
+        <div class="ctrl"><label for="yrs">Years <output id="yrsOut"></output></label><input type="range" id="yrs" min="50" max="300" step="25" value="200"></div>
+        <label class="chk"><input type="checkbox" id="logScale"> Log scale</label>
+        <label class="chk"><input type="checkbox" id="showChecks" checked> Show checks at work</label>
+        <div class="readout" id="popRead"></div>
+        <p class="cite" style="margin-top:10px">Malthus's own defaults: doubling every 25 years, food rising by a constant amount. He put the ratio after two centuries at 256 to 9. (p. 74–75)</p>
+      </div>
+    </div>
+
+    <div class="card block">
+      <h3>What closes the gap? The "checks"</h3>
+      <p>Something must keep population down to the food supply. Malthus sorted these checks two ways. Switch between the schemes.</p>
+      <div class="btnrow" role="group" aria-label="Classification scheme">
+        <button class="btn" type="button" data-scheme="a" aria-pressed="true">Preventive / Positive</button>
+        <button class="btn" type="button" data-scheme="b" aria-pressed="false">Moral restraint / Vice / Misery</button>
+      </div>
+      <div class="cols" id="checkCols"></div>
+      <p class="muted" id="checkNote" style="margin-top:12px"></p>
+    </div>
+
+    <div class="grid g3 block">
+      <div class="card bar-yellow">
+        <h3>Farm or factory?</h3>
+        <p>The Corn Laws fight was really about what Britain would make. Landlords wanted a self-sufficient farming nation. Industrialists wanted Britain to specialize in manufactures and import cheap grain.</p>
+        <p><b>Malthus sided with farming.</b> More food supports more people, and those people must eat, so agriculture creates its own demand. He argued that more manufactures don't.</p>
+        <p class="cite">pp. 70–71, 82</p>
+      </div>
+      <div class="card bar-blue">
+        <h3>Goods now or machines later?</h3>
+        <p>Industrialization meant putting resources into factories and machinery, which left less for everyday consumption. In the authors' account, that sacrifice fell on the class with the least power: the workers, whose real wages fell as grain prices soared.</p>
+        <p class="cite">pp. 65–66</p>
+      </div>
+      <div class="card bar-red">
+        <h3>What counts as wealth?</h3>
+        <div class="flip">
+          <div><div class="who">Smith</div>The produce of labor.</div>
+          <div><div class="who">Malthus</div>Useful material objects people own, even things no labor went into.</div>
+        </div>
+        <p style="margin-top:10px">He also renamed "unproductive labor" as <b>personal services</b> (servants, artists, clergy). This mattered later: his cure for depressions depends on those services.</p>
+        <p class="cite">p. 80</p>
+      </div>
+    </div>
+
+    <div class="card block">
+      <h3>Can a society make too much?</h3>
+      <p>Most classical economists said no, because whatever is saved gets spent on new capital. Malthus said <b>yes</b>: in a general <b>glut</b>, goods pile up unsold because people with income aren't spending it. His answer to "what to make" therefore included a surprising item: enough <i>luxury consumption</i> by people who don't produce. Try the glut machine under <a href="#share">Question 3</a>.</p>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="view" id="v-how">
+    <span class="kicker blue">Question 2</span>
+    <h2>How will we make it?</h2>
+    <p class="lede">The factory system answered this question in practice. Malthus answered it in theory by treating production as a trade between three kinds of owner. Hunt and Lautzenheiser argue that this viewpoint hides where the surplus comes from.</p>
+
+    <div class="grid g2 block">
+      <div class="card bar-blue">
+        <h3>The factory answer</h3>
+        <p>Machines set the pace, the clock set the day, and work was split into routine tasks that women and children could do for lower wages. Workers lost control of their tools and their time and became appendages of the machine. The Luddites smashed machines until 1813, when many were hanged or deported.</p>
+        <p class="cite">pp. 66–67</p>
+      </div>
+      <div class="card bar-yellow">
+        <h3>The labor lag</h3>
+        <p>Malthus noted that new capital can appear in a year, but a new adult worker takes <b>16–18 years</b>. So a sudden investment boom finds too few hands: some capital sits idle and wages rise.</p>
+        <p><b>The authors' catch:</b> by his own population theory, population should adjust to any steady rate of investment. The lag only makes sense if you quietly set the population theory aside.</p>
+        <p class="cite">pp. 85–86</p>
+      </div>
+    </div>
+
+    <div class="card block">
+      <h3>Production as a trade between three owners</h3>
+      <p>Pick an input to compare Malthus's view with the production view held by Smith and the authors.</p>
+      <div class="inputs" role="group" aria-label="Factors of production">
+        <button class="inp red" type="button" data-inp="labor" aria-pressed="true"><div class="ico">Labor</div><div class="mono" style="font-size:.75rem">→ wages</div></button>
+        <button class="inp blue" type="button" data-inp="capital" aria-pressed="false"><div class="ico">Capital</div><div class="mono" style="font-size:.75rem">→ profits</div></button>
+        <button class="inp yellow" type="button" data-inp="land" aria-pressed="false"><div class="ico">Land</div><div class="mono" style="font-size:.75rem">→ rent</div></button>
+      </div>
+      <div class="flip" style="margin-top:14px">
+        <div><div class="who" style="color:var(--blue)">Malthus · exchange view</div><p id="inpM" style="margin:0"></p></div>
+        <div><div class="who" style="color:var(--red)">Smith / authors · production view</div><p id="inpS" style="margin:0"></p></div>
+      </div>
+      <p class="muted" style="margin-top:12px">Malthus's key move: in "the lottery of human life," some draw land, some capital, some only their own labor. Each owner is paid for letting their property be used, so owning becomes a contribution to production. <span class="cite">pp. 80–81</span></p>
+    </div>
+
+    <div class="grid g12 block">
+      <div class="card bar-blue">
+        <h3>Rent machine: farming worse and worse land</h3>
+        <svg class="chart" id="rentChart" viewBox="0 0 640 320" role="img" aria-label="Bar chart of six grades of land by cost of growing a quarter of wheat, with price and rent."></svg>
+        <div class="legend">
+          <span><i style="background:var(--blue)"></i>Cost to grow (wages + profit)</span>
+          <span><i style="background:var(--red)"></i>Rent (price − cost)</span>
+          <span><i style="background:var(--yellow)"></i>Market price</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Controls</h3>
+        <div class="ctrl"><label for="demand">Population / food needed <output id="demandOut"></output></label><input type="range" class="b" id="demand" min="1" max="6" value="3"></div>
+        <div class="btnrow" role="group" aria-label="Trade policy">
+          <button class="btn" type="button" data-trade="corn" aria-pressed="true">Corn Law (1815)</button>
+          <button class="btn" type="button" data-trade="free" aria-pressed="false">Free trade</button>
+        </div>
+        <div class="readout" id="rentRead"></div>
+        <p class="cite" style="margin-top:10px">Mechanism from pp. 81–82. Costs and the 55s import price are illustrative; the 80s Corn Law threshold is historical (p. 71).</p>
+      </div>
+    </div>
+    <div class="card block">
+      <p style="margin:0">As population grows, poorer land comes under the plow. The price of grain must rise to cover costs on the <i>worst</i> land farmed, so the better land earns a surplus: <b>rent</b>. Malthus called this surplus a gift of God's bounty in the soil and treated it as the landlord's contribution. Rising rents, he argued, are the best sign of national prosperity. Rent theory is really about <b>how</b> food is grown, but it leads straight to Question 3: who keeps the surplus?</p>
+    </div>
+  </section>
+
+  <!-- ================= SHARE ================= -->
+  <section class="view" id="v-share">
+    <span class="kicker yellow">Question 3</span>
+    <h2>How will we share it?</h2>
+    <p class="lede">This is the question the chapter is really about. The price of everything splits into <b style="color:var(--red)">wages</b>, <b style="color:var(--blue)">profits</b>, and <b class="hl-y">rent</b>, and those are also the incomes of the three classes. Whatever one class gains, another loses.</p>
+
+    <div class="card block bar-yellow">
+      <h3>Who gets the loaf?</h3>
+      <p>William Godwin, a radical Malthus wrote against, posed a puzzle: six hungry brothers, one loaf. Who has a just claim to it? Pick a rule.</p>
+      <div class="men" id="men"></div>
+      <div class="btnrow" role="group" aria-label="Distribution rule">
+        <button class="btn" type="button" data-rule="law" aria-pressed="false">Law of inheritance</button>
+        <button class="btn red" type="button" data-rule="godwin" aria-pressed="false">Godwin: greatest need</button>
+        <button class="btn blue" type="button" data-rule="malthus" aria-pressed="false">Malthus: proprietors choose</button>
+      </div>
+      <div class="readout" id="loafRead">Choose a rule above.</div>
+    </div>
+
+    <div class="grid g2 block">
+      <div class="card bar-red">
+        <h3>Round 1 · Owners vs. workers</h3>
+        <p>Malthus's population theory made redistribution pointless in his eyes. Raise the incomes of the poor and they will have more children until everyone is back at bare subsistence. So he opposed the poor laws, charitable wage top-ups, and in one notorious passage even medical cures.</p>
+        <blockquote>"…in the great lottery of life, have drawn a blank."<footer>Malthus, first Essay (1798), on the poor</footer></blockquote>
+        <p style="margin-top:12px">Only "moral restraint," meaning late marriage without vice, could lift someone out of poverty. The authors conclude that for Malthus, the difference between rich and poor came down to character.</p>
+        <p class="cite">pp. 73–78</p>
+      </div>
+      <div class="card bar-blue">
+        <h3>The alternatives he fought</h3>
+        <p><b>Condorcet:</b> a public fund for the old, widows, and orphans, and credit steered away from big capitalists toward ordinary workers.</p>
+        <p><b>Godwin:</b> private property causes crime and misery, and the rich write the laws, so government will never fix it. Reason would lead people to abolish property, classes, and the state.</p>
+        <p>Malthus replied that any such society would soon fall back into a class of proprietors and a class of laborers, by natural law.</p>
+        <p class="cite">pp. 72–74</p>
+      </div>
+    </div>
+
+    <div class="grid g12 block">
+      <div class="card bar-yellow">
+        <h3>Round 2 · The glut machine</h3>
+        <p>Output is worth 100, and that 100 is also everyone's income. Workers and landlords spend all of theirs. Capitalists save most of their profit and can only invest part of it profitably. Anything saved but not invested means <b>goods no one buys</b>.</p>
+        <svg class="chart" id="glutChart" viewBox="0 0 640 230" role="img" aria-label="Stacked bars comparing total goods produced with total spending; any gap is a glut."></svg>
+        <div class="legend">
+          <span><i style="background:var(--red)"></i>Workers' spending</span>
+          <span><i style="background:var(--yellow)"></i>Landlords &amp; servants</span>
+          <span><i style="background:var(--blue)"></i>Capitalists' spending &amp; investment</span>
+          <span><i style="background:repeating-linear-gradient(45deg,var(--red) 0 3px,var(--paper) 3px 7px)"></i>Glut (unsold)</span>
+        </div>
+        <div id="glutMsg"></div>
+      </div>
+      <div class="card">
+        <h3>Controls</h3>
+        <div class="ctrl"><label for="gw">Wage share <output id="gwOut"></output></label><input type="range" class="r" id="gw" min="20" max="80" value="50"></div>
+        <div class="ctrl"><label for="gr">Rent share <output id="grOut"></output></label><input type="range" id="gr" min="0" max="40" value="15"></div>
+        <div class="ctrl"><label for="gs">Capitalists save <output id="gsOut"></output></label><input type="range" class="b" id="gs" min="0" max="100" step="5" value="80"></div>
+        <div class="ctrl"><label for="gi">Profitable investment outlets <output id="giOut"></output></label><input type="range" class="b" id="gi" min="0" max="40" value="15"></div>
+        <div class="btnrow">
+          <button class="btn yellow" type="button" id="fixMalthus">Malthus: +10 rent</button>
+          <button class="btn red" type="button" id="fixWages">Authors: +10 wages</button>
+          <button class="btn" type="button" id="fixReset">Reset</button>
+        </div>
+        <div class="readout" id="glutRead"></div>
+      </div>
+    </div>
+
+    <div class="card block">
+      <h3>The double standard</h3>
+      <p>Try both buttons. Moving 10 points from profits to <b>rent</b> and moving 10 points to <b>wages</b> close the glut by exactly the same amount and cut profits by exactly the same amount. Malthus endorsed the first (the Corn Laws, landlords' servants, "personal services") and rejected the second on the grounds that higher wages lower profits and kill the motive to invest. Higher rents do that too. The authors read this as class loyalty overriding logic.</p>
+      <p class="cite">pp. 86–88</p>
+    </div>
+  </section>
+
+  <!-- ================= VERDICT ================= -->
+  <section class="view" id="v-verdict">
+    <span class="kicker blue">Debate &amp; verdict</span>
+    <h2>Malthus vs. Ricardo</h2>
+    <p class="lede">After 1819, Malthus and David Ricardo, the capitalists' leading spokesman, argued over gluts. Step through the exchange.</p>
+
+    <div class="card block">
+      <div class="debate" id="debate">
+        <div class="bubble m"><div class="who">Malthus</div>Capitalists save far faster than capital can profitably grow. Spending falls short and goods go unsold: a general glut.</div>
+        <div class="bubble r hidden"><div class="who">Ricardo</div>Nonsense. Whatever is saved is spent on new capital. Supply creates its own market.</div>
+        <div class="bubble m hidden"><div class="who">Malthus</div>Then we need a class that consumes more than it produces. The landlords stand preeminent: they and their servants spend without adding to supply. Keep rents high.</div>
+        <div class="bubble r hidden"><div class="who">Ricardo</div>Giving goods to people who return nothing doesn't raise my profits. Hand soldiers the clothier's cloth and it stimulates him "in the same way as a fire would."</div>
+        <div class="bubble m hidden"><div class="who">Malthus</div>But raising <i>wages</i> won't do. Workers' consumption raises costs, lowers profits, and destroys the motive to accumulate.</div>
+        <div class="bubble a hidden"><div class="who">Hunt &amp; Lautzenheiser</div>Both are half right. Each capitalist wants their own wages and rents low, but all capitalists together need those incomes to buy their goods. Malthus saw the demand problem; Ricardo saw the cost problem. Neither could solve the contradiction, which returns with Keynes (ch. 15).</div>
+      </div>
+      <div class="btnrow" style="margin-top:18px">
+        <button class="btn blue" type="button" id="debNext">Next ▶</button>
+        <button class="btn" type="button" id="debAll">Show all</button>
+        <button class="btn" type="button" id="debReset">Restart</button>
+      </div>
+      <p class="cite">Paraphrased from pp. 84–89; the quoted phrase is Ricardo's own.</p>
+    </div>
+
+    <h2 class="block">The three questions, answered</h2>
+    <div class="tablewrap">
+      <table class="verdict">
+        <thead><tr><th>Question</th><th>Malthus's answer</th><th>The authors' critique</th></tr></thead>
+        <tbody>
+          <tr><th>What</th><td>Food first; farming over manufacturing; enough unproductive luxury consumption to prevent gluts.</td><td>His definition of wealth leaves out labor, and his glut remedy quietly contradicts his population theory.</td></tr>
+          <tr><th>How</th><td>Three owners (labor, capital, land) each supply a necessary input and earn a matching reward.</td><td>That treats owning as producing. Tools are stored-up past labor, and the exchange view hides where the surplus comes from.</td></tr>
+          <tr><th>Share</th><td>Poverty is natural and permanent; landlords' high rents serve everyone.</td><td>His conclusions follow his class loyalties, not his logic. Wages vs. rent is the tell.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2 block">
+      <div class="card bar-red">
+        <h3>Lasting legacy</h3>
+        <p>The population theory inspired Darwin and lives on in theories of less-developed countries. The glut theory, his most important contribution in the authors' view, anticipates Keynes on insufficient demand.</p>
+      </div>
+      <div class="card bar-yellow">
+        <h3>A note on this site</h3>
+        <p>This dashboard follows one critical reading of Malthus, Hunt and Lautzenheiser's. Other historians of thought judge him more sympathetically. Numbers in the simulators are illustrative unless cited.</p>
+      </div>
+    </div>
+
+    <div class="card bar-blue block">
+      <h3>Ideas in Action</h3>
+      <p>Play <b>The Malthus Trail</b>, a retro arcade game built on this chapter. Lead a parish from 1798 to 1846. Each year you answer the three questions: <b style="color:var(--red)">what</b> to make on the trail, <b style="color:var(--blue)">how</b> to make it by building routes across Britain, and how to <b>share</b> it in a vestry where two members are secretly landlords.</p>
+      <div class="btnrow"><a class="btn red" href="game/" style="text-decoration:none">Play The Malthus Trail ▶</a></div>
+    </div>
+  </section>
+
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn" href="../smith/"><span class="d">◀ PREVIOUS CASE</span><span class="t">Case 002 · Adam Smith</span></a>
+    <a class="cn next" href="../ricardo/"><span class="d">NEXT CASE ▶</span><span class="t">Case 004 · Ricardo</span></a>
+  </nav>
+  </main>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent, text){
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
+  function patternDefs(svg){
+    const defs = el("defs", {}, svg);
+    const p = el("pattern", {id: svg.id + "-hatch", width: 8, height: 8, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)"}, defs);
+    el("rect", {width: 8, height: 8, class: "f-paper"}, p);
+    el("rect", {width: 4, height: 8, class: "f-red"}, p);
+    return "url(#" + svg.id + "-hatch)";
+  }
+  function fmt(v){
+    if (v >= 1e6) return v.toExponential(1).replace("e+", "×10^");
+    if (v >= 100) return Math.round(v).toLocaleString();
+    if (v >= 10) return v.toFixed(0);
+    return (Math.round(v * 10) / 10).toString();
+  }
+  function niceStep(raw){
+    const p = Math.pow(10, Math.floor(Math.log10(raw)));
+    const n = raw / p;
+    return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p;
+  }
+
+  /* ---------- theme ---------- */
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("malthus-theme"); if (t) root.dataset.theme = t; } catch(e){}
+  $("#themeBtn").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("malthus-theme", root.dataset.theme); } catch(e){}
+  });
+
+  /* ---------- routing ---------- */
+  const views = ["overview", "what", "how", "share", "verdict"];
+  function route(){
+    const h = location.hash.replace("#", "");
+    const v = views.includes(h) ? h : "overview";
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "v-" + v));
+    $$("nav.side a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + v));
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
+  /* ---------- wheat chart ---------- */
+  (function(){
+    const svg = $("#wheatChart");
+    const data = [["1750", 31], ["1775", 46], ["1800", 128]];
+    const X0 = 50, Y0 = 180, H = 150, max = 140;
+    const y = v => Y0 - v / max * H;
+    for (let v = 0; v <= 140; v += 40){
+      el("line", {x1: X0, x2: 540, y1: y(v), y2: y(v), class: "gridl"}, svg);
+      el("text", {x: X0 - 8, y: y(v) + 4, "text-anchor": "end"}, svg, v);
+    }
+    data.forEach((d, i) => {
+      const x = X0 + 30 + i * 150, h = Y0 - y(d[1]);
+      el("rect", {x, y: y(d[1]), width: 90, height: h, class: ["f-blue","f-blue","f-red"][i], stroke: "currentColor", style: "stroke:var(--ink);stroke-width:3"}, svg);
+      el("text", {x: x + 45, y: y(d[1]) - 8, "text-anchor": "middle", style: "font-weight:700"}, svg, d[1] + "s");
+      el("text", {x: x + 45, y: Y0 + 20, "text-anchor": "middle"}, svg, d[0]);
+    });
+    el("line", {x1: X0, x2: 540, y1: y(80), y2: y(80), class: "s-yellow", "stroke-width": 4, "stroke-dasharray": "10 6"}, svg);
+    el("text", {x: 536, y: y(80) - 8, "text-anchor": "end", style: "font-weight:700"}, svg, "1815 Corn Law: no imports below 80s");
+    el("line", {x1: X0, x2: 540, y1: Y0, y2: Y0, class: "axis"}, svg);
+  })();
+
+  /* ---------- population sim ---------- */
+  const dbl = $("#dbl"), food = $("#food"), yrs = $("#yrs"), logS = $("#logScale"), showC = $("#showChecks");
+  function drawPop(){
+    const d = +dbl.value, k = +food.value, Y = +yrs.value, log = logS.checked, checks = showC.checked;
+    $("#dblOut").textContent = d + " yrs";
+    $("#foodOut").textContent = "+" + k + "× start";
+    $("#yrsOut").textContent = Y;
+    $("#lgActual").style.display = checks ? "" : "none";
+    const svg = $("#popChart"); clear(svg);
+    const hatch = patternDefs(svg);
+    const L = 62, R = 620, T = 18, B = 290;
+    const pot = t => Math.pow(2, t / d), fd = t => 1 + k * t / 25;
+    const maxV = Math.max(pot(Y), fd(Y));
+    const tr = v => log ? Math.log2(v) : v;
+    const top = log ? Math.ceil(Math.log2(maxV)) : maxV;
+    const bot = log ? 0 : 0;
+    const sx = t => L + t / Y * (R - L);
+    const sy = v => B - (tr(v) - bot) / (top - bot) * (B - T);
+
+    // grid + y ticks
+    if (log){
+      const step = Math.max(1, Math.ceil(top / 6));
+      for (let e = 0; e <= top; e += step){
+        el("line", {x1: L, x2: R, y1: sy(Math.pow(2, e)), y2: sy(Math.pow(2, e)), class: "gridl"}, svg);
+        el("text", {x: L - 8, y: sy(Math.pow(2, e)) + 4, "text-anchor": "end"}, svg, fmt(Math.pow(2, e)));
+      }
+    } else {
+      const step = niceStep(maxV / 5);
+      for (let v = 0; v <= maxV + 1e-9; v += step){
+        el("line", {x1: L, x2: R, y1: sy(v), y2: sy(v), class: "gridl"}, svg);
+        el("text", {x: L - 8, y: sy(v) + 4, "text-anchor": "end"}, svg, fmt(v));
+      }
+    }
+    const xstep = Y > 150 ? 50 : 25;
+    for (let t = 0; t <= Y; t += xstep){
+      el("text", {x: sx(t), y: B + 20, "text-anchor": "middle"}, svg, t);
+    }
+    el("text", {x: (L + R) / 2, y: B + 38, "text-anchor": "middle", class: "t-muted"}, svg, "years");
+    el("text", {x: 14, y: T + 4, class: "t-muted", transform: `rotate(-90 14 ${T + 4})`, "text-anchor": "end"}, svg, "× starting population");
+
+    const N = 240, P = [], F = [], A = [];
+    for (let i = 0; i <= N; i++){
+      const t = i / N * Y;
+      P.push([sx(t), sy(pot(t))]); F.push([sx(t), sy(fd(t))]); A.push([sx(t), sy(Math.min(pot(t), fd(t)))]);
+    }
+    const path = pts => "M" + pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join("L");
+    if (checks){
+      const area = path(P) + "L" + A.slice().reverse().map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join("L") + "Z";
+      el("path", {d: area, fill: hatch, opacity: .45}, svg);
+    }
+    if (checks) el("path", {d: path(A), fill: "none", class: "s-yellow", "stroke-width": 10}, svg);
+    el("path", {d: path(F), fill: "none", class: "s-blue", "stroke-width": 3}, svg);
+    el("path", {d: path(P), fill: "none", class: "s-red", "stroke-width": 4}, svg);
+    el("line", {x1: L, x2: R, y1: B, y2: B, class: "axis"}, svg);
+    el("line", {x1: L, x2: L, y1: T, y2: B, class: "axis"}, svg);
+
+    // crisis year
+    let crisis = null;
+    for (let t = 0.5; t <= Y; t += 0.5){ if (pot(t) > fd(t) + 1e-9){ crisis = t; break; } }
+    if (crisis != null){
+      el("line", {x1: sx(crisis), x2: sx(crisis), y1: T, y2: B, class: "s-ink", "stroke-width": 2, "stroke-dasharray": "6 5"}, svg);
+      const lx = sx(crisis) + 6, anchor = crisis > Y * .7 ? "end" : "start";
+      el("text", {x: anchor === "end" ? sx(crisis) - 6 : lx, y: T + 14, "text-anchor": anchor, style: "font-weight:700"}, svg, "checks begin ~yr " + Math.round(crisis));
+    }
+    const pe = pot(Y), fe = fd(Y);
+    const gap = Math.max(0, pe - fe);
+    $("#popRead").innerHTML =
+      `After <b>${Y}</b> years:<br>potential population <b style="color:var(--red)">${fmt(pe)}</b> vs. food for <b style="color:var(--blue)">${fmt(fe)}</b>` +
+      (gap > 0 ? `<br>Ratio ${fmt(pe / fe)} : 1. For every person fed, ${fmt(pe / fe - 1)} more are held back by preventive or positive checks.`
+               : `<br>Food keeps pace, so no checks are needed yet. Malthus thought this could not last.`);
+  }
+  [dbl, food, yrs, logS, showC].forEach(i => i.addEventListener("input", drawPop));
+  drawPop();
+
+  /* ---------- checks classifier ---------- */
+  const checksData = [
+    {n: "Delayed marriage, chaste", a: "prev", b: "moral"},
+    {n: "Birth control", a: "prev", b: "vice"},
+    {n: "Extramarital sex", a: "prev", b: "vice"},
+    {n: "Sterility", a: "prev", b: "misery"},
+    {n: "Famine", a: "pos", b: "misery"},
+    {n: "Plague & disease", a: "pos", b: "misery"},
+    {n: "War", a: "pos", b: "misery"},
+    {n: "Unwholesome work", a: "pos", b: "misery"},
+    {n: "Starvation", a: "pos", b: "misery"}
+  ];
+  const schemes = {
+    a: {cols: [["prev", "Preventive · lower births", "blue"], ["pos", "Positive · raise deaths", "red"]],
+        note: "If preventive checks aren't enough, positive checks take over, and starvation is the final backstop."},
+    b: {cols: [["moral", "Moral restraint", "yellow"], ["vice", "Vice", "blue"], ["misery", "Misery", "red"]],
+        note: "This is the normative scheme. Only moral restraint escapes vice or misery, and Malthus believed only the virtuous (in practice, the propertied) practised it. He counted birth control as a vice."}
+  };
+  function drawChecks(s){
+    const box = $("#checkCols"); box.innerHTML = "";
+    const sc = schemes[s];
+    box.style.gridTemplateColumns = `repeat(${sc.cols.length}, minmax(0,1fr))`;
+    if (matchMedia("(max-width:560px)").matches) box.style.gridTemplateColumns = "1fr";
+    sc.cols.forEach(([key, label, c]) => {
+      const col = document.createElement("div"); col.className = "col " + c;
+      col.innerHTML = `<h4>${label}</h4><div class="chips">${checksData.filter(x => x[s] === key).map(x => `<span class="chip">${x.n}</span>`).join("")}</div>`;
+      box.appendChild(col);
+    });
+    $("#checkNote").textContent = sc.note;
+    $$("[data-scheme]").forEach(b => b.setAttribute("aria-pressed", b.dataset.scheme === s));
+  }
+  $$("[data-scheme]").forEach(b => b.addEventListener("click", () => drawChecks(b.dataset.scheme)));
+  drawChecks("a");
+
+  /* ---------- inputs compare ---------- */
+  const inputs = {
+    labor: ["Workers happened to draw only their labor in the lottery of life. They are not slaves, so they stand on the same footing as any other owner, and every wage bargain benefits them, since any job beats starving.",
+            "Labor is the one input every society needs, under any system. Before land and capital were privately owned, workers kept the whole product."],
+    capital: ["Tools make workers more productive, so capitalists contribute by allowing their machines to be used. Profit is not a deduction from labor's product, as Smith claimed.",
+              "Tools and machines are the products of past labor. Owning them is a legal relationship, not a productive act, and profit comes out of the surplus workers create."],
+    land: ["Rent is the natural result of the soil's God-given power to feed more people than it takes to work it. Landlords rent it out like anyone else rents their property, and improvements to the soil add to its worth.",
+           "Smith said landlords love to reap where they never sowed. Rent is a claim on surplus that comes from owning land, not from any activity by the landlord."]
+  };
+  function showInp(k){
+    $("#inpM").textContent = inputs[k][0];
+    $("#inpS").textContent = inputs[k][1];
+    $$("[data-inp]").forEach(b => b.setAttribute("aria-pressed", b.dataset.inp === k));
+  }
+  $$("[data-inp]").forEach(b => b.addEventListener("click", () => showInp(b.dataset.inp)));
+  showInp("labor");
+
+  /* ---------- rent machine ---------- */
+  const grades = [{g: "A", c: 40}, {g: "B", c: 48}, {g: "C", c: 56}, {g: "D", c: 64}, {g: "E", c: 72}, {g: "F", c: 80}];
+  const UNITS = 10, IMPORT = 55;
+  let trade = "corn";
+  function drawRent(){
+    const need = +$("#demand").value;
+    $("#demandOut").textContent = need + " of 6 plots";
+    let farmed, price, imported = 0;
+    if (trade === "corn"){
+      farmed = need; price = grades[need - 1].c;
+    } else {
+      const cheap = grades.filter(g => g.c <= IMPORT).length;
+      farmed = Math.min(need, cheap);
+      imported = need - farmed;
+      price = imported > 0 ? IMPORT : grades[farmed - 1].c;
+    }
+    const svg = $("#rentChart"); clear(svg);
+    const L = 50, B = 270, T = 20, max = 100;
+    const sy = v => B - v / max * (B - T);
+    for (let v = 0; v <= 100; v += 20){
+      el("line", {x1: L, x2: 625, y1: sy(v), y2: sy(v), class: "gridl"}, svg);
+      el("text", {x: L - 8, y: sy(v) + 4, "text-anchor": "end"}, svg, v + "s");
+    }
+    const bw = 64, gap = 30;
+    let totalRent = 0;
+    grades.forEach((g, i) => {
+      const x = L + 20 + i * (bw + gap);
+      const on = i < farmed;
+      const stroke = "stroke:var(--ink);stroke-width:3";
+      if (on){
+        el("rect", {x, y: sy(g.c), width: bw, height: B - sy(g.c), class: "f-blue", style: stroke}, svg);
+        const r = price - g.c;
+        if (r > 0){
+          el("rect", {x, y: sy(price), width: bw, height: sy(g.c) - sy(price), class: "f-red", style: stroke}, svg);
+          el("text", {x: x + bw / 2, y: sy(price) + (sy(g.c) - sy(price)) / 2 + 4, "text-anchor": "middle", class: "t-on", style: "font-weight:700"}, svg, "+" + r);
+          totalRent += r * UNITS;
+        }
+      } else {
+        el("rect", {x, y: sy(g.c), width: bw, height: B - sy(g.c), class: "f-paper", style: stroke + ";stroke-dasharray:6 4"}, svg);
+        el("text", {x: x + bw / 2, y: sy(g.c) - 8, "text-anchor": "middle", class: "t-muted"}, svg, "idle");
+      }
+      el("text", {x: x + bw / 2, y: B + 18, "text-anchor": "middle", style: "font-weight:700"}, svg, "Land " + g.g);
+      el("text", {x: x + bw / 2, y: B - 8, "text-anchor": "middle", class: on ? "t-on" : "t-muted"}, svg, g.c);
+    });
+    el("line", {x1: L, x2: 625, y1: sy(price), y2: sy(price), class: "s-yellow", "stroke-width": 5}, svg);
+    el("text", {x: 622, y: sy(price) - 8, "text-anchor": "end", style: "font-weight:700"}, svg, "price " + price + "s");
+    if (trade === "corn") el("line", {x1: L, x2: 625, y1: sy(80), y2: sy(80), class: "s-ink", "stroke-width": 2, "stroke-dasharray": "3 5"}, svg);
+    el("line", {x1: L, x2: 625, y1: B, y2: B, class: "axis"}, svg);
+    el("line", {x1: L, x2: L, y1: T, y2: B, class: "axis"}, svg);
+
+    $("#rentRead").innerHTML =
+      `Price of wheat: <b style="background:var(--yellow);color:var(--on-yellow);padding:0 4px">${price}s</b><br>` +
+      `Total rent to landlords: <b style="color:var(--red)">${totalRent}</b><br>` +
+      (imported ? `Imported: ${imported} plot${imported > 1 ? "s" : ""}' worth of grain at ${IMPORT}s. Poor land stays idle, bread is cheaper, and capitalists can pay lower money wages, <b>so profits rise</b>.`
+                : trade === "corn" ? `With imports blocked, every extra mouth pushes cultivation onto worse land. Dearer bread forces up money wages, so surplus shifts <b>from profits to rent</b>.`
+                : `Demand is still low enough that home land is the cheapest source.`);
+    $$("[data-trade]").forEach(b => b.setAttribute("aria-pressed", b.dataset.trade === trade));
+  }
+  $("#demand").addEventListener("input", drawRent);
+  $$("[data-trade]").forEach(b => b.addEventListener("click", () => { trade = b.dataset.trade; drawRent(); }));
+  drawRent();
+
+  /* ---------- loaf ---------- */
+  const men = [
+    {age: 34, hunger: .35, owner: true,  works: false},
+    {age: 31, hunger: .55, owner: false, works: true},
+    {age: 28, hunger: .95, owner: false, works: false},
+    {age: 25, hunger: .6,  owner: false, works: true},
+    {age: 22, hunger: .8,  owner: false, works: true},
+    {age: 19, hunger: .5,  owner: false, works: false}
+  ];
+  const menBox = $("#men");
+  function drawMen(win){
+    menBox.innerHTML = men.map((m, i) =>
+      `<div class="man ${win.includes(i) ? "win" : ""}"><div class="fig">${["I","II","III","IV","V","VI"][i]}</div>age ${m.age}<div class="hb" title="hunger"><i style="width:${m.hunger*100}%"></i></div>${m.works ? "willing to work" : m.owner ? "heir" : "&nbsp;"}</div>`
+    ).join("");
+  }
+  const rules = {
+    law: [[0], "<b>Primogeniture:</b> the eldest inherits, even though he is the least hungry. Godwin's point: law decides, and law was written by the rich."],
+    godwin: [[2], "<b>Godwin:</b> property justly belongs to whoever needs it most or will benefit most. Brother III is starving, so the loaf is his."],
+    malthus: [[1, 3, 4], "<b>Malthus:</b> proprietors, not the hungry, decide. It is \"natural and just\" to share with those able and willing to produce a further surplus. The idle starving brother gets nothing, and relief would only encourage more mouths."]
+  };
+  drawMen([]);
+  $$("[data-rule]").forEach(b => b.addEventListener("click", () => {
+    const [win, txt] = rules[b.dataset.rule];
+    drawMen(win); $("#loafRead").innerHTML = txt;
+    $$("[data-rule]").forEach(x => x.setAttribute("aria-pressed", x === b));
+  }));
+
+  /* ---------- glut machine ---------- */
+  const gw = $("#gw"), gr = $("#gr"), gs = $("#gs"), gi = $("#gi");
+  const DEF = {w: 50, r: 15, s: 80, i: 15};
+  let baseProfit = null;
+  function drawGlut(src){
+    let w = +gw.value, r = +gr.value;
+    if (w + r > 100){ if (src === gw) r = 100 - w; else w = 100 - r; gw.value = w; gr.value = r; }
+    const p = 100 - w - r, s = +gs.value / 100, inv = +gi.value;
+    const saved = p * s, pc = p - saved, invested = Math.min(saved, inv), hoard = saved - invested;
+    const demand = w + r + pc + invested;
+    $("#gwOut").textContent = w; $("#grOut").textContent = r; $("#gsOut").textContent = Math.round(s * 100) + "%"; $("#giOut").textContent = inv;
+
+    const svg = $("#glutChart"); clear(svg);
+    const hatch = patternDefs(svg);
+    const L = 110, W = 510, sx = v => v / 100 * W;
+    const rowS = 30, rowD = 110, h = 56, st = "stroke:var(--ink);stroke-width:3";
+    el("text", {x: 8, y: rowS + h / 2 + 4, style: "font-weight:700"}, svg, "PRODUCED");
+    el("text", {x: 8, y: rowD + h / 2 + 4, style: "font-weight:700"}, svg, "SPENT");
+    // supply split by income
+    let x = L;
+    [[w, "f-red", "t-on", "wages"], [r, "f-yellow", "t-on-y", "rent"], [p, "f-blue", "t-on", "profit"]].forEach(([v, c, tc, lab]) => {
+      if (v <= 0) return;
+      el("rect", {x, y: rowS, width: sx(v), height: h, class: c, style: st}, svg);
+      if (sx(v) > 44) el("text", {x: x + sx(v) / 2, y: rowS + h / 2 + 4, "text-anchor": "middle", class: tc}, svg, lab + " " + Math.round(v));
+      x += sx(v);
+    });
+    x = L;
+    [[w, "f-red", "t-on", "workers"], [r, "f-yellow", "t-on-y", "landlords"], [pc + invested, "f-blue", "t-on", "capitalists"]].forEach(([v, c, tc, lab]) => {
+      if (v <= 0.01) return;
+      el("rect", {x, y: rowD, width: sx(v), height: h, class: c, style: st}, svg);
+      if (sx(v) > 118) el("text", {x: x + sx(v) / 2, y: rowD + h / 2 + 4, "text-anchor": "middle", class: tc}, svg, lab + " " + Math.round(v));
+      x += sx(v);
+    });
+    if (hoard > 0.01){
+      el("rect", {x, y: rowD, width: sx(hoard), height: h, fill: hatch, style: st}, svg);
+      el("text", {x: x + sx(hoard) / 2, y: rowD + h + 20, "text-anchor": "middle", style: "font-weight:700", class: "f-red"}, svg, "GLUT " + Math.round(hoard));
+    }
+    el("line", {x1: L + W, x2: L + W, y1: rowS - 10, y2: rowD + h + 6, class: "s-ink", "stroke-width": 2, "stroke-dasharray": "4 4"}, svg);
+    el("text", {x: L + W, y: rowS - 14, "text-anchor": "end", class: "t-muted"}, svg, "100");
+
+    if (baseProfit === null) baseProfit = p;
+    $("#glutRead").innerHTML =
+      `Profit share: <b style="color:var(--blue)">${Math.round(p)}</b> &nbsp;·&nbsp; saved ${Math.round(saved)}, invested ${Math.round(invested)}<br>` +
+      `Spending: <b>${Math.round(demand)}</b> of 100 &nbsp;·&nbsp; unsold: <b style="color:var(--red)">${Math.round(hoard)}</b>`;
+    $("#glutMsg").innerHTML = hoard > 0.5
+      ? `<div class="alert">GENERAL GLUT: capitalists hold ${Math.round(hoard)} in idle cash instead of spending it. Warehouses fill, factories idle, workers are laid off.</div>`
+      : `<div class="ok">Spending matches output, so every good finds a buyer.</div>`;
+  }
+  [gw, gr, gs, gi].forEach(i => i.addEventListener("input", () => drawGlut(i)));
+  function shift(to){
+    const w = +gw.value, r = +gr.value, p = 100 - w - r;
+    const amt = Math.min(10, p);
+    if (to === "r") gr.value = Math.min(40, r + amt); else gw.value = Math.min(80, w + amt);
+    drawGlut(to === "r" ? gr : gw);
+  }
+  $("#fixMalthus").addEventListener("click", () => shift("r"));
+  $("#fixWages").addEventListener("click", () => shift("w"));
+  $("#fixReset").addEventListener("click", () => { gw.value = DEF.w; gr.value = DEF.r; gs.value = DEF.s; gi.value = DEF.i; drawGlut(); });
+  drawGlut();
+
+  /* ---------- debate ---------- */
+  const bubbles = $$("#debate .bubble");
+  let shown = 1;
+  function drawDeb(){ bubbles.forEach((b, i) => b.classList.toggle("hidden", i >= shown)); $("#debNext").disabled = shown >= bubbles.length; }
+  $("#debNext").addEventListener("click", () => { shown = Math.min(bubbles.length, shown + 1); drawDeb(); });
+  $("#debAll").addEventListener("click", () => { shown = bubbles.length; drawDeb(); });
+  $("#debReset").addEventListener("click", () => { shown = 1; drawDeb(); });
+  drawDeb();
+
+  window.addEventListener("resize", () => {
+    const s = document.querySelector("[data-scheme][aria-pressed='true']");
+    drawChecks(s ? s.dataset.scheme : "a");
+  });
+})();
+</script>
+</body>
+</html>
