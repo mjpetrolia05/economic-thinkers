@@ -111,6 +111,8 @@ p{margin:0 0 .7em}
 .clue .dec:hover{color:var(--cyan); border-color:var(--cyan)}
 .clue.locked{color:var(--muted); font-style:italic; border-style:dashed}
 .lgwrap{overflow-x:auto}
+.gridbar{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-top:10px}
+#resetGrid.armed{background:var(--red); color:var(--void); border-color:var(--red)}
 table.lg{border-collapse:collapse; font-family:var(--mono); font-size:11px; margin:0 auto}
 table.lg th{font-weight:400; color:var(--muted); padding:3px; white-space:nowrap}
 table.lg th.col{height:92px; vertical-align:bottom}
@@ -121,7 +123,7 @@ table.lg td.gap{border:0; width:8px}
 table.lg td.blank{border:0}
 table.lg td button{width:100%; height:100%; font-family:var(--display); font-size:14px}
 table.lg td button:hover{background:rgba(34,229,255,.12)}
-.x{color:var(--red)} .o{color:var(--lime); text-shadow:0 0 8px var(--lime)}
+.x{color:var(--red)} .x.auto{opacity:.45} .o{color:var(--lime); text-shadow:0 0 8px var(--lime)}
 .c-p{color:var(--lime)} .c-a{color:var(--cyan)} .c-t{color:var(--magenta)}
 .mps{display:grid; gap:8px; margin-bottom:12px}
 .mp{display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center; padding:8px 10px; border:1px solid var(--line); background:rgba(4,5,13,.5)}
@@ -218,6 +220,7 @@ table.lg td button:hover{background:rgba(34,229,255,.12)}
         <div class="k" style="margin-bottom:6px">COMMITTEE REPORTS: which argument moves which MP?</div>
         <div class="clues" id="clues"></div>
         <div class="lgwrap"><table class="lg" id="lg"></table></div>
+        <div class="gridbar"><span class="k">● match · ✕ ruled out · faint ✕ = automatic</span><button class="btn" type="button" id="resetGrid">↺ Reset grid</button></div>
       </div>
       <div class="panel vio"><h3>// COLONY LOG</h3><div class="log" id="log"></div></div>
     </div>
@@ -314,7 +317,7 @@ const EVENTS = [
 /* ---------- state ---------- */
 let G = null;
 function newGame(){
-  G = {pos:0, lord:9, capital:100, margin:3, round:1, votes:[false,false,false], puz:makePuzzle(), marks:{}, rentBank:0, harvests:0,
+  G = {pos:0, lord:9, capital:100, margin:3, round:1, votes:[false,false,false], puz:makePuzzle(), marks:{}, auto:{}, rentBank:0, harvests:0,
        deck:shuffle(EVENTS.slice()), log:[], over:null, busy:false, improvedThisRound:false, briefedThisRound:false, attempts:0, newClues:[]};
   revealClue(true);
   logm("Colony founded. Plots 1–4 are farmed. Every round the population grows and worse land must be plowed.");
@@ -569,14 +572,46 @@ function tokens(i){ return (G.pos === i ? `<span class="tok">🛸</span>` : "") 
 /* deduction grid */
 const SH = {P:MPS.map(m => m.s), A:ARGS.map(a => a.s), T:TOWNS.map(t => t.s)};
 const mk = (b, r, c) => `${b}:${r}:${c}`;
+// Clicking cycles a cell: blank → ✕ → ● → blank. Placing a ● fills the rest of its row and
+// column with automatic ✕'s; G.auto remembers which ● put each one there, so removing the ●
+// takes back only the ✕'s that no other ● still needs (✕'s you placed yourself always stay).
 function cycleMark(b, r, c){
   const k = mk(b, r, c), v = G.marks[k], next = v === undefined ? "x" : v === "x" ? "o" : undefined;
+  delete G.auto[k];                 // you've touched this cell, so it's yours now
+  if (v === "o") clearAuto(k);      // taking a check away also takes away its ✕'s
   if (next === undefined) delete G.marks[k]; else G.marks[k] = next;
-  if (next === "o") for (let j = 0; j < 3; j++){ if (j !== c && !G.marks[mk(b, r, j)]) G.marks[mk(b, r, j)] = "x"; if (j !== r && !G.marks[mk(b, j, c)]) G.marks[mk(b, j, c)] = "x"; }
+  if (next === "o") for (let j = 0; j < 3; j++){
+    if (j !== c) autoX(mk(b, r, j), k);
+    if (j !== r) autoX(mk(b, j, c), k);
+  }
   renderGrid();
 }
+function autoX(cell, src){
+  if (!G.marks[cell]){ G.marks[cell] = "x"; G.auto[cell] = [src]; }
+  else if (G.auto[cell] && !G.auto[cell].includes(src)) G.auto[cell].push(src);
+}
+function clearAuto(src){
+  Object.keys(G.auto).forEach(cell => {
+    const left = G.auto[cell].filter(s => s !== src);
+    if (left.length){ G.auto[cell] = left; return; }
+    delete G.auto[cell];
+    if (G.marks[cell] === "x") delete G.marks[cell];
+  });
+}
+let resetArmed = null;
+function resetGrid(btn){
+  if (!resetArmed){
+    btn.textContent = "Tap again to clear"; btn.classList.add("armed");
+    resetArmed = setTimeout(() => { resetArmed = null; btn.textContent = "↺ Reset grid"; btn.classList.remove("armed"); }, 3000);
+    return;
+  }
+  clearTimeout(resetArmed); resetArmed = null;
+  G.marks = {}; G.auto = {};
+  btn.textContent = "↺ Reset grid"; btn.classList.remove("armed");
+  renderGrid(); toast("Clue grid cleared");
+}
 function renderGrid(){
-  const cell = (b, r, c) => { const v = G.marks[mk(b, r, c)]; return `<td><button type="button" data-cell="${b},${r},${c}">${v === "x" ? `<span class="x">✕</span>` : v === "o" ? `<span class="o">●</span>` : ""}</button></td>`; };
+  const cell = (b, r, c) => { const v = G.marks[mk(b, r, c)]; return `<td><button type="button" data-cell="${b},${r},${c}">${v === "x" ? `<span class="x${G.auto[mk(b, r, c)] ? " auto" : ""}">✕</span>` : v === "o" ? `<span class="o">●</span>` : ""}</button></td>`; };
   let h = `<tr><th></th>${SH.A.map(n => `<th class="col"><span class="c-a">${n}</span></th>`).join("")}<td class="gap"></td>${SH.T.map(n => `<th class="col"><span class="c-t">${n}</span></th>`).join("")}</tr>`;
   SH.P.forEach((n, r) => { h += `<tr><th class="rowh c-p">${n}</th>${[0,1,2].map(c => cell("PA", r, c)).join("")}<td class="gap"></td>${[0,1,2].map(c => cell("PT", r, c)).join("")}</tr>`; });
   h += `<tr><td class="gap" colspan="9" style="height:8px"></td></tr>`;
@@ -604,6 +639,7 @@ function title(){
 
 /* ---------- input ---------- */
 document.addEventListener("click", e => {
+  const rg = e.target.closest("#resetGrid"); if (rg){ resetGrid(rg); return; }
   const c = e.target.closest("[data-cell]"); if (c){ const [b, r, col] = c.dataset.cell.split(","); cycleMark(b, +r, +col); return; }
   const d = e.target.closest("[data-dec]"); if (d && !G.over){ if (G.capital < 10){ toast("Not enough capital"); return; } const cl = G.puz.clues[+d.dataset.dec]; cl.decoded = true; G.capital -= 10; logm(`Decoded clue ${+d.dataset.dec + 1} (−10).`); render(); return; }
   const sh = e.target.closest("[data-shuttle]"); if (sh){ shuttle(+sh.dataset.shuttle); return; }
