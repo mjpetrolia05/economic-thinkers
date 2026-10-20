@@ -316,13 +316,36 @@ const EVENTS = [
 
 /* ---------- state ---------- */
 let G = null;
-function newGame(){
+function newGame(preview){
+  saveOn = !preview;
   G = {pos:0, lord:9, capital:100, margin:3, round:1, votes:[false,false,false], puz:makePuzzle(), marks:{}, auto:{}, rentBank:0, harvests:0,
-       deck:shuffle(EVENTS.slice()), log:[], over:null, busy:false, improvedThisRound:false, briefedThisRound:false, attempts:0, newClues:[]};
+       deck:shuffle(EVENTS.map((_, i) => i)), log:[], over:null, busy:false, improvedThisRound:false, briefedThisRound:false, attempts:0, newClues:[]};
   revealClue(true);
   logm("Colony founded. Plots 1–4 are farmed. Every round the population grows and worse land must be plowed.");
   logm("Win three MPs to repeal the Corn Laws before profit falls to zero.");
   hideModal(); render();
+}
+/* ---------- saving: like the other games, progress is kept in this browser ---------- */
+const SAVE_KEY = "ricardo-stationary-v1";
+let saveOn = false;
+function save(){
+  if (!saveOn || !G) return;
+  try {
+    if (G.over) localStorage.removeItem(SAVE_KEY);
+    else if (!G.busy || G.pendingEnd) localStorage.setItem(SAVE_KEY, JSON.stringify(G)); // not mid-move
+  } catch(e){}
+}
+function loadSave(){
+  try { const d = JSON.parse(localStorage.getItem(SAVE_KEY)); return d && d.puz && Array.isArray(d.deck) && !d.over ? d : null; }
+  catch(e){ return null; }
+}
+function resume(){
+  const d = loadSave(); if (!d){ newGame(); return; }
+  G = d; G.newClues = []; saveOn = true;
+  hideModal();
+  if (G.pendingEnd){ render(); endRound(); }   // you'd already played this round's space
+  else { G.busy = false; render(); }
+  toast(`Welcome back: Round ${G.round}`);
 }
 function logm(t, cls = ""){ G.log.unshift({t:`R${G.round} · ${t}`, cls}); G.log = G.log.slice(0, 60); }
 const marginFert = () => G.margin > 9 ? WAGE : FERT[G.margin];
@@ -397,8 +420,8 @@ function resolve(){
   if (s.t === "start"){ G.capital += 25; const got = [revealClue(true)]; logGot(got); return card("🛰️ Harvest Station", `<p>Back at base. Investors advance you <b>25 capital</b>.</p>${reportNote(got)}`); }
   if (s.t === "clue"){ const got = [revealClue(true), revealClue(true)]; logGot(got); return card("📡 Committee Room", reportNote(got)); }
   if (s.t === "mill"){
-    if (!G.deck.length) G.deck = shuffle(EVENTS.slice());
-    const e = G.deck.pop(); e.fx();
+    if (!G.deck.length) G.deck = shuffle(EVENTS.map((_, i) => i));
+    const e = EVENTS[G.deck.pop()]; e.fx();
     logm(`${e.i} ${e.n}.`, "");
     const extra = G.lastGot ? reportNote(G.lastGot) : ""; G.lastGot = null;
     return card(`${e.i} ${e.n}`, `<p>${e.d}</p>${extra}`);
@@ -426,6 +449,7 @@ function portChoice(){
       <button class="btn mag" type="button" data-port="intel">Talk to the merchants: +1 report</button></div>`);
 }
 function card(title, html){
+  G.pendingEnd = true;
   showModal(`<h2>${title}</h2>${html}<div class="foot"><button class="btn big" type="button" data-act="endRound">Continue ▶</button></div>`);
   render();
 }
@@ -457,6 +481,7 @@ function doLobby(){
 /* ---------- end of round: population grows, the landlord collects ---------- */
 function endRound(){
   hideModal();
+  G.pendingEnd = false;
   if (G.over) return;
   if (G.capital < 0) return lose("bankrupt");
   if (G.margin > 9) return lose("stationary");
@@ -566,6 +591,7 @@ function render(){
   G.newClues = [];
   $("#log").innerHTML = G.log.map(l => `<div class="${l.cls}">${l.t}</div>`).join("");
   renderGrid();
+  save();
 }
 function tokens(i){ return (G.pos === i ? `<span class="tok">🛸</span>` : "") + (G.lord === i ? `<span class="tok lord">👑</span>` : ""); }
 
@@ -627,14 +653,15 @@ function howto(){
     <div><b class="c-a">1 · FARM</b>Roll and move around the ring. Landing on farmed land gives a harvest: <b style="display:inline;font-family:var(--body);letter-spacing:0">produce = wages + rent + profit</b>. Watch the middle of the board: your profit is the <i>same</i> on every plot. The landlord takes the difference.</div>
     <div><b style="color:var(--amber)">2 · OUTRUN THE MARGIN</b>Each round the population grows and the next, poorer plot is plowed. Rents rise on every better plot and your profit shrinks. Run out of land and you reach the <i>stationary state</i>.</div>
     <div><b class="c-p">3 · REPEAL</b>Win all three MPs' votes in Parliament to repeal the Corn Laws. Committee reports are logic clues. Mark the grid (✕ / ●) to work out which argument moves which MP, then land on Parliament and lobby.</div></div>
-  <p class="sub">Spend capital wisely. <b>Shuttle</b> (−20) moves you exactly where you want. <b>Improve land</b> (−60) pulls the margin back a plot, so rents fall. <b>Briefings</b> (−30) buy a clue, once a round. <b>Decode</b> (−10) translates a clue into plain terms. Watch out for 👑 the landlords' collector: if it reaches Parliament, it flips one of your votes back.</p>`;
+  <p class="sub">Spend capital wisely. <b>Shuttle</b> (−20) moves you exactly where you want. <b>Improve land</b> (−60) pulls the margin back a plot, so rents fall. <b>Briefings</b> (−30) buy a clue, once a round. <b>Decode</b> (−10) translates a clue into plain terms. Watch out for 👑 the landlords' collector: if it reaches Parliament, it flips one of your votes back. Your game saves automatically, so you can leave and come back later.</p>`;
 }
 function title(){
+  const saved = loadSave();
   showModal(`<div class="k" style="color:var(--lime)">&gt; COLONY ROSTER · PLANET RICARDO-IV</div>
     <h2>THE STATIONARY STATE</h2>
     <p>You run the colony's farms as its capitalist. The land runs from rich to barren, and the landlords own all of it. Every new colonist means plowing worse ground, which raises every rent and squeezes your profit toward zero. Win Parliament and repeal the Corn Laws before that happens.</p>
     ${howto()}
-    <div class="foot"><button class="btn lime big" type="button" data-act="new">▶ Begin the colony</button></div>`);
+    <div class="foot">${saved ? `<button class="btn" type="button" data-act="new">↺ Start a new colony</button><button class="btn lime big" type="button" data-act="resume">▶ Continue (Round ${saved.round})</button>` : `<button class="btn lime big" type="button" data-act="new">▶ Begin the colony</button>`}</div>`);
 }
 
 /* ---------- input ---------- */
@@ -647,10 +674,10 @@ document.addEventListener("click", e => {
   const lb = e.target.closest("[data-lob]"); if (lb){ const [p, a] = lb.dataset.lob.split(","); lobbySel[p] = +a; $$(`[data-lob^="${p},"]`).forEach(b => b.setAttribute("aria-pressed", b.dataset.lob === `${p},${a}`)); return; }
   const a = e.target.closest("[data-act]"); if (!a || a.disabled) return;
   ({new:newGame, help:() => showModal(`<h2>How to play</h2>${howto()}<div class="foot"><button class="btn lime" type="button" data-act="close">Got it</button></div>`),
-    close:hideModal, roll, carriage, improve, brief, endRound, doLobby}[a.dataset.act] || (() => {}))();
+    close:hideModal, resume, roll, carriage, improve, brief, endRound, doLobby}[a.dataset.act] || (() => {}))();
 });
 
-newGame(); title();
+newGame(true); title();
 </script>
 </body>
 </html>
