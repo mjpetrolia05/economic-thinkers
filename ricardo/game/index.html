@@ -308,14 +308,14 @@ const EVENTS = [
   {n:"Machinery displaces workers (1821)", i:"🤖", d:"Profit up, but workers are made 'redundant'. Capital +50. Ricardo admits their fears were \"not founded on prejudice and error.\"", fx:() => { G.capital += 50; }},
   {n:"Say's law", i:"🔁", d:"\"Commodities are always bought by commodities.\" No general glut this season. Capital +20.", fx:() => { G.capital += 20; }},
   {n:"Landlords' petition", i:"📜", d:"The landed interest lobbies hard to keep the Corn Laws. Capital −30.", fx:() => { G.capital -= 30; }},
-  {n:"Leaked committee minutes", i:"📡", d:"A clerk slips you a report.", fx:() => revealClue()}
+  {n:"Leaked committee minutes", i:"📡", d:"A clerk slips you a report.", fx:() => { G.lastGot = [revealClue(true)]; logGot(G.lastGot); }}
 ];
 
 /* ---------- state ---------- */
 let G = null;
 function newGame(){
   G = {pos:0, lord:9, capital:100, margin:3, round:1, votes:[false,false,false], puz:makePuzzle(), marks:{}, rentBank:0, harvests:0,
-       deck:shuffle(EVENTS.slice()), log:[], over:null, busy:false, improvedThisRound:false, briefedThisRound:false, attempts:0, newClue:null};
+       deck:shuffle(EVENTS.slice()), log:[], over:null, busy:false, improvedThisRound:false, briefedThisRound:false, attempts:0, newClues:[]};
   revealClue(true);
   logm("Colony founded. Plots 1–4 are farmed. Every round the population grows and worse land must be plowed.");
   logm("Win three MPs to repeal the Corn Laws before profit falls to zero.");
@@ -326,11 +326,28 @@ const marginFert = () => G.margin > 9 ? WAGE : FERT[G.margin];
 const profitPer = () => Math.max(0, marginFert() - WAGE);
 const rentOf = k => k <= G.margin ? FERT[k] - marginFert() : 0;
 const totalRent = () => FERT.slice(0, Math.min(G.margin, 9) + 1).reduce((s, f, k) => s + rentOf(k), 0);
+// Hands out the next report you don't have yet. Returns its index, or -1 when you
+// already hold every report (then the clerk pays 15 capital instead, so nothing repeats).
 function revealClue(quiet){
   const c = G.puz.clues.find(c => !c.found);
-  if (!c){ if (!quiet) { G.capital += 15; toast("No reports left; the clerk pays you 15 instead"); } return; }
-  c.found = true; G.newClue = G.puz.clues.indexOf(c);
-  if (!quiet){ logm(`📡 New committee report (clue ${G.newClue + 1}).`, "good"); toast("📡 New committee report"); }
+  if (!c){ if (!quiet){ G.capital += 15; logm("No new reports left: the clerk pays you 15 instead."); } return -1; }
+  c.found = true;
+  const i = G.puz.clues.indexOf(c);
+  G.newClues.push(i);
+  if (!quiet){ logm(`📡 New committee report: clue ${i + 1}.`, "good"); toast(`📡 New report: clue ${i + 1}`); }
+  return i;
+}
+// Logs each new report, and pays 15 capital for any that came up empty.
+function logGot(got){
+  got.forEach(i => { if (i >= 0) logm(`📡 New committee report: clue ${i + 1}.`, "good"); else { G.capital += 15; logm("No new reports left: the clerk pays you 15 instead."); } });
+}
+// Describes exactly what a space handed out, e.g. "New reports: clues 5 and 6."
+function reportNote(got){
+  const fresh = got.filter(i => i >= 0), none = got.length - fresh.length;
+  const list = fresh.map(i => i + 1).join(" and ");
+  let s = fresh.length ? `<p>New report${fresh.length > 1 ? "s" : ""}: <b style="color:var(--lime)">clue${fresh.length > 1 ? "s" : ""} ${list}</b>. Check the clue list.</p>` : "";
+  if (none) s += `<p class="sub">${fresh.length ? "That was the last one. " : "You already have every report, so there's nothing new to read. "}The clerk pays you <b>${15 * none}</b> capital instead.</p>`;
+  return s;
 }
 function moveMargin(d){
   const before = G.margin;
@@ -374,13 +391,14 @@ function spaceName(s){ return s.t === "plot" ? `Plot ${s.k + 1}` : s.t === "star
 function resolve(){
   const s = SPACES[G.pos];
   if (s.t === "plot") return harvest(s.k);
-  if (s.t === "start"){ G.capital += 25; revealClue(); return card("🛰️ Harvest Station", `<p>Back at base. Investors advance you <b>25 capital</b>, and a briefing arrives.</p>`); }
-  if (s.t === "clue"){ revealClue(); revealClue(); return card("📡 Committee Room", `<p>Two committee reports land on your desk. Check the clue list.</p>`); }
+  if (s.t === "start"){ G.capital += 25; const got = [revealClue(true)]; logGot(got); return card("🛰️ Harvest Station", `<p>Back at base. Investors advance you <b>25 capital</b>.</p>${reportNote(got)}`); }
+  if (s.t === "clue"){ const got = [revealClue(true), revealClue(true)]; logGot(got); return card("📡 Committee Room", reportNote(got)); }
   if (s.t === "mill"){
     if (!G.deck.length) G.deck = shuffle(EVENTS.slice());
     const e = G.deck.pop(); e.fx();
     logm(`${e.i} ${e.n}.`, "");
-    return card(`${e.i} ${e.n}`, `<p>${e.d}</p>`);
+    const extra = G.lastGot ? reportNote(G.lastGot) : ""; G.lastGot = null;
+    return card(`${e.i} ${e.n}`, `<p>${e.d}</p>${extra}`);
   }
   if (s.t === "port") return portChoice();
   if (s.t === "parl") return lobbyModal();
@@ -540,9 +558,9 @@ function render(){
   $("#briefBtn").disabled = busy || G.briefedThisRound || G.capital < 30 || !G.puz.clues.some(c => !c.found);
   $("#mps").innerHTML = MPS.map((m, p) => `<div class="mp"><span class="face">${m.f}</span><div><b>${m.n}</b><small>${m.d[0]}</small></div><span class="st ${G.votes[p] ? "yes" : ""}">${G.votes[p] ? "AYE" : "UNDECIDED"}</span></div>`).join("");
   $("#clues").innerHTML = G.puz.clues.map((c, i) => c.found
-    ? `<div class="clue ${G.newClue === i ? "new" : ""}"><span class="no">${String(i + 1).padStart(2, "0")}</span><span>${c.txt}${c.decoded ? `<span class="plain">≡ ${c.plain}</span>` : ""}</span>${c.decoded ? "" : `<button class="dec" type="button" data-dec="${i}" title="Costs 10 capital">DECODE −10</button>`}</div>`
+    ? `<div class="clue ${G.newClues.includes(i) ? "new" : ""}"><span class="no">${String(i + 1).padStart(2, "0")}</span><span>${c.txt}${c.decoded ? `<span class="plain">≡ ${c.plain}</span>` : ""}</span>${c.decoded ? "" : `<button class="dec" type="button" data-dec="${i}" title="Costs 10 capital">DECODE −10</button>`}</div>`
     : `<div class="clue locked"><span class="no">${String(i + 1).padStart(2, "0")}</span><span>Sealed. Land on the Committee Room or Harvest, visit the Port, or buy a briefing.</span><span></span></div>`).join("");
-  G.newClue = null;
+  G.newClues = [];
   $("#log").innerHTML = G.log.map(l => `<div class="${l.cls}">${l.t}</div>`).join("");
   renderGrid();
 }
@@ -589,7 +607,7 @@ document.addEventListener("click", e => {
   const c = e.target.closest("[data-cell]"); if (c){ const [b, r, col] = c.dataset.cell.split(","); cycleMark(b, +r, +col); return; }
   const d = e.target.closest("[data-dec]"); if (d && !G.over){ if (G.capital < 10){ toast("Not enough capital"); return; } const cl = G.puz.clues[+d.dataset.dec]; cl.decoded = true; G.capital -= 10; logm(`Decoded clue ${+d.dataset.dec + 1} (−10).`); render(); return; }
   const sh = e.target.closest("[data-shuttle]"); if (sh){ shuttle(+sh.dataset.shuttle); return; }
-  const pt = e.target.closest("[data-port]"); if (pt){ if (pt.dataset.port === "trade"){ G.capital += 30; logm("⚓ Traded cloth for wine: +30.", "good"); card("⚓ Comparative advantage", `<p>England makes cloth, Portugal makes wine, and both gain. <b>+30 capital.</b></p>`); } else { revealClue(); card("⚓ Dockside gossip", `<p>The merchants know things. One new report.</p>`); } return; }
+  const pt = e.target.closest("[data-port]"); if (pt){ if (pt.dataset.port === "trade"){ G.capital += 30; logm("⚓ Traded cloth for wine: +30.", "good"); card("⚓ Comparative advantage", `<p>England makes cloth, Portugal makes wine, and both gain. <b>+30 capital.</b></p>`); } else { const got = [revealClue(true)]; logGot(got); card("⚓ Dockside gossip", `<p>The merchants know things.</p>${reportNote(got)}`); } return; }
   const lb = e.target.closest("[data-lob]"); if (lb){ const [p, a] = lb.dataset.lob.split(","); lobbySel[p] = +a; $$(`[data-lob^="${p},"]`).forEach(b => b.setAttribute("aria-pressed", b.dataset.lob === `${p},${a}`)); return; }
   const a = e.target.closest("[data-act]"); if (!a || a.disabled) return;
   ({new:newGame, help:() => showModal(`<h2>How to play</h2>${howto()}<div class="foot"><button class="btn lime" type="button" data-act="close">Got it</button></div>`),
