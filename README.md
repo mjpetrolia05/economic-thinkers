@@ -10,7 +10,7 @@ An interactive website exploring how economic thinkers answered the three questi
 | 002 | Adam Smith | Invisible Hand |
 | 003 | Thomas Robert Malthus | The Malthus Trail |
 | 004 | David Ricardo | The Stationary State |
-| 005 | Jeremy Bentham, J.B. Say & Nassau Senior | coming soon |
+| 005 | Jeremy Bentham, J.B. Say & Nassau Senior | The Dream Boutique |
 
 Plus **The Line-Up** (compare thinkers side by side) and **Who Said It?** (a quote quiz).
 
