@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bentham, Say & Senior · Great Economic Thinkers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#ff2d95; --hot:#e0218a; --bubble:#ffc2e0; --blush:#fff0f7; --cream:#fffafd;
+  --lilac:#9b6cff; --aqua:#16b3c4; --sun:#ffd23f; --berry:#5a1040; --muted:#9a4a78; --line:#ffb3d6;
+  --script:"Pacifico",cursive; --round:"Fredoka",system-ui,sans-serif; --body:"Quicksand",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0; overflow-x:clip}
+body{font-family:var(--body); font-weight:600; font-size:16px; line-height:1.55; color:var(--berry); min-height:100vh;
+  background-color:var(--blush);
+  background-image:
+    repeating-linear-gradient(0deg,rgba(255,45,149,.07) 0 22px,transparent 22px 44px),
+    repeating-linear-gradient(90deg,rgba(255,45,149,.07) 0 22px,transparent 22px 44px);
+}
+a{color:var(--hot)}
+button{font:inherit; color:inherit; cursor:pointer; background:none; border:0; padding:0}
+button:focus-visible,a:focus-visible{outline:3px solid var(--lilac); outline-offset:3px}
+h1,h2,h3,h4{margin:0; line-height:1.15}
+p{margin:0 0 .8em}
+.app{max-width:1180px; margin:0 auto; padding:0 16px 60px}
+
+/* sparkles */
+.spark{position:absolute; color:#fff; text-shadow:0 0 8px var(--pink),0 0 16px #fff; animation:twinkle 2.4s ease-in-out infinite; pointer-events:none; user-select:none}
+@keyframes twinkle{0%,100%{opacity:.25; transform:scale(.7) rotate(0)}50%{opacity:1; transform:scale(1.15) rotate(25deg)}}
+
+/* ---------- header ---------- */
+.mast{position:relative; text-align:center; padding:34px 10px 26px; overflow:hidden}
+.badge{display:inline-flex; align-items:center; gap:8px; font-family:var(--round); font-weight:700; font-size:14px; letter-spacing:.06em; color:#fff; background:linear-gradient(180deg,#ff6ab8,var(--hot)); padding:7px 16px; border-radius:999px; box-shadow:0 4px 0 #b3166b, inset 0 2px 0 rgba(255,255,255,.5)}
+.mast h1{font-family:var(--script); font-weight:400; font-size:clamp(40px,8vw,88px); color:var(--pink); margin:14px 0 4px;
+  -webkit-text-stroke:3px #fff; paint-order:stroke fill; text-shadow:0 6px 0 var(--hot), 0 10px 22px rgba(224,33,138,.35); transform:rotate(-3deg)}
+.mast .sub{font-family:var(--round); font-weight:700; font-size:clamp(17px,2.4vw,24px); color:var(--hot); letter-spacing:.02em}
+.mast .tag{max-width:62ch; margin:12px auto 0; color:var(--muted)}
+.btns{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:18px}
+.pill{display:inline-flex; align-items:center; gap:6px; font-family:var(--round); font-weight:700; font-size:15px; text-decoration:none; color:#fff; padding:10px 18px; border-radius:999px;
+  background:linear-gradient(180deg,#ff6ab8,var(--hot)); box-shadow:0 4px 0 #b3166b, inset 0 2px 0 rgba(255,255,255,.55); transition:transform .1s, box-shadow .1s}
+.pill:hover{transform:translateY(-2px)}
+.pill:active{transform:translateY(3px); box-shadow:0 1px 0 #b3166b, inset 0 2px 0 rgba(255,255,255,.55)}
+.pill.light{background:#fff; color:var(--hot); box-shadow:0 4px 0 var(--line), inset 0 0 0 2px var(--line)}
+.pill.aqua{background:linear-gradient(180deg,#4fd8e4,var(--aqua)); box-shadow:0 4px 0 #0b7f8b, inset 0 2px 0 rgba(255,255,255,.5)}
+.pill.lilac{background:linear-gradient(180deg,#b897ff,var(--lilac)); box-shadow:0 4px 0 #6a3fd0, inset 0 2px 0 rgba(255,255,255,.5)}
+.pill.off{opacity:.5; pointer-events:none}
+.pill[aria-pressed="true"]{background:linear-gradient(180deg,#fff,#ffe3f1); color:var(--hot); box-shadow:inset 0 0 0 3px var(--pink)}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky; top:0; z-index:30; display:flex; gap:8px; overflow-x:auto; padding:12px 4px; margin:0 -4px 18px; background:linear-gradient(180deg,var(--blush) 75%,transparent); scrollbar-width:none}
+.tab{flex:0 0 auto; text-decoration:none; font-family:var(--round); font-weight:700; font-size:15px; color:var(--hot); background:#fff; padding:9px 18px 7px; border-radius:999px; box-shadow:inset 0 0 0 2px var(--line), 0 3px 0 var(--line)}
+.tab small{display:block; font-family:var(--body); font-size:11px; color:var(--muted); letter-spacing:.04em}
+.tab.active{color:#fff; background:linear-gradient(180deg,#ff6ab8,var(--hot)); box-shadow:0 4px 0 #b3166b, inset 0 2px 0 rgba(255,255,255,.5)}
+.tab.active small{color:#ffe3f1}
+
+section.view{display:none}
+section.view.active{display:grid; gap:22px; animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0; transform:translateY(14px) scale(.98)}}
+
+/* ---------- cards ---------- */
+.card{position:relative; background:var(--cream); border-radius:28px; padding:22px 24px; box-shadow:0 0 0 3px #fff, 0 0 0 6px var(--c,var(--line)), 0 14px 30px -12px rgba(224,33,138,.35); min-width:0}
+.card h2{font-family:var(--script); font-weight:400; font-size:clamp(28px,4vw,42px); color:var(--pink); margin-bottom:6px}
+.card h3{font-family:var(--round); font-weight:700; font-size:20px; color:var(--c,var(--hot)); margin-bottom:8px}
+.kicker{display:inline-block; font-family:var(--round); font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; background:var(--c,var(--pink)); padding:3px 12px; border-radius:999px; margin-bottom:10px}
+.lede{font-size:18px; max-width:72ch}
+.cite{font-size:12px; color:var(--muted); margin-top:10px}
+.grid{display:grid; gap:22px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g12{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+
+/* thinker section = doll box */
+.doll{--c:var(--pink); position:relative; border-radius:30px; background:linear-gradient(180deg,var(--c) 0 64px,var(--cream) 64px); padding:0 0 20px; box-shadow:0 0 0 4px #fff, 0 0 0 8px var(--c), 0 16px 34px -14px rgba(90,16,64,.35); min-width:0}
+.doll.say{--c:var(--aqua)} .doll.senior{--c:var(--lilac)}
+.doll .top{display:flex; align-items:center; gap:12px; height:64px; padding:0 20px; color:#fff}
+.doll .top .nm{font-family:var(--script); font-size:26px; line-height:1; text-shadow:0 2px 0 rgba(0,0,0,.15)}
+.doll .top .yr{margin-left:auto; font-family:var(--round); font-weight:700; font-size:12px; background:rgba(255,255,255,.25); padding:3px 10px; border-radius:999px}
+.doll .win{margin:16px 18px 0; padding:16px 18px; border-radius:22px; background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(232,250,255,.7)); box-shadow:inset 0 0 0 2px rgba(0,0,0,.04), inset 6px 6px 18px rgba(255,255,255,.9)}
+.doll .say-it{font-family:var(--round); font-weight:700; font-size:19px; color:var(--c); margin-bottom:6px}
+.doll .catch{margin:14px 18px 0; padding:12px 14px; border-radius:18px; background:#fff3d6; border:2px dashed #e6b100; font-size:14px}
+.doll .catch b{color:#a87a00}
+
+/* quotes */
+.q{position:relative; margin:12px 0 0; padding:14px 18px 12px 46px; border-radius:20px; background:#fff; box-shadow:inset 0 0 0 2px var(--line)}
+.q::before{content:"❝"; position:absolute; left:14px; top:6px; font-size:30px; color:var(--c,var(--pink))}
+.q span{display:block; font-style:italic; font-weight:700; font-size:17px}
+.q small{color:var(--muted); font-weight:600}
+
+/* controls */
+.ctrl{margin:12px 0}
+.ctrl label{display:flex; justify-content:space-between; gap:10px; font-family:var(--round); font-weight:600; font-size:14px; margin-bottom:6px}
+.ctrl output{color:var(--c,var(--hot)); font-weight:700}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:12px; border-radius:999px; background:linear-gradient(90deg,var(--bubble),var(--c,var(--pink))); outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:26px; height:26px; border-radius:50%; background:#fff; border:4px solid var(--c,var(--pink)); box-shadow:0 2px 6px rgba(90,16,64,.3); cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px; height:20px; border-radius:50%; background:#fff; border:4px solid var(--c,var(--pink)); cursor:pointer}
+.row{display:flex; flex-wrap:wrap; gap:8px}
+.readout{margin-top:12px; padding:12px 14px; border-radius:18px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); font-size:15px}
+.readout b{color:var(--c,var(--hot))}
+.meter{height:18px; border-radius:999px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); overflow:hidden; margin-top:6px}
+.meter i{display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--bubble),var(--c,var(--pink))); transition:width .5s cubic-bezier(.2,1.3,.4,1)}
+svg.chart{width:100%; height:auto; display:block}
+svg.chart text{font-family:var(--round); font-weight:600; font-size:12px; fill:var(--muted)}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chip{font-family:var(--round); font-weight:600; font-size:14px; padding:6px 12px; border-radius:999px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); color:var(--berry)}
+.chip[aria-pressed="true"]{background:var(--c,var(--pink)); color:#fff; box-shadow:none}
+.toggle{display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:8px 12px; border-radius:16px; background:#fff; box-shadow:inset 0 0 0 2px var(--line)}
+.toggle + .toggle{margin-top:6px}
+.toggle .sw{flex:none; width:42px; height:24px; border-radius:99px; background:#f3d3e3; position:relative; transition:background .2s}
+.toggle .sw::after{content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.2); transition:transform .2s}
+.toggle[aria-pressed="true"] .sw{background:var(--c,var(--pink))}
+.toggle[aria-pressed="true"] .sw::after{transform:translateX(18px)}
+.toggle small{display:block; color:var(--muted); font-weight:600}
+.stamp{display:inline-block; font-family:var(--round); font-weight:700; letter-spacing:.06em; color:var(--hot); border:3px solid var(--hot); border-radius:12px; padding:4px 12px; transform:rotate(-6deg); animation:stamp .4s cubic-bezier(.2,1.6,.4,1)}
+@keyframes stamp{from{transform:rotate(-20deg) scale(1.8); opacity:0}}
+
+/* overview: doll boxes that flip */
+.boxes{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px}
+.box{perspective:900px; min-height:400px}
+.box .flip{position:relative; width:100%; height:100%; min-height:400px; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.3,1.3,.4,1)}
+.box.open .flip{transform:rotateY(180deg)}
+.face{position:absolute; inset:0; backface-visibility:hidden; border-radius:30px; padding:18px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px}
+.face.front{background:linear-gradient(180deg,var(--c),#fff 70%); box-shadow:0 0 0 4px #fff, 0 0 0 8px var(--c), 0 16px 34px -14px rgba(90,16,64,.35)}
+.face.front .brand{font-family:var(--script); font-size:30px; color:#fff; text-shadow:0 3px 0 rgba(0,0,0,.15)}
+.face.front .windowp{width:78%; flex:1; border-radius:120px 120px 24px 24px; background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(220,248,255,.75)); box-shadow:inset 0 0 0 3px rgba(255,255,255,.9), inset 0 0 30px rgba(255,255,255,.8); display:grid; place-items:center}
+.face.front .windowp svg{width:62%}
+.face.front .comes{font-size:13px; color:var(--berry)}
+.face.back{background:var(--cream); transform:rotateY(180deg); box-shadow:0 0 0 4px #fff, 0 0 0 8px var(--c), 0 16px 34px -14px rgba(90,16,64,.35); text-align:left; align-items:stretch}
+.face.back h3{font-family:var(--script); font-weight:400; font-size:26px; color:var(--c); margin:0}
+.face.back p{font-size:14px; margin:0}
+.face .pill{margin-top:auto; align-self:center}
+.roots{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px}
+.root{text-align:left; padding:14px; border-radius:20px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); transition:transform .15s}
+.root:hover{transform:translateY(-3px)}
+.root .e{font-size:26px}
+.root b{display:block; font-family:var(--round); font-size:15px; color:var(--hot)}
+.root[aria-pressed="true"]{background:var(--pink); color:#fff; box-shadow:none}
+.root[aria-pressed="true"] b{color:#fff}
+.rootinfo{margin-top:12px}
+.tl{display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:8px}
+.tl div{border-radius:18px; padding:10px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); font-size:13px}
+.tl b{display:block; font-family:var(--round); font-size:18px; color:var(--c,var(--hot))}
+
+/* closet & sorting */
+.closet{display:flex; flex-wrap:wrap; gap:6px; min-height:52px; padding:10px; border-radius:18px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); font-size:26px}
+.closet span{animation:pop .4s cubic-bezier(.2,1.6,.4,1)}
+.incomes{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
+.inc{text-align:left; padding:10px 12px; border-radius:16px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); font-size:14px}
+.inc .e{font-size:22px}
+.inc[aria-pressed="true"]{box-shadow:inset 0 0 0 3px var(--lilac); background:#f4eeff}
+.inc.done{opacity:.4; pointer-events:none}
+.bins{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:10px}
+.bin{min-height:86px; padding:10px; border-radius:18px; border:3px dashed var(--lilac); background:#faf6ff; text-align:left; font-family:var(--round); font-weight:700; color:var(--lilac)}
+.bin .got{font-size:22px; display:flex; flex-wrap:wrap; gap:3px; margin-top:4px}
+.bin.ok{background:#e9ffe6; border-style:solid; border-color:#4cc76a}
+.bin.no{background:#ffe3e8; animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* verdict */
+table.v{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:22px; background:#fff; box-shadow:inset 0 0 0 2px var(--line); font-size:15px}
+table.v th,table.v td{padding:12px; text-align:left; vertical-align:top; border-bottom:2px solid #ffe3f1}
+table.v thead th{font-family:var(--round); color:#fff; background:var(--pink)}
+table.v thead th:nth-child(3){background:var(--aqua)} table.v thead th:nth-child(4){background:var(--lilac)}
+table.v tbody th{font-family:var(--script); font-weight:400; font-size:22px; color:var(--hot)}
+.tbl{overflow-x:auto; border-radius:22px}
+.dreams{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
+.dream{perspective:800px; min-height:220px}
+.dream .flip{position:relative; min-height:220px; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.3,1.3,.4,1)}
+.dream.awake .flip{transform:rotateY(180deg)}
+.dream .face{padding:16px}
+.dream .front{background:linear-gradient(160deg,#ffd3ea,#fff); box-shadow:0 0 0 3px #fff, 0 0 0 6px var(--pink)}
+.dream .back{background:#fff; transform:rotateY(180deg); box-shadow:0 0 0 3px #fff, 0 0 0 6px var(--berry); text-align:left}
+.dream .who{font-family:var(--round); font-weight:700; font-size:12px; letter-spacing:.08em; color:var(--muted)}
+.dream .claim{font-family:var(--script); font-size:21px; color:var(--hot); line-height:1.25}
+.dream .back b{font-family:var(--round); color:var(--berry)}
+
+/* case nav */
+.casenav{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:34px}
+.cn{display:flex; flex-direction:column; gap:2px; text-decoration:none; padding:14px 20px; border-radius:999px; background:#fff; color:var(--berry); box-shadow:inset 0 0 0 3px var(--line), 0 5px 0 var(--line); transition:transform .15s}
+.cn.next{text-align:right}
+.cn:hover{transform:translateY(-3px)}
+.cn .d{font-family:var(--round); font-weight:700; font-size:12px; letter-spacing:.08em; color:var(--muted)}
+.cn .t{font-family:var(--script); font-size:22px; color:var(--pink)}
+.cn.off{opacity:.45; pointer-events:none; box-shadow:inset 0 0 0 3px dashed var(--line)}
+.foot{text-align:center; color:var(--muted); font-size:13px; margin-top:26px}
+
+@media (max-width:1000px){
+  .g3,.boxes,.dreams{grid-template-columns:1fr}
+  .g12{grid-template-columns:1fr}
+  .roots{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tl{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .box{min-height:360px} .box .flip{min-height:360px}
+}
+@media (max-width:640px){
+  .g2{grid-template-columns:1fr}
+  .roots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .incomes,.bins{grid-template-columns:1fr}
+  .casenav{grid-template-columns:1fr} .cn{border-radius:26px} .cn.next{text-align:left}
+  .card{padding:18px}
+  .doll .top .nm{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="mast">
+    <span class="spark" style="left:8%;top:30px;font-size:26px">✦</span>
+    <span class="spark" style="left:18%;top:150px;font-size:16px;animation-delay:.8s">✦</span>
+    <span class="spark" style="right:10%;top:44px;font-size:30px;animation-delay:.4s">✦</span>
+    <span class="spark" style="right:22%;top:170px;font-size:18px;animation-delay:1.2s">✦</span>
+    <span class="badge">💖 CASE NO. 005 · 1780–1836</span>
+    <h1>Harmony Land</h1>
+    <div class="sub">Bentham, Say &amp; Senior · the dream where everyone's interests match</div>
+    <p class="tag">Three thinkers swapped labor for <b>utility</b> (pleasure) as the source of value. With that one change, class conflict vanished and economics became a story of perfect harmony. Hunt and Lautzenheiser ask whether it's a dream.</p>
+    <div class="btns">
+      <a class="pill light" href="../">⌂ Home</a>
+      <a class="pill light" href="../ricardo/">◀ Case 004</a>
+      <span class="pill off" title="Coming soon">✨ Ideas in Action · soon</span>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="#overview">💖 Overview<small>meet the dolls</small></a>
+    <a class="tab" href="#what">👗 What?<small>will we make</small></a>
+    <a class="tab" href="#how">🛠️ How?<small>will we make it</small></a>
+    <a class="tab" href="#share">🎀 Share?<small>who gets it</small></a>
+    <a class="tab" href="#verdict">⏰ Wake up<small>the verdict</small></a>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view" id="v-overview">
+    <div class="card">
+      <span class="kicker">THE BIG SWITCH</span>
+      <h2>From labor to pleasure</h2>
+      <p class="lede">Smith and Ricardo said labor creates value, and that put workers and owners at odds. Bentham, Say, and Senior said value comes from <b>utility</b>, the pleasure a thing gives. With that, working and owning look like the same kind of contribution, everyone is paid what they deserve, and the market is good for all. The authors call this "rationalistic subjectivism," and argue it laid the foundation for most economics since.</p>
+    </div>
+
+    <div>
+      <div class="kicker" style="margin-left:6px">MEET THE CAST · tap a box to open it</div>
+      <div class="boxes" id="boxes"></div>
+    </div>
+
+    <div class="card">
+      <h3>Where the dream came from: five features of capitalism mistaken for human nature</h3>
+      <div class="roots" id="roots"></div>
+      <div class="readout rootinfo" id="rootInfo"></div>
+      <div class="cite">pp. 125–29</div>
+    </div>
+
+    <div class="card">
+      <h3>Timeline</h3>
+      <div class="tl">
+        <div style="--c:var(--pink)"><b>1780</b>Bentham's <i>Principles of Morals and Legislation</i></div>
+        <div style="--c:var(--pink)"><b>1801</b>Bentham welcomes government action</div>
+        <div style="--c:var(--aqua)"><b>1803</b>Say's <i>Treatise</i> "corrects" Smith</div>
+        <div style="--c:var(--aqua)"><b>1820</b>Say's letters to Malthus on gluts</div>
+        <div style="--c:var(--lilac)"><b>1825</b>Senior: Oxford's first economics chair</div>
+        <div style="--c:var(--lilac)"><b>1830</b>The "frightful autumn" turns Senior</div>
+        <div style="--c:var(--lilac)"><b>1834</b>The New Poor Law and its workhouses</div>
+        <div style="--c:var(--lilac)"><b>1836</b>Senior's <i>Outline</i> and abstinence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT ================= -->
+  <section class="view" id="v-what">
+    <div class="card">
+      <span class="kicker">QUESTION 1</span>
+      <h2>What will we make?</h2>
+      <p class="lede">Whatever gives people pleasure. Value now comes from utility, not labor. And since wants seem endless, whatever gets made will always find a buyer… or will it?</p>
+    </div>
+
+    <div class="doll" style="--c:var(--pink)">
+      <div class="top"><span class="nm">Jeremy Bentham</span><span class="yr">1748–1832</span></div>
+      <div class="win">
+        <div class="say-it">"All value is founded on utility."</div>
+        <p>Bentham took on Smith's water-and-diamonds puzzle (why does useful water cost nothing while useless diamonds cost a fortune?). His answer comes close to what later economists called <b>marginal utility</b>: what matters is the value of the <i>next</i> glass, and when you already have plenty, the next one is worth almost nothing.</p>
+        <div class="grid g12" style="align-items:center">
+          <div>
+            <div class="ctrl"><label for="water">Glasses of water you already have <output id="waterOut"></output></label><input type="range" id="water" min="0" max="12" value="0"></div>
+            <div class="readout" id="waterRead"></div>
+          </div>
+          <svg class="chart" id="waterChart" viewBox="0 0 260 190" role="img" aria-label="Pleasure from the next glass of water versus the next diamond"></svg>
+        </div>
+        <div class="q"><span>If the whole quantity required is available, the surplus has no kind of value.</span><small>Jeremy Bentham, on water</small></div>
+      </div>
+      <div class="catch"><b>But later…</b> Bentham also noticed that savings can sit unspent "in a chest," so the economy may make less than it could. Then, he said, the government should add money.</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 131–33</div>
+    </div>
+
+    <div class="doll say" style="--c:var(--aqua)">
+      <div class="top"><span class="nm">Jean-Baptiste Say</span><span class="yr">1767–1832</span></div>
+      <div class="win">
+        <div class="say-it">"Produce opens a vent for produce."</div>
+        <p>Say's law: nobody makes things except to trade them for other things, so supply always creates an equal demand. There can be too much of <i>one</i> good, but only because there's too little of another, and capital moving between industries fixes that. A <b>general glut is impossible</b>.</p>
+        <div class="row" style="margin-bottom:8px">
+          <button class="pill aqua" type="button" id="moveCap">↔ Let capital move</button>
+          <button class="pill light" type="button" id="chestBtn" aria-pressed="false">🧰 Hoard money in a chest</button>
+          <button class="pill light" type="button" id="resetMkt">Reset</button>
+        </div>
+        <svg class="chart" id="sayChart" viewBox="0 0 520 210" role="img" aria-label="Supply and demand for gowns and roller skates"></svg>
+        <div class="readout" id="sayRead"></div>
+        <div class="q" style="--c:var(--aqua)"><span>Exchangeable value, or price, is an index of the recognized utility of a thing.</span><small>Jean-Baptiste Say, A Treatise on Political Economy</small></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> recurring depressions kept happening. Malthus, the later Bentham, Marx, and Keynes all rejected Say's law.</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 134–38; quantities illustrative.</div>
+    </div>
+
+    <div class="doll senior" style="--c:var(--lilac)">
+      <div class="top"><span class="nm">Nassau Senior</span><span class="yr">1790–1864</span></div>
+      <div class="win">
+        <div class="say-it">Everyone always wants more.</div>
+        <p>Senior's first proposition: every person wants more wealth for as little sacrifice as possible, and "no person feels his whole wants to be adequately supplied." If wants are endless, nothing made can ever go unsold, so a glut is impossible. He went further than Say and hardly admitted slumps had happened at all.</p>
+        <div class="row" style="margin-bottom:8px">
+          <button class="pill lilac" type="button" id="addItem">✨ Add to the closet</button>
+          <button class="pill light" type="button" data-cmode="senior" aria-pressed="true">Senior's view</button>
+          <button class="pill light" type="button" data-cmode="bentham" aria-pressed="false">Bentham's view</button>
+          <button class="pill light" type="button" id="emptyCloset">Empty</button>
+        </div>
+        <div class="closet" id="closet" aria-label="The closet"></div>
+        <div style="margin-top:10px;font-family:var(--round);font-weight:600">Pleasure from the next thing you buy</div>
+        <div class="meter"><i id="closetM"></i></div>
+        <div class="readout" id="closetRead"></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> Senior's own premise of insatiable desire "proved" depressions couldn't exist, so he simply looked past the ones that did.</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 144–46</div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="view" id="v-how">
+    <div class="card" style="--c:var(--aqua)">
+      <span class="kicker" style="background:var(--aqua)">QUESTION 2</span>
+      <h2>How will we make it?</h2>
+      <p class="lede">With calculating minds and painful sacrifices. Every worker endures the pain of labor; every owner endures the pain of saving. So labor, capital, and land become equal partners in making utility.</p>
+    </div>
+
+    <div class="doll" style="--c:var(--pink)">
+      <div class="top"><span class="nm">Jeremy Bentham</span><span class="yr">the pleasure calculator</span></div>
+      <div class="win">
+        <div class="say-it">"Nature has placed mankind under the governance of two sovereign masters, pain and pleasure."</div>
+        <p>Bentham believed pleasure could be measured like physics, on seven dimensions. Every decision is a sum: add the pleasures, subtract the pains, and do what comes out ahead. And work is pure pain. "Love of labour is a contradiction in terms."</p>
+        <div class="chips" id="acts" role="group" aria-label="Pick an activity"></div>
+        <div class="grid g2" style="margin-top:6px" id="dims"></div>
+        <div class="readout" id="calcRead"></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> a capitalist's bookkeeping became the model for <i>all</i> human choice. Habit, kindness, faith, and feeling dropped out of the picture.</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 129–31; scoring is our playful take on his seven circumstances.</div>
+    </div>
+
+    <div class="doll say" style="--c:var(--aqua)">
+      <div class="top"><span class="nm">Jean-Baptiste Say</span><span class="yr">the three partners</span></div>
+      <div class="win">
+        <div class="say-it">"To the labour of man alone he ascribes the power of producing values. This is an error."</div>
+        <p>Say "corrected" Smith: labor, capital, and land are three equal <b>productive agencies</b> that together produce utility. Owning is as productive as working. Make a pink gown and see who made it, by Say's account and by Ricardo's.</p>
+        <div class="row"><button class="pill aqua" type="button" data-prod="say" aria-pressed="true">Say's view</button><button class="pill light" type="button" data-prod="ricardo" aria-pressed="false">Ricardo's view</button></div>
+        <svg class="chart" id="prodChart" viewBox="0 0 520 120" role="img" aria-label="Who produced the gown" style="margin-top:10px"></svg>
+        <div class="readout" id="prodRead"></div>
+        <h3 style="margin-top:14px">And where did the property come from?</h3>
+        <div class="chips" id="origins"></div>
+        <div class="readout" id="originRead">Pick how the owner got their property.</div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> one historian compares Say to someone tidying a pair of trousers by turning them upside down and emptying out all the valuables. Safer that way: Say "purged" Smith of his dangerous ideas.</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 134–37</div>
+    </div>
+
+    <div class="doll senior" style="--c:var(--lilac)">
+      <div class="top"><span class="nm">Nassau Senior</span><span class="yr">the abstinence argument</span></div>
+      <div class="win">
+        <div class="say-it">Profit is the reward for abstinence.</div>
+        <p>Senior's most lasting idea. Workers sacrifice by laboring; capitalists sacrifice by <b>abstaining</b> from spending their capital on enjoyment. Both endure pain, so both deserve their pay. Build a capitalist and test how much sacrifice is really there.</p>
+        <div id="abst"></div>
+        <div style="margin-top:10px;font-family:var(--round);font-weight:600">Real sacrifice behind the profit</div>
+        <div class="meter"><i id="abstM"></i></div>
+        <div class="readout" id="abstRead"></div>
+        <div class="q" style="--c:var(--lilac)"><span>To abstain from the enjoyment which is in our power, or to seek distant rather than immediate results, are among the most painful exertions of the human will.</span><small>Nassau Senior, An Outline of the Science of Political Economy</small></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> most capital is inherited, and capitalists <i>enjoy</i> making profits. Senior himself admitted they "go on producing and amassing and leave the task of expending to their heirs."</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 146–50</div>
+    </div>
+  </section>
+
+  <!-- ================= SHARE ================= -->
+  <section class="view" id="v-share">
+    <div class="card" style="--c:var(--lilac)">
+      <span class="kicker" style="background:var(--lilac)">QUESTION 3</span>
+      <h2>How will we share it?</h2>
+      <p class="lede">Bentham's math pointed toward sharing more equally. Say and Senior made every income look deserved, made the classes disappear, and sent the poor to the workhouse.</p>
+    </div>
+
+    <div class="doll" style="--c:var(--pink)">
+      <div class="top"><span class="nm">Jeremy Bentham</span><span class="yr">the happiness machine</span></div>
+      <div class="win">
+        <div class="say-it">Money brings less pleasure the more you have.</div>
+        <p>A rich man with 50,000 times a laborer's income isn't 50,000 times happier. Bentham thought even "twice" was generous. So moving money from rich to poor raises society's total happiness. He wanted inequality cut to the level of the "Anglo-American United States", which would have meant radical reform in England.</p>
+        <div class="ctrl"><label for="xfer">Move income from the rich man to the laborer <output id="xferOut"></output></label><input type="range" id="xfer" min="0" max="100" value="0"></div>
+        <div class="row"><button class="pill light" type="button" id="noCompare" aria-pressed="false">🚫 Senior's rule: you can't compare people</button></div>
+        <svg class="chart" id="hapChart" viewBox="0 0 520 190" role="img" aria-label="Happiness of the laborer, the rich man, and the total" style="margin-top:10px"></svg>
+        <div class="readout" id="hapRead"></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> reform needs an impartial government. But by Bentham's own theory, legislators are selfish too. Who pays them better, the rich or the poor?</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 133–34; happiness uses a simple diminishing curve.</div>
+    </div>
+
+    <div class="doll say" style="--c:var(--aqua)">
+      <div class="top"><span class="nm">Jean-Baptiste Say</span><span class="yr">paid by contribution</span></div>
+      <div class="win">
+        <div class="say-it">Each partner is paid for the utility it creates.</div>
+        <p>In Say's account each productive agency is paid in proportion to "the importance of its co-operation." Whatever the split turns out to be, it's what each side contributed, so it's always just. The rich and poor "are not opposed to each other, and that all rivalships are mere folly."</p>
+        <div class="grid g2">
+          <div class="ctrl"><label for="impL">Labor's "importance" <output id="impLOut"></output></label><input type="range" id="impL" min="1" max="10" value="5"></div>
+          <div class="ctrl"><label for="impC">Capital's "importance" <output id="impCOut"></output></label><input type="range" id="impC" min="1" max="10" value="3"></div>
+        </div>
+        <div class="ctrl"><label for="impN">Land's "importance" <output id="impNOut"></output></label><input type="range" id="impN" min="1" max="10" value="2"></div>
+        <svg class="chart" id="pieChart" viewBox="0 0 520 70" role="img" aria-label="How the income is split"></svg>
+        <div class="readout" id="pieRead"></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> there's no way to measure each agency's "importance" apart from the pay itself, so the theory justifies whatever split already exists. Say even said it makes "no difference whatever" whether property was gained by violence or fraud.</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 135–37</div>
+    </div>
+
+    <div class="doll senior" style="--c:var(--lilac)">
+      <div class="top"><span class="nm">Nassau Senior</span><span class="yr">the vanishing classes</span></div>
+      <div class="win">
+        <div class="say-it">Wages, profit, and rent blur together.</div>
+        <p>Senior said any earnings from an advantage others can't copy (a rare talent, an inherited fortune) are really <b>rent</b>. And a capitalist who manages must labor, so part of profit is really <b>wages</b>. Sort these incomes the way Senior would.</p>
+        <div class="incomes" id="incomes"></div>
+        <div class="bins" id="bins"></div>
+        <div class="readout" id="sortRead">Tap an income, then the box it belongs in.</div>
+        <h3 style="margin-top:16px">The poor: 1601 vs. 1834</h3>
+        <div class="row"><button class="pill light" type="button" data-pl="old" aria-pressed="true">Old Poor Law</button><button class="pill lilac" type="button" data-pl="new" aria-pressed="false">Senior's New Poor Law (1834)</button></div>
+        <div class="readout" id="plRead"></div>
+      </div>
+      <div class="catch"><b>The authors' catch:</b> once all incomes look alike, class conflict seems to disappear. Senior dismissed it as "the political economy of the poor," believed by those whose reasoning is "uncultivated."</div>
+      <div class="cite" style="margin:8px 18px 0">pp. 139–41, 148–50</div>
+    </div>
+  </section>
+
+  <!-- ================= VERDICT ================= -->
+  <section class="view" id="v-verdict">
+    <div class="card">
+      <span class="kicker">THE VERDICT</span>
+      <h2>Time to wake up?</h2>
+      <p class="lede">Harmony Land is a lovely place. Tap each dream to see what Hunt and Lautzenheiser think is really going on.</p>
+    </div>
+    <div class="dreams" id="dreams"></div>
+    <div class="row" style="justify-content:center"><button class="pill" type="button" id="wakeAll">⏰ Wake up from all of them</button></div>
+
+    <div class="card">
+      <h3>The three questions, by thinker</h3>
+      <div class="tbl"><table class="v">
+        <thead><tr><th></th><th>Bentham</th><th>Say</th><th>Senior</th></tr></thead>
+        <tbody>
+          <tr><th>What?</th><td>Whatever maximizes pleasure; the next unit is what counts</td><td>Whatever has utility; supply creates its own demand</td><td>Wants are endless, so nothing goes unsold</td></tr>
+          <tr><th>How?</th><td>By calculating pleasure and pain; work is pure pain</td><td>Labor, capital, and land as equal partners</td><td>Through abstinence and capital accumulation</td></tr>
+          <tr><th>Share?</th><td>Later: redistribute, since money's pleasure diminishes</td><td>Each paid by contribution; property is sacred</td><td>Classes blur; profit rewards abstinence; the workhouse for the poor</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h3>Is economics "value-free"?</h3>
+      <p>Senior said the economist states general principles and has no right to add "a single syllable of advice." Tap each of his four propositions to find the value judgment hiding inside.</p>
+      <div class="chips" id="props" style="--c:var(--lilac)"></div>
+      <div class="readout" id="propRead">Pick a proposition.</div>
+      <div class="q" style="--c:var(--lilac)"><span>The business of a Political Economist is neither to recommend nor to dissuade, but to state general principles, which it is fatal to neglect.</span><small>Nassau Senior. The authors ask: fatal by whose values?</small></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card" style="--c:var(--aqua)">
+        <h3>Echoes in other cases</h3>
+        <p>🌾 <b>Malthus</b>: Say's law was aimed at his gluts; Senior repeats his population theory. <a href="../malthus/">Case 003</a></p>
+        <p>🚀 <b>Ricardo</b>: Senior turns his rent into a theory where classes disappear. <a href="../ricardo/">Case 004</a></p>
+        <p>💎 <b>Smith</b>: the water-and-diamonds puzzle and the labor theory Say "corrected." <a href="../smith/">Case 002</a></p>
+        <p style="margin:0">🏚️ <b>Before Smith</b>: Hobbes returns, and the 1601 Poor Law gets replaced. <a href="../before-smith/">Case 001</a></p>
+      </div>
+      <div class="card" style="text-align:center">
+        <span class="kicker">IDEAS IN ACTION</span>
+        <h3>A game is coming soon 💅</h3>
+        <p>Meanwhile, compare these three with everyone else, or test yourself.</p>
+        <div class="btns"><a class="pill" href="../compare/">The line-up</a><a class="pill aqua" href="../who-said-it/">Who said it?</a></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="casenav" aria-label="Case files">
+    <a class="cn" href="../ricardo/"><span class="d">◀ PREVIOUS CASE</span><span class="t">Case 004 · Ricardo</span></a>
+    <span class="cn next off" aria-disabled="true"><span class="d">NEXT CASE ▶</span><span class="t">Case 006 · Pending</span></span>
+  </nav>
+  <p class="foot">Interpretation follows E.K. Hunt &amp; Mark Lautzenheiser, <i>History of Economic Thought</i>, ch. 6, pp. 125–152. Quotations attributed to Bentham, Say, and Senior are their own words.</p>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const N = v => Math.round(v);
+  const C = {pink:"#ff2d95", hot:"#e0218a", aqua:"#16b3c4", lilac:"#9b6cff", berry:"#5a1040", muted:"#9a4a78", bubble:"#ffc2e0", sun:"#ffd23f"};
+  const press = (sel, attr, val) => $$(sel).forEach(b => b.setAttribute("aria-pressed", b.dataset[attr] === val));
+
+  /* ---------- routing ---------- */
+  const views = ["overview","what","how","share","verdict"];
+  function route(){
+    const h = location.hash.slice(1), v = views.includes(h) ? h : "overview";
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "v-" + v));
+    $$(".tab").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + v));
+    if (location.hash) window.scrollTo(0, $(".tabs").offsetTop);
+  }
+  window.addEventListener("hashchange", route); route();
+
+  /* ---------- doll boxes ---------- */
+  const doll = (hair, outfit, extra = "") => `<svg viewBox="0 0 120 170" aria-hidden="true">
+    <path d="M30 60 Q22 20 60 14 Q98 20 90 60 Q96 92 86 104 L34 104 Q24 92 30 60Z" fill="${hair}"/>
+    <ellipse cx="60" cy="58" rx="24" ry="28" fill="#ffdccb"/>
+    <circle cx="51" cy="56" r="3" fill="${C.berry}"/><circle cx="69" cy="56" r="3" fill="${C.berry}"/>
+    <ellipse cx="46" cy="66" rx="5" ry="3" fill="#ff9ac6" opacity=".7"/><ellipse cx="74" cy="66" rx="5" ry="3" fill="#ff9ac6" opacity=".7"/>
+    <path d="M52 72 Q60 78 68 72" stroke="${C.hot}" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M30 168 L40 98 Q60 88 80 98 L90 168Z" fill="${outfit}"/>
+    <path d="M44 98 Q60 112 76 98" stroke="#fff" stroke-width="3" fill="none"/>
+    ${extra}</svg>`;
+  const CAST = [
+    {k:"bentham", n:"Jeremy", s:"Bentham", c:C.pink, yr:"1748–1832 · English philosopher", hair:"#d9d4cf", outfit:C.pink,
+     extra:`<rect x="86" y="120" width="26" height="34" rx="4" fill="#fff" stroke="${C.hot}" stroke-width="3"/><text x="99" y="142" text-anchor="middle" font-size="14">±</text>`,
+     comes:"Comes with: pleasure calculator, two sovereign masters, a change of heart",
+     bio:"The founder of utilitarianism. All motives, he said, come down to seeking pleasure and avoiding pain, and pleasure could one day be measured like physics. Early on he backed pure free markets. By 1801 he welcomed government action, both to fight hoarded savings and to share wealth more equally.",
+     line:"\"Nature has placed mankind under the governance of two sovereign masters, pain and pleasure.\""},
+    {k:"say", n:"Jean-Baptiste", s:"Say", c:C.aqua, yr:"1767–1832 · French economist", hair:"#7a4b2a", outfit:C.aqua,
+     extra:`<path d="M8 130 l14 -8 l14 8 l-14 8z" fill="${C.sun}" stroke="#c89800" stroke-width="2"/>`,
+     comes:"Comes with: three equal partners, Say's law, Smith's empty trouser pockets",
+     bio:"Called himself Smith's disciple, then \"corrected\" him: value comes from utility, not labor. Labor, capital, and land are equal partners in production, and supply always creates its own demand. He argued about gluts with Malthus by letter.",
+     line:"\"Produce opens a vent for produce.\""},
+    {k:"senior", n:"Nassau", s:"Senior", c:C.lilac, yr:"1790–1864 · Oxford's first economist", hair:"#2e2235", outfit:C.lilac,
+     extra:`<rect x="84" y="118" width="28" height="22" rx="5" fill="${C.sun}" stroke="#c89800" stroke-width="2"/><path d="M90 118 v-6 h16 v6" stroke="#c89800" stroke-width="2" fill="none"/>`,
+     comes:"Comes with: abstinence, four propositions, a workhouse playset",
+     bio:"A lawyer and adviser to the Whig party. Kindly toward the poor until the riots of 1830 frightened him. Then he blamed the Poor Laws for poverty and largely wrote the harsh 1834 law. He gave profit its moral defense, abstinence, and claimed economics could be value-free.",
+     line:"\"Nature has decreed that the road to good shall be through evil.\""}
+  ];
+  $("#boxes").innerHTML = CAST.map((p, i) => `<div class="box" id="box${i}" style="--c:${p.c}"><div class="flip">
+      <div class="face front"><div class="brand">${p.s}</div><div class="windowp">${doll(p.hair, p.outfit, p.extra)}</div><div class="comes">${p.comes}</div><button class="pill" type="button" data-open="${i}" style="background:linear-gradient(180deg,#fff,#ffe3f1);color:${p.c};box-shadow:0 4px 0 ${p.c}">Open the box</button></div>
+      <div class="face back"><h3>${p.n} ${p.s}</h3><div class="cite" style="margin:0">${p.yr}</div><p>${p.bio}</p><p style="font-style:italic;color:${p.c}">${p.line}</p><button class="pill light" type="button" data-close="${i}">Close the box</button></div>
+    </div></div>`).join("");
+  $$("[data-open]").forEach(b => b.addEventListener("click", () => $("#box" + b.dataset.open).classList.add("open")));
+  $$("[data-close]").forEach(b => b.addEventListener("click", () => $("#box" + b.dataset.close).classList.remove("open")));
+
+  /* ---------- five roots ---------- */
+  const ROOTS = [
+    ["🏝️","Atomistic individualism","Specialized producers feel isolated, each alone against the market. Hobbes's people are natural combatants, and life without restraint is \"solitary, poor, nasty, brutish, and short.\""],
+    ["😋","Egoistic utilitarianism","Every motive is reduced to seeking pleasure and avoiding pain. This is the philosophy beneath the utility theory of value."],
+    ["🛍️","Dependence on markets","Under capitalism almost nobody can survive without the market, so if you take capitalism for granted, the market looks good for everyone. That's the root of the harmony view."],
+    ["🏭","Profit-financed industry","Building factories meant consuming less. Workers' wages lagged far behind output, so they really paid. But if you take the income split for granted, it looks as if capitalists sacrificed."],
+    ["🧮","Calculating rationality","A capitalist's bookkeeping (weigh costs, weigh benefits, maximize) becomes the model for every human decision, as in today's textbooks."]
+  ];
+  $("#roots").innerHTML = ROOTS.map((r, i) => `<button class="root" type="button" data-root="${i}" aria-pressed="${i === 0}"><span class="e">${r[0]}</span><b>${r[1]}</b></button>`).join("");
+  function showRoot(i){ press("[data-root]", "root", String(i)); $("#rootInfo").innerHTML = `<b>${ROOTS[i][1]}:</b> ${ROOTS[i][2]}`; }
+  $$("[data-root]").forEach(b => b.addEventListener("click", () => showRoot(+b.dataset.root))); showRoot(0);
+
+  /* ---------- WHAT · Bentham: water vs diamonds ---------- */
+  function drawWater(){
+    const n = +$("#water").value; $("#waterOut").textContent = n;
+    const water = 100 / Math.pow(1 + n, 1.15), diamond = 38;
+    const svg = $("#waterChart"), H = 150, sy = v => 165 - v / 100 * H;
+    const bar = (x, v, col, lbl, e) => `<rect x="${x}" y="${sy(v)}" width="70" height="${165 - sy(v)}" rx="16" fill="${col}"/><text x="${x + 35}" y="${sy(v) - 8}" text-anchor="middle" style="font-size:22px">${e}</text><text x="${x + 35}" y="182" text-anchor="middle">${lbl}</text><text x="${x + 35}" y="${Math.min(158, sy(v) + 20)}" text-anchor="middle" style="fill:#fff;font-weight:700">${N(v)}</text>`;
+    svg.innerHTML = `<line x1="10" x2="250" y1="165" y2="165" stroke="${C.bubble}" stroke-width="3"/>` + bar(40, water, C.aqua, "next glass", "💧") + bar(150, diamond, C.pink, "next diamond", "💎");
+    $("#waterRead").innerHTML = n === 0
+      ? `Parched! The first glass is worth <b>far more</b> than a diamond. Bentham pointed out water sells in London and Paris for a reason.`
+      : water < diamond ? `With ${n} glasses already, the next one adds only <b>${N(water)}</b> pleasure points, so cheap water and dear diamonds make sense. It's the value of the <i>next</i> unit that counts.`
+      : `Still thirsty: the next glass is worth <b>${N(water)}</b>. Keep drinking and watch it fall.`;
+  }
+  $("#water").addEventListener("input", drawWater); drawWater();
+
+  /* ---------- WHAT · Say: the market rebalances ---------- */
+  const mkt = {gS:120, gD:80, sS:60, sD:100, chest:false};
+  function drawSay(){
+    const hoard = mkt.chest ? 30 : 0, gD = mkt.gD - hoard / 2, sD = mkt.sD - hoard / 2;
+    const svg = $("#sayChart"), sy = v => 175 - v / 140 * 150;
+    let s = `<line x1="20" x2="500" y1="175" y2="175" stroke="${C.bubble}" stroke-width="3"/>`;
+    const pair = (x, sup, dem, lbl, e) => `<text x="${x + 70}" y="20" text-anchor="middle" style="font-size:16px;fill:${C.berry}">${e} ${lbl}</text>
+      <rect x="${x}" y="${sy(sup)}" width="62" height="${175 - sy(sup)}" rx="14" fill="${C.aqua}"/><text x="${x + 31}" y="194" text-anchor="middle">made ${N(sup)}</text>
+      <rect x="${x + 76}" y="${sy(dem)}" width="62" height="${175 - sy(dem)}" rx="14" fill="${C.pink}"/><text x="${x + 107}" y="194" text-anchor="middle">wanted ${N(dem)}</text>`;
+    s += pair(50, mkt.gS, gD, "Gowns", "👗") + pair(300, mkt.sS, sD, "Roller skates", "🛼");
+    svg.innerHTML = s;
+    const totS = mkt.gS + mkt.sS, totD = gD + sD, gapG = mkt.gS - gD;
+    $("#moveCap").disabled = Math.abs(mkt.gS - mkt.gD) < 1;
+    press("#chestBtn", "x", "");
+    $("#chestBtn").setAttribute("aria-pressed", mkt.chest);
+    $("#sayRead").innerHTML = mkt.chest
+      ? `Money is sitting in a chest, so total spending is <b>${N(totD)}</b> against <b>${N(totS)}</b> made: a <b style="color:${C.hot}">general glut</b> of everything at once. Say insisted this can't happen; Malthus and the later Bentham said it can.`
+      : Math.abs(gapG) < 1 ? `Balanced! Capital moved from gowns to skates until supply matched demand for each. Total made = total wanted = <b>${totS}</b>, just as Say's law promised.`
+      : `Too many gowns (${N(gapG)} extra), too few skates. But total made (<b>${totS}</b>) still equals total wanted (<b>${N(totD)}</b>). Say: the gluts and shortages cancel out. Press "Let capital move."`;
+  }
+  $("#moveCap").addEventListener("click", () => { const step = Math.min(10, mkt.gS - mkt.gD); mkt.gS -= step; mkt.sS += step; drawSay(); });
+  $("#chestBtn").addEventListener("click", () => { mkt.chest = !mkt.chest; drawSay(); });
+  $("#resetMkt").addEventListener("click", () => { Object.assign(mkt, {gS:120, gD:80, sS:60, sD:100, chest:false}); drawSay(); });
+  drawSay();
+
+  /* ---------- WHAT · Senior: the never-full closet ---------- */
+  const ITEMS = ["👗","👠","👜","🕶️","💄","👒","🛼","🎀","💍","🏖️","🚗","🏠","🛥️","🦄","✈️","🎠"];
+  let closet = [], cmode = "senior";
+  function drawCloset(){
+    $("#closet").innerHTML = closet.length ? closet.map(e => `<span>${e}</span>`).join("") : `<span style="font-size:15px;color:${C.muted}">Empty. Add something!</span>`;
+    const n = closet.length;
+    const next = cmode === "bentham" ? 100 / (1 + n * .45) : 92 - (n % 3) * 4;
+    $("#closetM").style.width = next + "%";
+    press("[data-cmode]", "cmode", cmode);
+    $("#closetRead").innerHTML = cmode === "senior"
+      ? `${n} item${n === 1 ? "" : "s"} and still wanting: the next one would give <b>${N(next)}%</b> pleasure. "Every person has some unsatisfied desires." Since wants never run out, Senior concluded there could <b>never be a general glut</b>.`
+      : `Bentham's view: each extra item adds less (${N(next)}% now). Eventually you're <b>satiated</b>, and an extra item barely matters. That's the idea Bentham used to argue for sharing with the poor, and the one Senior had to deny.`;
+  }
+  $("#addItem").addEventListener("click", () => { closet.push(ITEMS[closet.length % ITEMS.length]); drawCloset(); });
+  $("#emptyCloset").addEventListener("click", () => { closet = []; drawCloset(); });
+  $$("[data-cmode]").forEach(b => b.addEventListener("click", () => { cmode = b.dataset.cmode; drawCloset(); }));
+  drawCloset();
+
+  /* ---------- HOW · Bentham: the pleasure calculator ---------- */
+  const DIMS = [["intensity","Intensity",0,10],["duration","Duration",0,10],["certainty","Certainty %",0,100],["propinquity","Nearness (how soon) %",0,100],["fecundity","Fecundity (leads to more pleasure)",0,10],["purity","Purity (free of pain) %",0,100],["extent","Extent (people affected)",1,10]];
+  const ACTS = [
+    {n:"🧁 Eat a cupcake", sign:1, v:{intensity:6, duration:2, certainty:100, propinquity:100, fecundity:1, purity:80, extent:1}},
+    {n:"🏭 Work a 12-hour shift", sign:-1, v:{intensity:7, duration:9, certainty:100, propinquity:100, fecundity:2, purity:20, extent:1}},
+    {n:"🏠 Save for a dreamhouse", sign:1, v:{intensity:9, duration:9, certainty:40, propinquity:10, fecundity:6, purity:50, extent:3}},
+    {n:"💌 Help a neighbor", sign:1, v:{intensity:4, duration:4, certainty:90, propinquity:90, fecundity:5, purity:90, extent:3}}
+  ];
+  let act = 0; const dv = {};
+  $("#acts").innerHTML = ACTS.map((a, i) => `<button class="chip" type="button" data-act="${i}" style="--c:${C.pink}">${a.n}</button>`).join("");
+  $("#dims").innerHTML = DIMS.map(d => `<div class="ctrl" style="margin:4px 0"><label for="d-${d[0]}">${d[1]} <output id="o-${d[0]}"></output></label><input type="range" id="d-${d[0]}" min="${d[2]}" max="${d[3]}"></div>`).join("");
+  function setAct(i){ act = i; Object.assign(dv, ACTS[i].v); DIMS.forEach(d => $("#d-" + d[0]).value = dv[d[0]]); press("[data-act]", "act", String(i)); drawCalc(); }
+  function drawCalc(){
+    DIMS.forEach(d => { dv[d[0]] = +$("#d-" + d[0]).value; $("#o-" + d[0]).textContent = dv[d[0]]; });
+    const a = ACTS[act];
+    const raw = dv.intensity * dv.duration * (dv.certainty / 100) * (dv.propinquity / 100) * (1 + dv.fecundity / 10) * (dv.extent);
+    const pleasure = raw * (dv.purity / 100), pain = raw * (1 - dv.purity / 100);
+    const net = a.sign > 0 ? pleasure - pain * .5 : -(raw * (1 - dv.purity / 100)) + raw * dv.purity / 100 * .3;
+    $("#calcRead").innerHTML = `${a.sign < 0 ? `Work is pain: Bentham says the only emotion labour produces is <b>aversion</b>. ` : ""}Net result: <b>${net >= 0 ? "+" : ""}${net.toFixed(1)}</b> ${net >= 0 ? "hedons (units of pleasure)" : "dolors (units of pain)"}.<br>Bentham's verdict: <b>${net > 0 ? "do it!" : a.sign < 0 ? "only if a wage outweighs the pain" : "skip it"}</b>`;
+  }
+  $$("[data-act]").forEach(b => b.addEventListener("click", () => setAct(+b.dataset.act)));
+  DIMS.forEach(d => $("#d-" + d[0]).addEventListener("input", drawCalc));
+  setAct(0);
+
+  /* ---------- HOW · Say: who made the gown? ---------- */
+  let prod = "say";
+  function drawProd(){
+    press("[data-prod]", "prod", prod);
+    const parts = prod === "say"
+      ? [["Labor", 50, C.pink], ["Capital", 30, C.aqua], ["Land", 20, C.sun]]
+      : [["Labor today", 50, C.pink], ["Past labor in the machines", 30, "#ff8cc6"], ["Rent: a transfer, not production", 20, "#e9d8e2"]];
+    let x = 10, s = "";
+    parts.forEach(([l, v, col]) => { const w = v / 100 * 500; s += `<rect x="${x}" y="20" width="${w - 4}" height="56" rx="16" fill="${col}"/><text x="${x + w / 2}" y="54" text-anchor="middle" style="fill:${col === "#e9d8e2" || col === C.sun ? C.berry : "#fff"};font-weight:700">${l} ${v}%</text>`; x += w; });
+    $("#prodChart").innerHTML = s + `<text x="10" y="104">👗 one pink gown</text>`;
+    $("#prodRead").innerHTML = prod === "say"
+      ? `Say: three <b>equal productive agencies</b> made the gown together. The capital-owner and the landowner produced utility just as surely as the seamstress did.`
+      : `Ricardo: production is human labor. The machines are labor done earlier, and nature does its work for free. Rent is a share handed to the owner, not something they made.`;
+  }
+  $$("[data-prod]").forEach(b => b.addEventListener("click", () => { prod = b.dataset.prod; drawProd(); })); drawProd();
+  const ORIGINS = ["🌱 Was first to settle it", "💼 Saved up and bought it", "👑 Inherited it", "⚔️ Took it by force", "🎭 Got it by fraud"];
+  $("#origins").innerHTML = ORIGINS.map((o, i) => `<button class="chip" type="button" data-or="${i}" style="--c:${C.aqua}">${o}</button>`).join("");
+  $$("[data-or]").forEach(b => b.addEventListener("click", () => { press("[data-or]", "or", b.dataset.or); $("#originRead").innerHTML = `<span class="stamp">SACRED &amp; INDISPUTABLE</span> &nbsp;Say: whether it was gained "by prior occupancy, by violence, or by fraud, can make no difference whatever" to production and distribution.`; }));
+
+  /* ---------- HOW · Senior: the abstinence test ---------- */
+  const AB = [
+    {k:"saved", n:"Built the capital by saving from their own pay", d:"Real abstinence: they gave up enjoyment.", v:+45},
+    {k:"inherit", n:"Inherited the factory", d:"Most capital is inherited, an accident of birth.", v:-40},
+    {k:"enjoy", n:"Loves making money for its own sake", d:"Senior called the \"desire of wealth for its own sake\" instinctive.", v:-25},
+    {k:"vanity", n:"Saves out of vanity", d:"Senior: vanity is \"the most powerful of human passions\" among the educated.", v:-20},
+    {k:"heirs", n:"Leaves the spending to their heirs", d:"\"They go on producing and amassing…\"", v:-15}
+  ];
+  const abOn = {saved:true};
+  $("#abst").innerHTML = AB.map(a => `<button class="toggle" type="button" data-ab="${a.k}" style="--c:${C.lilac}"><span class="sw"></span><span>${a.n}<small>${a.d}</small></span></button>`).join("");
+  function drawAbst(){
+    let v = 55; AB.forEach(a => { if (abOn[a.k]) v += a.v; }); v = Math.max(0, Math.min(100, v));
+    AB.forEach(a => $(`[data-ab="${a.k}"]`).setAttribute("aria-pressed", !!abOn[a.k]));
+    $("#abstM").style.width = v + "%";
+    $("#abstRead").innerHTML = `Senior says profit always rewards one of "the most painful exertions of the human will." For this capitalist, the real sacrifice comes to <b>${v}%</b>. ${v < 25 ? "Not much pain to reward here, yet the profit is just the same." : v > 75 ? "Here abstinence really happened. The authors' point is that this is the exception, not the rule." : "Somewhere in between, and profit doesn't vary with it."}`;
+  }
+  $$("[data-ab]").forEach(b => b.addEventListener("click", () => { abOn[b.dataset.ab] = !abOn[b.dataset.ab]; drawAbst(); })); drawAbst();
+
+  /* ---------- SHARE · Bentham: the happiness machine ---------- */
+  let noCompare = false;
+  function drawHap(){
+    const pct = +$("#xfer").value, moved = pct / 100 * 25000;
+    $("#xferOut").textContent = pct ? `${N(moved).toLocaleString()} units` : "nothing yet";
+    const lab = 1 + moved, rich = 50000 - moved;
+    const hL = Math.log(1 + lab * 3), hR = Math.log(1 + rich * 3), tot = hL + hR, max = 26;
+    const svg = $("#hapChart"), W = 360, X = 130;
+    const bar = (y, v, col, lbl, sub) => `<text x="10" y="${y + 20}" style="fill:${C.berry};font-size:14px">${lbl}</text><text x="10" y="${y + 36}">${sub}</text><rect x="${X}" y="${y}" width="${Math.max(6, v / max * W)}" height="34" rx="17" fill="${col}"/><text x="${X + Math.max(6, v / max * W) + 8}" y="${y + 23}" style="fill:${C.berry}">${v.toFixed(1)}</text>`;
+    let s = bar(10, hL, C.aqua, "👷 Laborer", `income ${N(lab).toLocaleString()}`) + bar(62, hR, C.lilac, "🎩 Rich man", `income ${N(rich).toLocaleString()}`);
+    s += noCompare ? `<text x="10" y="144" style="fill:${C.berry};font-size:14px">💖 Society</text><text x="${X}" y="140" style="fill:${C.hot};font-size:16px;font-weight:700">Can't be added up! (Senior)</text>` : bar(114, tot, C.pink, "💖 Society", "total happiness");
+    svg.innerHTML = s;
+    $("#noCompare").setAttribute("aria-pressed", noCompare);
+    $("#hapRead").innerHTML = noCompare
+      ? `Senior denied that one person's pleasure can be compared with another's, since "the nature and urgency of each individual's wants are as various as the differences in individual character." Without a total, Bentham's case for redistribution <b>disappears</b>.`
+      : pct === 0 ? `The rich man has 50,000 times the laborer's income, but nowhere near 50,000 times the happiness. Move some income across.`
+      : `Moving ${N(moved).toLocaleString()} units barely dents the rich man's happiness (${hR.toFixed(1)}) but transforms the laborer's (${hL.toFixed(1)}). Total happiness rises to <b>${tot.toFixed(1)}</b>.${pct > 80 ? " Bentham stopped short of full equality: past a point, he feared, people would lose the incentive to work." : ""}`;
+  }
+  $("#xfer").addEventListener("input", drawHap);
+  $("#noCompare").addEventListener("click", () => { noCompare = !noCompare; drawHap(); });
+  drawHap();
+
+  /* ---------- SHARE · Say: paid by contribution ---------- */
+  function drawPie(){
+    const L = +$("#impL").value, K = +$("#impC").value, T = +$("#impN").value, tot = L + K + T, out = 1000;
+    $("#impLOut").textContent = L; $("#impCOut").textContent = K; $("#impNOut").textContent = T;
+    const parts = [["Wages", L, C.pink], ["Profit", K, C.aqua], ["Rent", T, C.sun]];
+    let x = 10, s = "";
+    parts.forEach(([l, v, col]) => { const w = v / tot * 500; s += `<rect x="${x}" y="8" width="${Math.max(2, w - 3)}" height="54" rx="16" fill="${col}"/>${w > 70 ? `<text x="${x + w / 2}" y="40" text-anchor="middle" style="fill:${col === C.sun ? C.berry : "#fff"};font-weight:700">${l} ${N(v / tot * out)}</text>` : ""}`; x += w; });
+    $("#pieChart").innerHTML = s;
+    $("#pieRead").innerHTML = `Out of 1,000 in income: wages <b>${N(L / tot * out)}</b>, profit <b>${N(K / tot * out)}</b>, rent <b>${N(T / tot * out)}</b>.<br>Whatever you set, Say would call it fair: each got exactly what its "co-operation" was worth. Try it: there's no split this theory would call unjust.`;
+  }
+  ["#impL","#impC","#impN"].forEach(s => $(s).addEventListener("input", drawPie)); drawPie();
+
+  /* ---------- SHARE · Senior: sort the incomes ---------- */
+  const INC = [
+    {e:"🎤", n:"An opera star's fee for a rare voice", b:"rent", why:"extraordinary talent nobody can copy: rent"},
+    {e:"👑", n:"An heir's profit from an inherited factory", b:"rent", why:"capital they didn't create through their own abstinence: as good as rent"},
+    {e:"📋", n:"The profit an owner earns for directing the business", b:"wages", why:"to manage, the owner must labor and \"conquer his indolence\": partly wages"},
+    {e:"🧵", n:"A seamstress's pay", b:"wages", why:"the reward of labour"},
+    {e:"🐷", n:"Profit for not spending your savings", b:"profit", why:"the reward of abstinence"},
+    {e:"🌾", n:"A landowner's income from fertile fields", b:"rent", why:"revenue offered by nature"}
+  ];
+  const BINS = [["wages","Wages 💪"],["profit","Profit 🐷"],["rent","Rent 🌾"]];
+  let selInc = null; const placed = {};
+  function drawSort(){
+    $("#incomes").innerHTML = INC.map((x, i) => `<button class="inc ${placed[i] ? "done" : ""}" type="button" data-inc="${i}" aria-pressed="${selInc === i}"><span class="e">${x.e}</span> ${x.n}</button>`).join("");
+    $("#bins").innerHTML = BINS.map(([k, l]) => `<button class="bin" type="button" data-bin="${k}">${l}<div class="got">${INC.filter((x, i) => placed[i] === k).map(x => x.e).join("")}</div></button>`).join("");
+    $$("[data-inc]").forEach(b => b.addEventListener("click", () => { selInc = +b.dataset.inc; drawSort(); }));
+    $$("[data-bin]").forEach(b => b.addEventListener("click", () => drop(b.dataset.bin, b)));
+    if (Object.keys(placed).length === INC.length) $("#sortRead").innerHTML = `<b>All sorted.</b> Notice how much of "profit" turned out to be rent or wages? Once the categories blur, the classes seem to vanish, and with them class conflict. That was the point.`;
+  }
+  function drop(k, el){
+    if (selInc == null){ $("#sortRead").textContent = "Pick an income first."; return; }
+    const x = INC[selInc];
+    if (x.b === k){ placed[selInc] = k; $("#sortRead").innerHTML = `✨ Yes: ${x.why}.`; selInc = null; drawSort(); const nb = $(`[data-bin="${k}"]`); nb.classList.add("ok"); setTimeout(() => nb.classList.remove("ok"), 600); }
+    else { el.classList.remove("no"); void el.offsetWidth; el.classList.add("no"); $("#sortRead").textContent = "Not how Senior would sort it. Try again."; }
+  }
+  drawSort();
+  const PL = {
+    old:"<b>The old Poor Laws (from 1601):</b> relief was a right, paid for by a parish tax, often given at home and topped up by family allowances. Senior said this made wages \"a right for the one, and a tax on the other\" and made workers lazy and \"arrogant.\" <a href=\"../before-smith/#share\">See Case 001's sorting game →</a>",
+    new:"<b>The New Poor Law (1834), largely Senior's work:</b> take any job at any wage; relief only enough to prevent starvation; and relief must be \"less eligible\" than the worst job, inside jail-like workhouses that separated husbands, wives, and children. One historian called it among the most inhuman statutes ever passed."
+  };
+  $$("[data-pl]").forEach(b => b.addEventListener("click", () => { press("[data-pl]", "pl", b.dataset.pl); $("#plRead").innerHTML = PL[b.dataset.pl]; }));
+  $("#plRead").innerHTML = PL.old;
+
+  /* ---------- VERDICT ---------- */
+  const DREAMS = [
+    ["SAY","Value comes from utility, not labor.","Drop labor and you lose sight of the difference between <b>working</b> and <b>owning</b>, which is exactly what made class conflict visible."],
+    ["SAY & SENIOR","Supply creates its own demand. No glut ever.","Depressions kept happening. Malthus, the later Bentham, Marx, and Keynes all <b>rejected Say's law</b>."],
+    ["SENIOR","Profit rewards painful abstinence.","Most capital is <b>inherited</b>, and capitalists enjoy amassing it. Senior admitted as much himself."],
+    ["SAY & SENIOR","There are no classes, only contributors.","The incomes blur only if you ignore where they come from: <b>work versus ownership</b>, the basis of a continuing class divide."],
+    ["SENIOR","Economics is value-free.","Choosing which few \"facts\" matter is itself a <b>value judgment</b>, and Senior's principles were \"fatal to neglect\" by his values."],
+    ["BENTHAM","An impartial government can share wealth fairly.","By Bentham's own theory, legislators are <b>selfish too</b>, and the rich can reward them better than the poor."]
+  ];
+  $("#dreams").innerHTML = DREAMS.map((d, i) => `<div class="dream" id="dr${i}"><div class="flip">
+    <div class="face front"><span class="who">💭 ${d[0]} DREAMS…</span><span class="claim">"${d[1]}"</span><button class="pill" type="button" data-wake="${i}">⏰ Wake up</button></div>
+    <div class="face back"><span class="who">☀️ THE AUTHORS SAY</span><p style="margin:6px 0">${d[2]}</p><button class="pill light" type="button" data-sleep="${i}">💤 Back to the dream</button></div>
+  </div></div>`).join("");
+  $$("[data-wake]").forEach(b => b.addEventListener("click", () => $("#dr" + b.dataset.wake).classList.add("awake")));
+  $$("[data-sleep]").forEach(b => b.addEventListener("click", () => $("#dr" + b.dataset.sleep).classList.remove("awake")));
+  $("#wakeAll").addEventListener("click", () => DREAMS.forEach((_, i) => setTimeout(() => $("#dr" + i).classList.add("awake"), i * 220)));
+  const PROPS = [
+    ["1 · Everyone wants more wealth for as little sacrifice as possible", "Bakes in Bentham's selfish, calculating person, and \"proves\" gluts impossible, so slumps disappear from view."],
+    ["2 · Population is limited only by evil or by fear of want", "Turns into the case for keeping workers in constant \"fear of deficiency\", the foundation of the 1834 workhouses."],
+    ["3 · Labor and capital can be increased without limit", "Leads straight to abstinence: capitalists' saving becomes the source of national prosperity, and so deserves profit."],
+    ["4 · Extra labor on land gives diminishing returns", "Senior cared mostly about the exception: improvements (through capital) beat Ricardo's stationary state. And rent becomes a way to make classes vanish."]
+  ];
+  $("#props").innerHTML = PROPS.map((p, i) => `<button class="chip" type="button" data-prop="${i}">${p[0]}</button>`).join("");
+  $$("[data-prop]").forEach(b => b.addEventListener("click", () => { press("[data-prop]", "prop", b.dataset.prop); $("#propRead").innerHTML = `<b>The hidden value:</b> ${PROPS[+b.dataset.prop][1]}`; }));
+})();
+</script>
+</body>
+</html>

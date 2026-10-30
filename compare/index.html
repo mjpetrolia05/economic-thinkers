@@ -55,7 +55,7 @@ h2 em{font-weight:400}
     repeating-linear-gradient(180deg,transparent 0 23px,rgba(255,255,255,.12) 23px 24px),
     linear-gradient(180deg,#1a1a1a,#0e0e0e)}
 .lineup::before{content:"7'  ·  6'  ·  5'  ·  4'"; position:absolute; left:8px; top:8px; font-family:var(--type); font-size:.7rem; color:#555; writing-mode:vertical-rl}
-.suspects{display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:8px; padding-left:16px}
+.suspects{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; padding-left:16px}
 .sus{position:relative; display:grid; justify-items:center; gap:6px; padding:10px 4px 0; text-align:center; transition:transform .2s; filter:grayscale(1)}
 .sus svg{width:100%; max-width:110px; height:auto; transition:filter .25s, transform .25s; filter:brightness(.7)}
 .sus:hover svg{filter:brightness(1); transform:translateY(-4px)}
@@ -100,7 +100,7 @@ tr.dim{display:none}
 .empty{padding:50px 20px; text-align:center; color:var(--ash); font-style:italic}
 
 /* ---------- files ---------- */
-.files{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px}
+.files{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:18px}
 .file{display:block; text-decoration:none; background:var(--paper); color:var(--black); padding:18px; position:relative; transition:transform .25s, box-shadow .25s}
 .file:hover{transform:translateY(-4px) rotate(-.5deg); box-shadow:0 0 0 2px var(--white)}
 .file .no{font-family:var(--type); font-size:.75rem}
@@ -120,7 +120,7 @@ tr.dim{display:none}
 footer{padding:30px 16px 60px; text-align:center; color:var(--ash); font-size:.85rem; border-top:1px solid var(--smoke)}
 
 @media (max-width:900px){
-  .suspects{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .suspects{grid-template-columns:repeat(4,minmax(0,1fr))}
   .files{grid-template-columns:1fr}
 }
 @media (max-width:520px){
@@ -190,6 +190,7 @@ footer{padding:30px 16px 60px; text-align:center; color:var(--ash); font-size:.8
       <a class="file" href="../smith/"><span class="no type">Case No. 002</span><h3>Adam Smith</h3><p>Four stages, labor and value, the invisible hand.</p><span class="go">Open the file →</span></a>
       <a class="file" href="../malthus/"><span class="no type">Case No. 003</span><h3>Thomas Robert Malthus</h3><p>Population, rent, and gluts.</p><span class="go">Open the file →</span></a>
       <a class="file" href="../ricardo/"><span class="no type">Case No. 004</span><h3>David Ricardo</h3><p>Rent, labor value, and comparative advantage.</p><span class="go">Open the file →</span></a>
+      <a class="file" href="../bentham-say-senior/"><span class="no type">Case No. 005</span><h3>Bentham, Say &amp; Senior</h3><p>Utility, Say's law, and abstinence.</p><span class="go">Open the file →</span></a>
     </div>
   </section>
 </main>
@@ -214,6 +215,9 @@ footer{padding:30px 16px 60px; text-align:center; color:var(--ash); font-size:.8
     beret:`<ellipse cx="55" cy="30" rx="27" ry="10" fill="#555" stroke="#111" stroke-width="3"/>`,
     parson:`<ellipse cx="55" cy="34" rx="36" ry="6" fill="#111"/><path d="M38 34 Q38 14 55 14 Q72 14 72 34Z" fill="#111"/>`,
     bald:`<path d="M31 46 Q30 30 40 28 M79 46 Q80 30 70 28" stroke="#555" stroke-width="5" fill="none"/><path d="M40 82 Q55 88 70 82" stroke="#111" stroke-width="5" fill="none"/>`,
+    brim:`<ellipse cx="55" cy="32" rx="40" ry="7" fill="#d0d0d0" stroke="#111" stroke-width="3"/><path d="M36 32 Q36 12 55 12 Q74 12 74 32Z" fill="#d0d0d0" stroke="#111" stroke-width="3"/><path d="M36 28 H74" stroke="#111" stroke-width="4"/>`,
+    cravat:`<path d="M31 50 Q28 26 55 24 Q82 26 79 50 Q70 32 55 34 Q40 32 31 50Z" fill="#444" stroke="#111" stroke-width="2"/><path d="M44 92 Q55 100 66 92 L60 112 H50Z" fill="#f2f2f2" stroke="#111" stroke-width="2"/>`,
+    part:`<path d="M30 52 Q26 24 52 24 L56 30 Q60 24 66 24 Q86 28 80 52 Q76 38 58 34 Q42 34 30 52Z" fill="#1f1f1f" stroke="#111" stroke-width="2"/>`,
     smith:`<path d="M30 56 Q24 24 55 22 Q86 24 80 56 L80 44 Q55 30 30 44 Z" fill="#e2e2e2" stroke="#111" stroke-width="3"/><circle cx="84" cy="62" r="6" fill="#e2e2e2" stroke="#111" stroke-width="2"/><circle cx="26" cy="62" r="6" fill="#e2e2e2" stroke="#111" stroke-width="2"/>`
   };
   const face = (hat, collar) => `<svg viewBox="0 0 110 130" aria-hidden="true">
@@ -281,7 +285,25 @@ footer{padding:30px 16px 60px; text-align:center; color:var(--ash); font-size:.8
      how:["By labor alone. Nature works free; machines are past labor.", "labor"],
      share:["Wages, profit, rent in conflict; rising rents squeeze profits.", "three classes"],
      value:["Labor embodied.", "labor"],
-     serves:["The capitalists, against the landlords.", "capitalists"]}
+     serves:["The capitalists, against the landlords.", "capitalists"]},
+    {id:"bentham", n:"Jeremy Bentham", s:"Bentham", yr:"1780–1801 · utilitarian", file:"../bentham-say-senior/", c:"005", hat:HATS.brim,
+     what:["Whatever maximizes pleasure; the next unit is what counts.", "utility"],
+     how:["Calculate pleasure against pain. Work is pure pain.", "self-interest"],
+     share:["Later: redistribute, since money's pleasure diminishes.", "the poor"],
+     value:["Utility.", "utility"],
+     serves:["Mixed: capitalist psychology, but a case for sharing.", "harmony & conflict"]},
+    {id:"say", n:"Jean-Baptiste Say", s:"Say", yr:"1803 · France", file:"../bentham-say-senior/", c:"005", hat:HATS.cravat,
+     what:["Whatever has utility. Supply creates its own demand.", "utility"],
+     how:["Labor, capital, and land as equal productive partners.", "three classes"],
+     share:["Each paid for its contribution; property is sacred.", "harmony"],
+     value:["Utility.", "utility"],
+     serves:["The capitalists, by erasing class conflict.", "capitalists"]},
+    {id:"senior", n:"Nassau Senior", s:"Senior", yr:"1836 · Oxford", file:"../bentham-say-senior/", c:"005", hat:HATS.part,
+     what:["Wants are endless, so nothing goes unsold.", "utility"],
+     how:["Through abstinence: capitalists' saving builds the capital.", "abstinence"],
+     share:["Profit rewards abstinence; the workhouse for the poor.", "capitalists"],
+     value:["Utility.", "utility"],
+     serves:["The capitalists.", "capitalists"]}
   ];
   const ROWS = [
     {k:"what", n:"What?", d:"will we make", tab:"what"},
@@ -296,7 +318,9 @@ footer{padding:30px 16px 60px; text-align:center; color:var(--ash); font-size:.8
     ["The merchant age", ["barbon","crown","north"]],
     ["Selfishness as virtue", ["hobbes","mandeville","smith"]],
     ["Friends of the land", ["quesnay","malthus"]],
-    ["Labor creates value", ["mandeville","smith","ricardo"]]
+    ["Labor creates value", ["mandeville","smith","ricardo"]],
+    ["Utility creates value", ["bentham","say","senior"]],
+    ["Gluts: possible or not?", ["malthus","say","senior"]]
   ];
   const FILTERS = [["all","All"],["what","What"],["how","How"],["share","Share"],["value","Value"],["serves","Whose side"]];
 

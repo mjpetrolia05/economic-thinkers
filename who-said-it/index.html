@@ -154,6 +154,9 @@ footer{padding:40px 16px 60px; text-align:center; color:var(--ash); font-size:.8
     smith:`<path d="M30 56 Q24 24 55 22 Q86 24 80 56 L80 44 Q55 30 30 44 Z" fill="#e2e2e2" stroke="#111" stroke-width="3"/><circle cx="84" cy="62" r="6" fill="#e2e2e2" stroke="#111" stroke-width="2"/><circle cx="26" cy="62" r="6" fill="#e2e2e2" stroke="#111" stroke-width="2"/>`,
     quill:`<path d="M24 46 Q22 24 55 24 Q88 24 86 46 Q70 34 55 36 Q40 34 24 46Z" fill="#555" stroke="#111" stroke-width="3"/><path d="M84 20 L66 52" stroke="#eee" stroke-width="4"/>`,
     bald:`<path d="M31 46 Q30 30 40 28 M79 46 Q80 30 70 28" stroke="#555" stroke-width="5" fill="none"/>`,
+    brim:`<ellipse cx="55" cy="32" rx="40" ry="7" fill="#d0d0d0" stroke="#111" stroke-width="3"/><path d="M36 32 Q36 12 55 12 Q74 12 74 32Z" fill="#d0d0d0" stroke="#111" stroke-width="3"/><path d="M36 28 H74" stroke="#111" stroke-width="4"/>`,
+    cravat:`<path d="M31 50 Q28 26 55 24 Q82 26 79 50 Q70 32 55 34 Q40 32 31 50Z" fill="#444" stroke="#111" stroke-width="2"/><path d="M44 92 Q55 100 66 92 L60 112 H50Z" fill="#f2f2f2" stroke="#111" stroke-width="2"/>`,
+    part:`<path d="M30 52 Q26 24 52 24 L56 30 Q60 24 66 24 Q86 28 80 52 Q76 38 58 34 Q42 34 30 52Z" fill="#1f1f1f" stroke="#111" stroke-width="2"/>`,
     hood:`<path d="M22 80 Q18 18 55 16 Q92 18 88 80 Q80 60 78 44 Q55 30 32 44 Q30 60 22 80Z" fill="#1c1c1c" stroke="#000" stroke-width="2"/><text x="55" y="66" text-anchor="middle" font-family="Playfair Display" font-weight="900" font-size="30" fill="#eee">?</text>`
   };
   const face = (hat, opts = {}) => `<svg viewBox="0 0 110 130" aria-hidden="true">
@@ -173,7 +176,10 @@ footer{padding:40px 16px 60px; text-align:center; color:var(--ash); font-size:.8
     mandeville:{n:"Bernard Mandeville", s:"Mandeville", yr:"satirist, 1714", hat:HATS.cap},
     smith:{n:"Adam Smith", s:"Smith", yr:"Scotland, 1776", hat:HATS.smith},
     malthus:{n:"Thomas Robert Malthus", s:"Malthus", yr:"parson, 1798", hat:HATS.parson, collar:true},
-    ricardo:{n:"David Ricardo", s:"Ricardo", yr:"stockbroker, 1817", hat:HATS.bald}
+    ricardo:{n:"David Ricardo", s:"Ricardo", yr:"stockbroker, 1817", hat:HATS.bald},
+    bentham:{n:"Jeremy Bentham", s:"Bentham", yr:"utilitarian, 1780", hat:HATS.brim},
+    say:{n:"Jean-Baptiste Say", s:"Say", yr:"France, 1803", hat:HATS.cravat},
+    senior:{n:"Nassau Senior", s:"Senior", yr:"Oxford, 1836", hat:HATS.part}
   };
 
   /* ---------- the evidence: quotes that appear in the case files ---------- */
@@ -219,7 +225,19 @@ footer{padding:40px 16px 60px; text-align:center; color:var(--ash); font-size:.8
     {t:"Can any point be more clearly established than that profits must fall with a rise in wages?", by:"ricardo", src:"Principles of Political Economy and Taxation, 1817", file:"../ricardo/#share", c:"004",
      why:"With output fixed, wages and profits can only rise at each other's expense."},
     {t:"To determine the laws which regulate this distribution is the principal problem in Political Economy.", by:"ricardo", src:"Principles of Political Economy and Taxation, 1817", file:"../ricardo/#overview", c:"004",
-     why:"For him, economics was above all about how the produce is divided among landlords, capitalists, and workers."}
+     why:"For him, economics was above all about how the produce is divided among landlords, capitalists, and workers."},
+    {t:"Nature has placed mankind under the governance of two sovereign masters, pain and pleasure.", by:"bentham", src:"An Introduction to the Principles of Morals and Legislation, 1780", file:"../bentham-say-senior/#how", c:"005",
+     why:"The opening line of utilitarianism: every motive comes down to seeking pleasure and avoiding pain."},
+    {t:"All value is founded on utility.", by:"bentham", src:"writings on political economy", file:"../bentham-say-senior/#what", c:"005",
+     why:"He answered the water-and-diamonds puzzle with utility, not labor."},
+    {t:"Produce opens a vent for produce.", by:"say", src:"A Treatise on Political Economy", file:"../bentham-say-senior/#what", c:"005",
+     why:"Say's law: supply creates its own demand, so a general glut is impossible."},
+    {t:"To the labour of man alone he ascribes the power of producing values. This is an error.", by:"say", src:"A Treatise on Political Economy, on Adam Smith", file:"../bentham-say-senior/#how", c:"005",
+     why:"He 'corrected' Smith: labor, capital, and land are equal productive agencies."},
+    {t:"Nature has decreed that the road to good shall be through evil.", by:"senior", src:"writings on the Poor Laws", file:"../bentham-say-senior/#overview", c:"005",
+     why:"After 1830 he argued workers must be kept in fear of want, which became the logic of the workhouse."},
+    {t:"The business of a Political Economist is neither to recommend nor to dissuade, but to state general principles, which it is fatal to neglect.", by:"senior", src:"An Outline of the Science of Political Economy, 1836", file:"../bentham-say-senior/#verdict", c:"005",
+     why:"He claimed economics was value-free, while calling his principles fatal to ignore."}
   ];
 
   let G;
